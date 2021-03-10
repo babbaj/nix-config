@@ -47,5 +47,4 @@
 
   # no need :sunglasses:
   swapDevices = [ ];
-
 }

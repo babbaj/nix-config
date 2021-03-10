@@ -78,6 +78,7 @@ in
     SUBSYSTEM=="vfio", OWNER="babbaj"
   '';
 
+
   systemd.user.services.obs-replay = {
     enable = true;
     description = "OBS Replay";
@@ -146,8 +147,6 @@ in
   # services.xserver.libinput.enable = true;
 
 
-
-
   # Garbage Collection
   nix = {
     gc = {
@@ -204,6 +203,28 @@ in
           libratbag = unstable.libratbag; # 0.15 required for logitech g203
 
           oraclejdk = unstable.oraclejdk;
+
+          looking-glass-client = super.looking-glass-client.overrideAttrs (oldAttrs: rec {
+            version = "master";
+            src = pkgs.fetchFromGitHub {
+              owner = "gnif";
+              repo = "LookingGlass";
+              rev = "854b53e28c8116fe4f412ed49babf6e4bfa7425d"; # march 3rd
+              sha256 = "1f0ssnfyz8s24nj6dbc554553wm7kxka825z92qz28i0h011japd";
+              fetchSubmodules =  true;
+            };
+          
+            buildInputs = oldAttrs.buildInputs ++ [ pkgs.xorg.libXi pkgs.xorg.libXScrnSaver pkgs.xorg.libXinerama ];
+           
+            cmakeFlags = [ "-DENABLE_WAYLAND=no" ];
+            NIX_CFLAGS_COMPILE = "-mavx";
+          
+            patches = (oldAttrs.patches or []) ++ [
+             ./0001-Allow-sudo.patch
+            ];
+          });
+
+
         })
     ];
   };
@@ -233,6 +254,7 @@ in
     #goland_desktop
 
     #home-manager
+    looking-glass-client
     jetbrains.idea-ultimate
     jetbrains.clion
     jetbrains.goland
@@ -293,6 +315,7 @@ in
     psmisc # future installer requires killall
     linuxPackages.v4l2loopback
     lepton
+    unzip
 
     libbfd # temporarily necessary for looking-glass
   ];
