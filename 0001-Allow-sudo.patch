@@ -1,0 +1,33 @@
+From 719c670c5b02bc9c8ae219ac07279041999e77e0 Mon Sep 17 00:00:00 2001
+From: Babbaj <babbaj45@gmail.com>
+Date: Wed, 10 Mar 2021 02:31:11 -0500
+Subject: [PATCH] Allow sudo
+
+---
+ src/main.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/main.c b/src/main.c
+index 425a115..e958370 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -1015,11 +1015,11 @@ static void lg_shutdown(void)
+ 
+ int main(int argc, char * argv[])
+ {
+-  if (getuid() == 0)
+-  {
+-    DEBUG_ERROR("Do not run looking glass as root!");
+-    return -1;
+-  }
++  //if (getuid() == 0)
++  //{
++  //  DEBUG_ERROR("Do not run looking glass as root!");
++  //  return -1;
++  //}
+ 
+   DEBUG_INFO("Looking Glass (%s)", BUILD_VERSION);
+   DEBUG_INFO("Locking Method: " LG_LOCK_MODE);
+-- 
+2.29.2
+
