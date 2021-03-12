@@ -233,6 +233,15 @@ in
 
   environment.systemPackages = 
   let
+    looking_glass_desktop = pkgs.makeDesktopItem {
+      name = "looking-glass-client";
+      desktopName = "Looking glass client";
+      type = "Application";
+      icon = builtins.fetchurl "https://raw.githubusercontent.com/gnif/LookingGlass/master/resources/icon-128x128.png";
+      exec = "${pkgs.looking-glass-client}/bin/looking-glass-client input:grabKeyboardOnFocus spice:alwaysShowCursor";
+      terminal = "true";
+    };
+
     idea_desktop = pkgs.makeDesktopItem {
       name = "IntelliJ";
       desktopName = "IntelliJ Idea Ultimate IDE";
@@ -252,6 +261,7 @@ in
     #idea_desktop
     #clion_desktop
     #goland_desktop
+    looking_glass_desktop
 
     #home-manager
     looking-glass-client
@@ -316,6 +326,7 @@ in
     linuxPackages.v4l2loopback
     lepton
     unzip
+    gparted
 
     libbfd # temporarily necessary for looking-glass
   ];
