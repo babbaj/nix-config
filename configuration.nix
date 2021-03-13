@@ -122,6 +122,9 @@ in
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.screenSection = ''
+    Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"
+  '';
 
 
   # Enable the GNOME 3 Desktop Environment.
@@ -228,16 +231,15 @@ in
         })
     ];
   };
-
   
 
   environment.systemPackages = 
   let
     looking_glass_desktop = pkgs.makeDesktopItem {
       name = "looking-glass-client";
-      desktopName = "Looking glass client";
+      desktopName = "Looking Glass Client";
       type = "Application";
-      icon = builtins.fetchurl "https://raw.githubusercontent.com/gnif/LookingGlass/master/resources/icon-128x128.png";
+      icon = builtins.fetchurl "https://raw.githubusercontent.com/gnif/LookingGlass/master/resources/lg-logo.png";
       exec = "${pkgs.looking-glass-client}/bin/looking-glass-client input:grabKeyboardOnFocus spice:alwaysShowCursor";
       terminal = "true";
     };
@@ -327,6 +329,7 @@ in
     lepton
     unzip
     gparted
+    htop
 
     libbfd # temporarily necessary for looking-glass
   ];
