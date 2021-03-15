@@ -239,7 +239,7 @@ in
       name = "looking-glass-client";
       desktopName = "Looking Glass Client";
       type = "Application";
-      icon = builtins.fetchurl "https://raw.githubusercontent.com/gnif/LookingGlass/master/resources/lg-logo.png";
+      icon = "${pkgs.looking-glass-client.src}/resources/lg-logo.png";
       exec = "${pkgs.looking-glass-client}/bin/looking-glass-client input:grabKeyboardOnFocus spice:alwaysShowCursor";
       terminal = "true";
     };
