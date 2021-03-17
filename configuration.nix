@@ -328,10 +328,9 @@ in
     linuxPackages.v4l2loopback
     lepton
     unzip
+    p7zip
     gparted
     htop
-
-    libbfd # temporarily necessary for looking-glass
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
