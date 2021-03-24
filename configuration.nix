@@ -290,7 +290,7 @@ in
     llvm_11
     compsize
     tdesktop
-    sqlite
+    sqlite-interactive
     vscode
     pciutils
     cmake
@@ -331,6 +331,8 @@ in
     p7zip
     gparted
     htop
+    rlwrap
+    wireshark
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
