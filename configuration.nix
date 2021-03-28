@@ -8,6 +8,7 @@
 let
   baseconfig = { allowUnfree = true; };
   unstable = import <nixos-unstable> { config = baseconfig; };
+  master = import <master> { config = baseconfig; };
 in
 {
   imports =
@@ -77,7 +78,8 @@ in
     KERNEL=="sd*",  SUBSYSTEM=="block", OWNER="babbaj"
     SUBSYSTEM=="vfio", OWNER="babbaj"
   '';
-
+  
+  boot.supportedFilesystems = [ "zfs" ];
 
   systemd.user.services.obs-replay = {
     enable = true;
@@ -91,6 +93,7 @@ in
   };
 
   networking.hostName = "gamer"; # Define your hostname.
+  networking.hostId = "d5794eb2"; # ZFS requires this
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
@@ -102,6 +105,7 @@ in
   networking.useDHCP = false;
   networking.interfaces.enp34s0.useDHCP = true;
   networking.interfaces.wlp35s0.useDHCP = true;
+
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -122,9 +126,9 @@ in
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
-  services.xserver.screenSection = ''
-    Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"
-  '';
+  #services.xserver.screenSection = ''
+  #  Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"
+  #'';
 
 
   # Enable the GNOME 3 Desktop Environment.
@@ -227,7 +231,7 @@ in
             ];
           });
 
-
+          #discord = master.discord;
         })
     ];
   };
@@ -333,6 +337,9 @@ in
     htop
     rlwrap
     wireshark
+    busybox
+    zfs
+    mbuffer
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
