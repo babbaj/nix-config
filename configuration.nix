@@ -247,26 +247,7 @@ in
       exec = "${pkgs.looking-glass-client}/bin/looking-glass-client input:grabKeyboardOnFocus spice:alwaysShowCursor";
       terminal = "true";
     };
-
-    idea_desktop = pkgs.makeDesktopItem {
-      name = "IntelliJ";
-      desktopName = "IntelliJ Idea Ultimate IDE";
-      exec = "${pkgs.idea-ultimate}/bin/idea-ultimate";
-    };
-    clion_desktop = pkgs.makeDesktopItem {
-      name = "Clion";
-      desktopName = "CLion IDE";
-      exec = "${pkgs.clion}/bin/clion";
-    };
-    goland_desktop = pkgs.makeDesktopItem {
-      name = "GoLand";
-      desktopName = "GoLand IDE";
-      exec = "${pkgs.goland}/bin/goland";
-    };
   in with pkgs; [
-    #idea_desktop
-    #clion_desktop
-    #goland_desktop
     looking_glass_desktop
 
     #home-manager
@@ -384,7 +365,5 @@ in
     useGlobalPkgs = true;
     verbose = true;
   };
-
-
 
 }
