@@ -251,6 +251,7 @@ in
     looking_glass_desktop
 
     #home-manager
+    coreutils
     looking-glass-client
     jetbrains.idea-ultimate
     jetbrains.clion
@@ -266,6 +267,7 @@ in
     element-desktop
     discord
     go
+    goimports
     virt-manager
     libvirt
     git
@@ -318,9 +320,9 @@ in
     htop
     rlwrap
     wireshark
-    busybox
     zfs
     mbuffer
+
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
