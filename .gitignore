@@ -2,4 +2,4 @@
 !.gitignore
 !0001-Allow-sudo.patch
 !configuration.nix
-!hardware-configuration.nix
+!hardware.nix

@@ -13,7 +13,7 @@ in
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      ./hardware.nix
 
       # Everything that isn't public
       ./secret.nix
