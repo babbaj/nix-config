@@ -121,6 +121,7 @@ in
   programs.steam.enable = true;
   programs.java.enable = true;
   programs.gnupg.agent.enable = true;
+  virtualisation.docker.enable = true;
   #programs.networkmanager.enable = true;
 
   # Enable the X11 windowing system.
@@ -216,8 +217,8 @@ in
             src = pkgs.fetchFromGitHub {
               owner = "gnif";
               repo = "LookingGlass";
-              rev = "854b53e28c8116fe4f412ed49babf6e4bfa7425d"; # march 3rd
-              sha256 = "1f0ssnfyz8s24nj6dbc554553wm7kxka825z92qz28i0h011japd";
+              rev = "168d9890ae36ae09defe265c1120dbc1e543345d"; # April 18
+              sha256 = "1zk75izbcga5d1x7ywv232l80rgnx4ws6nyjwss0gq6bybv4ky9i";
               fetchSubmodules =  true;
             };
           
@@ -232,6 +233,8 @@ in
           });
 
           #discord = master.discord;
+          wine = unstable.wine;
+          spotify-tui = unstable.spotify-tui;
         })
     ];
   };
@@ -322,7 +325,11 @@ in
     wireshark
     zfs
     mbuffer
-
+    steam-run-native
+    wine
+    dotnet-netcore
+    youtube-dl
+    usbutils
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
