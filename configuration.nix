@@ -20,8 +20,12 @@ in
 
       # Home-manager
       <home-manager/nixos>
+
+      #"${builtins.fetchTarball "https://github.com/danielfullmer/nixos-config/archive/2aad9c4254b4372488606b0d0ebf4b89fbd26042.tar.gz"}/modules/nvidia-vgpu"
     ];
 
+  #hardware.nvidia.vgpu.enable = true;
+  #hardware.nvidia.vgpu.unlock.enable = true;
 
   boot.kernelPackages = unstable.linuxPackages_5_10;
 
@@ -58,19 +62,7 @@ in
     "f /dev/shm/scream-ivshmem 0666 babbaj qemu-libvirtd -"
   ];
 
-  # scream over ivshmem is cringe
-  systemd.user.services.scream-ivshmem = {
-    enable = true;
-    description = "Scream IVSHMEM";
-    serviceConfig = {
-      ExecStart = "${pkgs.scream-receivers}/bin/scream-ivshmem-alsa /dev/shm/scream-ivshmem -t 200";
-      Restart = "always";
-      RestartSec = "5";
-    };
-
-    wantedBy = [ "default.target" ];
-    requires = [ "pulseaudio.service" ];
-  };
+  networking.firewall.interfaces.virbr0.allowedUDPPorts = [ 4010 ]; # scream
 
   services.udev.extraRules = ''
     # Unprivileged nvme access
@@ -107,10 +99,6 @@ in
   networking.interfaces.wlp35s0.useDHCP = true;
 
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
@@ -127,9 +115,9 @@ in
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
-  #services.xserver.screenSection = ''
-  #  Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On}"
-  #'';
+  services.xserver.screenSection = ''
+    Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
+  '';
 
 
   # Enable the GNOME 3 Desktop Environment.
@@ -139,7 +127,6 @@ in
 
   # Configure keymap in X11
   services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
