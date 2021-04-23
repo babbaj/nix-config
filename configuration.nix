@@ -59,7 +59,6 @@ in
 
   systemd.tmpfiles.rules = [
     "f /dev/shm/looking-glass 0666 babbaj qemu-libvirtd -"
-    "f /dev/shm/scream-ivshmem 0666 babbaj qemu-libvirtd -"
   ];
 
   networking.firewall.interfaces.virbr0.allowedUDPPorts = [ 4010 ]; # scream
