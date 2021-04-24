@@ -1,5 +1,6 @@
 *
 !.gitignore
 !0001-Allow-sudo.patch
+!0001-Disable-input-grab-on-startup.patch
 !configuration.nix
 !hardware.nix

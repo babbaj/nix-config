@@ -1,0 +1,28 @@
+From 517fb1bfff926d8843bdcf989b1ad4d4f541bea0 Mon Sep 17 00:00:00 2001
+From: j-brn <me@bricker.io>
+Date: Sat, 24 Apr 2021 17:19:32 +0200
+Subject: [PATCH] Disable input grab on startup
+
+---
+ ui/input-linux.c | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/ui/input-linux.c b/ui/input-linux.c
+index 05c0c98819..169ac80453 100644
+--- a/ui/input-linux.c
++++ b/ui/input-linux.c
+@@ -394,12 +394,6 @@ static void input_linux_complete(UserCreatable *uc, Error **errp)
+     }
+ 
+     qemu_set_fd_handler(il->fd, input_linux_event, NULL, il);
+-    if (il->keycount) {
+-        /* delay grab until all keys are released */
+-        il->grab_request = true;
+-    } else {
+-        input_linux_toggle_grab(il);
+-    }
+     QTAILQ_INSERT_TAIL(&inputs, il, next);
+     il->initialized = true;
+     return;
+-- 
+2.31.1
