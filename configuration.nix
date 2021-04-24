@@ -234,6 +234,12 @@ in
           #discord = master.discord;
           wine = unstable.wine;
           spotify-tui = unstable.spotify-tui;
+
+          qemu = super.qemu.overrideAttrs (old: rec {
+            patches = (old.patches or []) ++ [
+             ./0001-Disable-input-grab-on-startup.patch
+            ];
+          });
         })
     ];
   };
