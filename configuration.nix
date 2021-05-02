@@ -61,18 +61,18 @@ in
     "f /dev/shm/looking-glass 0666 babbaj qemu-libvirtd -"
   ];
 
-    systemd.user.services.scream-ivshmem = {
-    enable = true;
-    description = "Scream";
-    serviceConfig = {
-      ExecStart = "${pkgs.scream-receivers}/bin/scream-alsa -i virbr0";
-      Restart = "always";
-      RestartSec = "5";
-    };
-
-    wantedBy = [ "default.target" ];
-    requires = [ "pulseaudio.service" ];
-  };
+  #systemd.user.services.scream-ivshmem = {
+  #  enable = true;
+  #  description = "Scream";
+  #  serviceConfig = {
+  #    ExecStart = "${pkgs.scream-receivers}/bin/scream-alsa -i virbr0";
+  #    Restart = "always";
+  #    RestartSec = "5";
+  #  };
+  #
+  #  wantedBy = [ "default.target" ];
+  #  requires = [ "pulseaudio.service" ];
+  #};
 
   networking.firewall.interfaces.virbr0.allowedUDPPorts = [ 4010 ]; # scream
 
@@ -85,20 +85,25 @@ in
   
   boot.supportedFilesystems = [ "zfs" ];
 
-  systemd.user.services.obs-replay = {
-    enable = true;
-    description = "OBS Replay";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.obs-studio}/bin/obs --startreplaybuffer";
-    };
-  
-    wantedBy = [ "gnome-session-initialized.target" ];
-  };
+  #systemd.user.services.obs-replay = {
+  #  enable = true;
+  #  description = "OBS Replay";
+  #  serviceConfig = {
+  #    Type = "oneshot";
+  #    ExecStart = "${pkgs.obs-studio}/bin/obs --startreplaybuffer";
+  #  };
+  #
+  #  wantedBy = [ "gnome-session-initialized.target" ];
+  #};
 
   networking.hostName = "gamer"; # Define your hostname.
   networking.hostId = "d5794eb2"; # ZFS requires this
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  networking.extraHosts =
+  ''
+    127.0.0.1 babbaj.proxy.localhost
+  '';
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -140,18 +145,11 @@ in
   # Configure keymap in X11
   services.xserver.layout = "us";
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
   services.ratbagd.enable = true;
-
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
 
   # Garbage Collection
@@ -335,6 +333,11 @@ in
     dotnet-netcore
     youtube-dl
     usbutils
+    lm_sensors
+    inetutils
+    dmidecode
+    i2c-tools
+    libreoffice-qt
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -346,6 +349,14 @@ in
 
   home-manager = {
     users.babbaj = {
+      programs.ssh = {
+        enable = true;
+        matchBlocks.n = {
+          hostname = "192.168.69.2";
+          user = "root";
+        };
+      };
+
       programs.direnv = {
         enable = true;
         enableNixDirenvIntegration = true;
