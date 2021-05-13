@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, lib, makeWrapper, pkgs, ... }:
 
 
 let
@@ -100,8 +100,7 @@ in
   networking.hostId = "d5794eb2"; # ZFS requires this
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  networking.extraHosts =
-  ''
+  networking.extraHosts = ''
     127.0.0.1 babbaj.proxy.localhost
   '';
 
@@ -231,12 +230,28 @@ in
 
           #discord = master.discord;
           wine = unstable.wine;
-          spotify-tui = unstable.spotify-tui;
 
           qemu = super.qemu.overrideAttrs (old: rec {
             patches = (old.patches or []) ++ [
-             ./0001-Disable-input-grab-on-startup.patch
+             #./0001-Disable-input-grab-on-startup.patch
+             #./0001-always-passthrough-my-mouse-s-keyboard-device.patch
+             ./0001-cringe-input-patch.patch
             ];
+          });
+
+          gb-backup = unstable.gb-backup.overrideAttrs (old: rec {
+            src = pkgs.fetchFromGitHub {
+              owner = "leijurv";
+              repo = "gb";
+              rev = "904813bf0bbce048af5795618d58c0b1953f9ff8";
+              sha256 = "111jrcv4x38sc19xha5q3pd2297s13qh1maa7sa1k09hgypvgsxf";
+            };
+
+            nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.makeWrapper pkgs.lepton ];
+
+            installPhase = old.installPhase + ''
+              wrapProgram $out/bin/gb  --prefix PATH : ${lib.makeBinPath [ pkgs.lepton ]}
+            '';
           });
         })
     ];
@@ -256,7 +271,6 @@ in
   in with pkgs; [
     looking_glass_desktop
 
-    #home-manager
     coreutils
     looking-glass-client
     jetbrains.idea-ultimate
@@ -291,9 +305,8 @@ in
     pkg-config
     docker
     docker-compose
-    #jre
-    #jdk 
-    oraclejdk
+    jdk 
+    #oraclejdk
     wget
     openssl
     pv
@@ -311,7 +324,7 @@ in
     nix-direnv
     jq
     openvpn
-    spotify-tui
+    spotify
     ffmpeg
     linuxPackages.perf
     iotop
@@ -319,7 +332,7 @@ in
     gnome3.networkmanagerapplet
     psmisc # future installer requires killall
     linuxPackages.v4l2loopback
-    lepton
+    #lepton
     unzip
     p7zip
     gparted
@@ -338,6 +351,7 @@ in
     dmidecode
     i2c-tools
     libreoffice-qt
+    #gb-backup
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
