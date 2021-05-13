@@ -234,25 +234,11 @@ in
           qemu = super.qemu.overrideAttrs (old: rec {
             patches = (old.patches or []) ++ [
              #./0001-Disable-input-grab-on-startup.patch
-             #./0001-always-passthrough-my-mouse-s-keyboard-device.patch
              ./0001-cringe-input-patch.patch
             ];
           });
 
-          gb-backup = unstable.gb-backup.overrideAttrs (old: rec {
-            src = pkgs.fetchFromGitHub {
-              owner = "leijurv";
-              repo = "gb";
-              rev = "904813bf0bbce048af5795618d58c0b1953f9ff8";
-              sha256 = "111jrcv4x38sc19xha5q3pd2297s13qh1maa7sa1k09hgypvgsxf";
-            };
-
-            nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.makeWrapper pkgs.lepton ];
-
-            installPhase = old.installPhase + ''
-              wrapProgram $out/bin/gb  --prefix PATH : ${lib.makeBinPath [ pkgs.lepton ]}
-            '';
-          });
+          gb-backup = unstable.gb-backup;
         })
     ];
   };
@@ -351,7 +337,7 @@ in
     dmidecode
     i2c-tools
     libreoffice-qt
-    #gb-backup
+    gb-backup
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
