@@ -202,6 +202,7 @@ in
           jetbrains.idea-ultimate = unstable.jetbrains.idea-ultimate;
           jetbrains.clion = unstable.jetbrains.clion;
           jetbrains.goland = unstable.jetbrains.goland;
+          jetbrains.rider = unstable.jetbrains.rider;
           obs-studio = unstable.obs-studio;
    
           libratbag = unstable.libratbag; # 0.15 required for logitech g203
@@ -262,6 +263,7 @@ in
     jetbrains.idea-ultimate
     jetbrains.clion
     jetbrains.goland
+    jetbrains.rider
     vlc
     wireguard
     qbittorrent
@@ -272,12 +274,12 @@ in
     firefox
     element-desktop
     discord
-    go
-    goimports
+    binutils
+    #go
+    #goimports
     virt-manager
     libvirt
     git
-    binutils
     gcc10
     clang_11
     llvm_11
@@ -329,7 +331,7 @@ in
     mbuffer
     steam-run-native
     wine
-    dotnet-netcore
+    dotnet-sdk_3
     youtube-dl
     usbutils
     lm_sensors
@@ -338,6 +340,7 @@ in
     i2c-tools
     libreoffice-qt
     gb-backup
+    xclip xsel
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -383,6 +386,22 @@ in
           #obs-v4l2loopback
           #obs-move-transition
         ];
+      };
+
+      programs.bash = {
+        enable = true;
+        bashrcExtra = ''
+          PATH=$PATH:~/bin
+          #alias pbcopy='xclip -selection clipboard'
+          #alias pbpaste='xclip -selection clipboard -o'
+          #alias pbcopy='xsel --clipboard --input'
+          #alias pbpaste='xsel --clipboard --output'
+        '';
+
+        shellAliases = {
+          pbcopy = "xclip -selection clipboard";
+          pbpaste = "xclip -selection clipboard -o";
+        };
       };
     };
 
