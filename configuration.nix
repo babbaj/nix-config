@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, makeWrapper, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 
 let
@@ -275,8 +275,8 @@ in
     element-desktop
     discord
     binutils
-    #go
-    #goimports
+    go
+    goimports
     virt-manager
     libvirt
     git
@@ -320,7 +320,7 @@ in
     gnome3.networkmanagerapplet
     psmisc # future installer requires killall
     linuxPackages.v4l2loopback
-    #lepton
+    lepton
     unzip
     p7zip
     gparted
@@ -402,6 +402,8 @@ in
           pbcopy = "xclip -selection clipboard";
           pbpaste = "xclip -selection clipboard -o";
         };
+
+        historyControl = [ "ignoredups" ];
       };
     };
 
