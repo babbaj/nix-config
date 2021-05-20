@@ -1,17 +1,17 @@
-From c9fe3d684ec1e94a1d7564d02b558310433c035e Mon Sep 17 00:00:00 2001
+From 5aa1f5ac8507e4bfaf1d76d873a75976251feb06 Mon Sep 17 00:00:00 2001
 From: Babbaj <babbaj45@gmail.com>
-Date: Wed, 12 May 2021 23:03:41 -0400
+Date: Thu, 20 May 2021 19:30:30 -0400
 Subject: [PATCH] cringe input patch
 
 ---
- ui/input-linux.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ ui/input-linux.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/ui/input-linux.c b/ui/input-linux.c
-index 4925ce1af1..109dd65192 100644
+index 4925ce1af1..f8f29a5281 100644
 --- a/ui/input-linux.c
 +++ b/ui/input-linux.c
-@@ -82,11 +82,16 @@ static void input_linux_toggle_grab(InputLinux *il)
+@@ -82,9 +82,14 @@ static void input_linux_toggle_grab(InputLinux *il)
      InputLinux *item;
      int rc;
  
@@ -26,21 +26,9 @@ index 4925ce1af1..109dd65192 100644
 +            if (rc < 0) {
 +            return;
 +        }
-+        il->grab_active = !il->grab_active;
      }
--    il->grab_active = !il->grab_active;
+     il->grab_active = !il->grab_active;
  
-     if (!il->grab_all) {
-         return;
-@@ -96,7 +101,7 @@ static void input_linux_toggle_grab(InputLinux *il)
-             /* avoid endless loops */
-             continue;
-         }
--        if (item->grab_active != il->grab_active) {
-+        if ((item->grab_active != il->grab_active) || isMouseKbd) {
-             input_linux_toggle_grab(item);
-         }
-     }
 @@ -104,6 +109,9 @@ static void input_linux_toggle_grab(InputLinux *il)
  
  static bool input_linux_check_toggle(InputLinux *il)
@@ -60,7 +48,7 @@ index 4925ce1af1..109dd65192 100644
              int qcode = qemu_input_linux_to_qcode(event->code);
              qemu_input_event_send_key_qcode(NULL, qcode, event->value);
          }
-@@ -402,11 +410,8 @@ static void input_linux_complete(UserCreatable *uc, Error **errp)
+@@ -402,12 +410,7 @@ static void input_linux_complete(UserCreatable *uc, Error **errp)
      }
  
      qemu_set_fd_handler(il->fd, input_linux_event, NULL, il);
@@ -69,11 +57,11 @@ index 4925ce1af1..109dd65192 100644
 -        il->grab_request = true;
 -    } else {
 -        input_linux_toggle_grab(il);
-+    if (strstr(il->evdev, "usb-Logitech_G203_LIGHTSYNC_Gaming_Mouse_206B37804B42-if01-event-kbd")) {
-+        il->grab_active = true;
-     }
+-    }
++
      QTAILQ_INSERT_TAIL(&inputs, il, next);
      il->initialized = true;
+     return;
 -- 
 2.29.3
 

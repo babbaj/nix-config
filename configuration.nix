@@ -61,7 +61,7 @@ in
     "f /dev/shm/looking-glass 0666 babbaj qemu-libvirtd -"
   ];
 
-  #systemd.user.services.scream-ivshmem = {
+  #systemd.user.services.scream = {
   #  enable = true;
   #  description = "Scream";
   #  serviceConfig = {
