@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out/bin
-    mv looking-glass-client $out/bin/looking-glass-test
+    mv looking-glass-client $out/bin/
   '';
 
   meta = with lib; {
