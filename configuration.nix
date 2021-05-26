@@ -28,7 +28,7 @@ in
   #hardware.nvidia.vgpu.enable = true;
   #hardware.nvidia.vgpu.unlock.enable = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_5_10;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -208,25 +208,7 @@ in
 
           oraclejdk = unstable.oraclejdk;
 
-          looking-glass-client = stable.looking-glass-client.overrideAttrs (oldAttrs: rec {
-            version = "master";
-            src = pkgs.fetchFromGitHub {
-              owner = "gnif";
-              repo = "LookingGlass";
-              rev = "168d9890ae36ae09defe265c1120dbc1e543345d"; # April 18
-              sha256 = "1zk75izbcga5d1x7ywv232l80rgnx4ws6nyjwss0gq6bybv4ky9i";
-              fetchSubmodules =  true;
-            };
-          
-            buildInputs = oldAttrs.buildInputs ++ [ pkgs.xorg.libXi pkgs.xorg.libXScrnSaver pkgs.xorg.libXinerama ];
-           
-            cmakeFlags = [ "-DENABLE_WAYLAND=no" ];
-            NIX_CFLAGS_COMPILE = "-mavx";
-          
-            patches = (oldAttrs.patches or []) ++ [
-             ./0001-Allow-sudo.patch
-            ];
-          });
+          looking-glass-client = pkgs.callPackage ./looking-glass.nix {};
 
           discord = master.discord;
           wine = unstable.wine;
