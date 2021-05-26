@@ -7,8 +7,9 @@
 
 let
   baseconfig = { allowUnfree = true; };
-  unstable = import <nixos-unstable> { config = baseconfig; };
+  unstable = import <nixos-unstable> { config = baseconfig; }; # TODO: remove
   master = import <master> { config = baseconfig; };
+  stable = import <nixos-stable> { config = baseconfig; }; # 20.09
 in
 {
   imports =
@@ -27,7 +28,7 @@ in
   #hardware.nvidia.vgpu.enable = true;
   #hardware.nvidia.vgpu.unlock.enable = true;
 
-  boot.kernelPackages = unstable.linuxPackages_5_10;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -135,11 +136,9 @@ in
     Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
   '';
 
-
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome3.enable = true;
-  
+  services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver.layout = "us";
@@ -209,7 +208,7 @@ in
 
           oraclejdk = unstable.oraclejdk;
 
-          looking-glass-client = super.looking-glass-client.overrideAttrs (oldAttrs: rec {
+          looking-glass-client = stable.looking-glass-client.overrideAttrs (oldAttrs: rec {
             version = "master";
             src = pkgs.fetchFromGitHub {
               owner = "gnif";
@@ -229,7 +228,7 @@ in
             ];
           });
 
-          #discord = master.discord;
+          discord = master.discord;
           wine = unstable.wine;
 
           qemu = super.qemu.overrideAttrs (old: rec {
@@ -269,6 +268,7 @@ in
     qbittorrent
     obs-studio
     minecraft
+    multimc
     steam
     google-chrome
     firefox
@@ -302,7 +302,7 @@ in
     neofetch
     gnupg
     flameshot
-    scream-receivers
+    scream
     pavucontrol
     zoom-us
     qdirstat
@@ -341,6 +341,7 @@ in
     libreoffice-qt
     gb-backup
     xclip xsel
+    handbrake
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
