@@ -62,6 +62,7 @@ in
     "f /dev/shm/looking-glass 0666 babbaj qemu-libvirtd -"
   ];
 
+
   #systemd.user.services.scream = {
   #  enable = true;
   #  description = "Scream";
@@ -99,7 +100,6 @@ in
 
   networking.hostName = "gamer"; # Define your hostname.
   networking.hostId = "d5794eb2"; # ZFS requires this
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   networking.extraHosts = ''
     127.0.0.1 babbaj.proxy.localhost
@@ -213,6 +213,8 @@ in
           discord = master.discord;
           wine = unstable.wine;
 
+          openvpn = stable.openvpn; # openvpn 2.5 is broken with pia
+
           qemu = super.qemu.overrideAttrs (old: rec {
             patches = (old.patches or []) ++ [
              #./0001-Disable-input-grab-on-startup.patch
@@ -275,8 +277,6 @@ in
     pkg-config
     docker
     docker-compose
-    jdk 
-    #oraclejdk
     wget
     openssl
     pv
@@ -324,6 +324,8 @@ in
     gb-backup
     xclip xsel
     handbrake
+    jdk8
+    ghidra-bin
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -375,15 +377,12 @@ in
         enable = true;
         bashrcExtra = ''
           PATH=$PATH:~/bin
-          #alias pbcopy='xclip -selection clipboard'
-          #alias pbpaste='xclip -selection clipboard -o'
-          #alias pbcopy='xsel --clipboard --input'
-          #alias pbpaste='xsel --clipboard --output'
         '';
 
         shellAliases = {
           pbcopy = "xclip -selection clipboard";
           pbpaste = "xclip -selection clipboard -o";
+          cp = "cp --reflink=auto";
         };
 
         historyControl = [ "ignoredups" ];

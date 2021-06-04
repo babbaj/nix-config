@@ -11,7 +11,7 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/1041a714-147d-407a-86ec-41786d8c6fd7";
+    { device = "/dev/disk/by-id/nvme-ADATA_SX8200PNP_2K22292H74YA-part1";
       fsType = "btrfs";
       options = [ "compress-force=zstd:3" ];
     };
@@ -37,8 +37,9 @@
     };
 
   fileSystems."/mnt/d" =
-    { device = "/dev/disk/by-id/ata-ST2000DM006-2DM164_Z4Z8WDL5-part1";
-      fsType = "ntfs-3g";
+    { device = "/dev/disk/by-id/ata-ST2000DM006-2DM164_Z4Z8WDL5-part2";
+      fsType = "btrfs";
+      options = [ "compress-force=zstd:3" ];
     };
 
 
