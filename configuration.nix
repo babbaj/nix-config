@@ -305,6 +305,7 @@ in
     lepton
     unzip
     p7zip
+    unrar
     gparted
     htop
     rlwrap
@@ -326,6 +327,7 @@ in
     handbrake
     jdk8
     ghidra-bin
+    depotdownloader
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

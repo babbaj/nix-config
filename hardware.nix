@@ -17,7 +17,7 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/9188-860B";
+    { device = "/dev/disk/by-id/nvme-ADATA_SX8200PNP_2K22292H74YA-part2";
       fsType = "vfat";
     };
   
