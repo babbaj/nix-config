@@ -34,6 +34,10 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ pkgs.linuxPackages_5_10.v4l2loopback ];
+  boot.extraModprobeConfig = ''
+    options v4l2loopback exclusive_caps=1 video_nr=9 card_label="OBS Virtual Output"
+  '';
   boot.initrd.availableKernelModules = [ "vfio-pci" ];
   # pci ids are probably not necessary anymore
   boot.kernelParams = [ "default_hugepagesz=1G" "hugepagesz=1G" "amd_iommu=on" "iommu=1" "kvm.ignore_msrs=1" "kvm_amd.npt=1" "kvm_amd.avic=1" "vfio-pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de:1ad9" ];
@@ -103,6 +107,7 @@ in
 
   networking.extraHosts = ''
     127.0.0.1 babbaj.proxy.localhost
+    23.156.128.112 2b2t.org
   '';
 
   # Set your time zone.
@@ -198,31 +203,19 @@ in
       (self: super:
         {
           # override with newer version from nixpkgs-unstable
-          jetbrains.idea-ultimate = unstable.jetbrains.idea-ultimate;
-          jetbrains.clion = unstable.jetbrains.clion;
-          jetbrains.goland = unstable.jetbrains.goland;
-          jetbrains.rider = unstable.jetbrains.rider;
-          obs-studio = unstable.obs-studio;
-   
-          libratbag = unstable.libratbag; # 0.15 required for logitech g203
-
-          oraclejdk = unstable.oraclejdk;
-
-          looking-glass-client = pkgs.callPackage ./looking-glass.nix {};
-
-          discord = master.discord;
-          wine = unstable.wine;
+          discord = master.discord; # get updates asap
+          steam = master.steam;
 
           openvpn = stable.openvpn; # openvpn 2.5 is broken with pia
+
+          looking-glass-client = pkgs.callPackage ./looking-glass.nix {};
 
           qemu = super.qemu.overrideAttrs (old: rec {
             patches = (old.patches or []) ++ [
              #./0001-Disable-input-grab-on-startup.patch
              ./0001-cringe-input-patch.patch
             ];
-          });
-
-          gb-backup = unstable.gb-backup;
+          });    
         })
     ];
   };
@@ -301,7 +294,6 @@ in
     iperf
     gnome3.networkmanagerapplet
     psmisc # future installer requires killall
-    linuxPackages.v4l2loopback
     lepton
     unzip
     p7zip
@@ -328,6 +320,11 @@ in
     jdk8
     ghidra-bin
     depotdownloader
+    file
+    qtcreator
+    gdb
+    backblaze-b2
+    nvtop
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -369,7 +366,6 @@ in
       programs.obs-studio = {
         enable = true;
         plugins = with pkgs; [
-          obs-v4l2sink
           #obs-v4l2loopback
           #obs-move-transition
         ];
