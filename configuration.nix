@@ -332,7 +332,6 @@ in
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "libvirtd" "input" ]; # Enable ‘sudo’ for the user.
   };
-  
 
   home-manager = {
     users.babbaj = {
@@ -362,14 +361,6 @@ in
 
       services.gpg-agent.enable = true;
       services.gpg-agent.pinentryFlavor = "gnome3";
-
-      programs.obs-studio = {
-        enable = true;
-        plugins = with pkgs; [
-          #obs-v4l2loopback
-          #obs-move-transition
-        ];
-      };
 
       programs.bash = {
         enable = true;
