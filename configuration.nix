@@ -140,6 +140,7 @@ in
   services.xserver.screenSection = ''
     Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
   '';
+  services.xserver.libinput.mouse.middleEmulation = false; # worst troll ever
 
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
@@ -228,7 +229,7 @@ in
       desktopName = "Looking Glass Client";
       type = "Application";
       icon = "${pkgs.looking-glass-client.src}/resources/lg-logo.png";
-      exec = "${pkgs.looking-glass-client}/bin/looking-glass-client input:grabKeyboardOnFocus spice:alwaysShowCursor";
+      exec = "${pkgs.looking-glass-client}/bin/looking-glass-client input:grabKeyboardOnFocus spice:alwaysShowCursor input:rawMouse";
       terminal = "true";
     };
   in with pkgs; [
