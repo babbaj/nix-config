@@ -102,7 +102,7 @@ in
   #  wantedBy = [ "gnome-session-initialized.target" ];
   #};
 
-  networking.hostName = "gamer"; # Define your hostname.
+  networking.hostName = "nixos"; # Define your hostname.
   networking.hostId = "d5794eb2"; # ZFS requires this
 
   networking.extraHosts = ''
@@ -244,7 +244,12 @@ in
     vlc
     wireguard
     qbittorrent
-    obs-studio
+    (wrapOBS {
+      plugins = with obs-studio-plugins; [
+        (pkgs.callPackage ./pkgs/looking-glass/obs-plugin.nix {})
+        wlrobs
+      ];
+    })
     minecraft
     multimc
     steam
@@ -294,6 +299,7 @@ in
     iotop
     iperf
     gnome3.networkmanagerapplet
+    gnome.gnome-tweaks
     psmisc # future installer requires killall
     lepton
     unzip

@@ -1,8 +1,3 @@
-*
-!.gitignore
-!0001-Allow-sudo.patch
-!0001-Disable-input-grab-on-startup.patch
-!0001-cringe-input-patch.patch
-!configuration.nix
-!hardware.nix
-!looking-glass.nix
+home-manager/*
+secret.nix
+result
