@@ -209,7 +209,7 @@ in
 
           openvpn = stable.openvpn; # openvpn 2.5 is broken with pia
 
-          looking-glass-client = pkgs.callPackage ./looking-glass.nix {};
+          looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix {};
 
           qemu = super.qemu.overrideAttrs (old: rec {
             patches = (old.patches or []) ++ [
@@ -220,7 +220,6 @@ in
         })
     ];
   };
-  
 
   environment.systemPackages = 
   let
@@ -232,6 +231,8 @@ in
       exec = "${pkgs.looking-glass-client}/bin/looking-glass-client input:grabKeyboardOnFocus spice:alwaysShowCursor input:rawMouse";
       terminal = "true";
     };
+
+    looking-glass-obs = pkgs.callPackage ./pkgs/looking-glass/obs-plugin.nix {};
   in with pkgs; [
     looking_glass_desktop
 
@@ -246,8 +247,7 @@ in
     qbittorrent
     (wrapOBS {
       plugins = with obs-studio-plugins; [
-        (pkgs.callPackage ./pkgs/looking-glass/obs-plugin.nix {})
-        wlrobs
+        looking-glass-obs
       ];
     })
     minecraft

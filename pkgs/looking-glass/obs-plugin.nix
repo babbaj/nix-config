@@ -20,8 +20,9 @@ stdenv.mkDerivation {
 
     NIX_CFLAGS_COMPILE = "-mavx";
 
+    # looking-glass does the installation incorrectly
     installPhase = ''
-        mkdir -p $out/lib/obs-plugins
-        mv liblooking-glass-obs.so $out/lib/obs-plugins
+        mkdir -p $out/lib/obs-plugins/
+        mv liblooking-glass-obs.so $out/lib/obs-plugins/
     '';
 }

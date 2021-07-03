@@ -11,8 +11,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "gnif";
     repo = "LookingGlass";
-    rev = "d385b49f5fe869ac746f59bcde35fa619af59ed5"; # June 28
-    sha256 = "0s79xypr7aj0lqz6c3gzl52aj61fa93bh6xddwa76r6v6m9gzla2";
+    rev = "d82f2e510d4910be7455e1497a7917a6d2d64f97"; # July 2
+    sha256 = "17gg5f5vsvg5mmwpx6gcwwyz0hazp7a2gf4vj9dbkalqvnk0qxxg";
     fetchSubmodules =  true;
   };
 
@@ -36,11 +36,6 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   sourceRoot = "source/client";
-
-  installPhase = ''
-    mkdir -p $out/bin
-    mv looking-glass-client $out/bin/
-  '';
 
   meta = with lib; {
     description = "A KVM Frame Relay (KVMFR) implementation";
