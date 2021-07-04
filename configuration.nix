@@ -76,20 +76,6 @@ in
     };
   };
 
-
-  #systemd.user.services.scream = {
-  #  enable = true;
-  #  description = "Scream";
-  #  serviceConfig = {
-  #    ExecStart = "${pkgs.scream-receivers}/bin/scream-alsa -i virbr0";
-  #    Restart = "always";
-  #    RestartSec = "5";
-  #  };
-  #
-  #  wantedBy = [ "default.target" ];
-  #  requires = [ "pulseaudio.service" ];
-  #};
-
   networking.firewall.interfaces.virbr0.allowedUDPPorts = [ 4010 ]; # scream
 
   services.udev.extraRules = ''

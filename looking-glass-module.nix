@@ -393,7 +393,7 @@ in
         environment.etc =
         let
         config = cleanup cfg.config;
-        in mkIf (!isAttrsEmpty config) { # Don't generate an empty file
+        in mkIf (!isAttrsEmpty config || cfg.extraConfig != "") { # Don't generate an empty file
             "looking-glass-client.ini" = {
                 text = (generators.toINI {} config) + "\n" + cfg.extraConfig;
                 mode = "0444";
