@@ -1,10 +1,19 @@
-{ stdenv, lib, fetchFromGitHub, fetchpatch
+{ stdenv, lib, fetchFromGitHub, fetchpatch, makeDesktopItem
 , cmake, pkgconfig, SDL2, SDL, SDL2_ttf, openssl, spice-protocol, fontconfig
 , libX11, freefont_ttf, nettle, libconfig, wayland, libpthreadstubs, libXdmcp
 , libXfixes, libbfd
 , libXi, libXScrnSaver, libXinerama
 }:
-
+let
+  desktopItem = makeDesktopItem {
+    name = "looking-glass-client";
+    desktopName = "Looking Glass Client";
+    type = "Application";
+    exec = "looking-glass-client";
+    icon = "lg-logo";
+    terminal = true;
+  };
+in
 stdenv.mkDerivation rec {
   pname = "looking-glass-client";
   version = "master";
@@ -36,6 +45,12 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   sourceRoot = "source/client";
+
+  postInstall = ''
+    mkdir -p $out/share/pixmaps
+    ln -s ${desktopItem}/share/applications $out/share/
+    cp ../../resources/lg-logo.png $out/share/pixmaps
+  '';
 
   meta = with lib; {
     description = "A KVM Frame Relay (KVMFR) implementation";

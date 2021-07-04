@@ -6,33 +6,35 @@ let
     cleanup = set: attrsets.filterAttrs (n: v: !(isAttrsEmpty v)) (attrsets.filterAttrsRecursive (name: v: v != null) set);
 
     cfg = config.looking-glass;
-
-    looking-glass-desktop = { args, terminal, package }: pkgs.makeDesktopItem {
-      name = "looking-glass-client";
-      desktopName = "Looking Glass Client";
-      type = "Application";
-      icon = "${package.src}/resources/lg-logo.png";
-      exec = "${package}/bin/looking-glass-client ${toString args}";
-      terminal = terminal;
-    };
 in
 {
     options.looking-glass = {
         enable = mkEnableOption "looking-glass module";
         package = mkOption {
-            type = types.nullOr types.package;
+            type = types.package;
             default = pkgs.looking-glass-client;
         };
-        desktopItem = {
-            arguments = mkOption {
-                type = types.nullOr (types.listOf types.str);
-                description = "List of arguments to the executable";
-                default = [];
+
+        shm = {
+            name = mkOption {
+                type = types.str;
+                description = "Name of shared memory file";
+                default = "looking-glass";
             };
-            terminal = mkOption {
-                type = types.nullOr lib.types.bool;
-                description = "Open a terminal for console output";
-                default = true;
+            user = mkOption {
+                type = types.str;
+                description = "User of shared memory file";
+                default = "1000";
+            };
+            group = mkOption {
+                type = types.str;
+                description = "Group of shared memory file";
+                default = "libvirtd";
+            };
+            permissions = mkOption {
+                type = types.str;
+                description = "Permission bits for shared memory file";
+                default = "0660";
             };
         };
 
@@ -381,21 +383,20 @@ in
     };
 
     config = mkIf cfg.enable {
-        environment.systemPackages = with cfg.desktopItem; [ 
-            (looking-glass-desktop { args = arguments; inherit terminal; package = cfg.package; })
+        environment.systemPackages = [ 
             cfg.package
         ];
 
-        systemd.tmpfiles.rules = [
-            "f /dev/shm/looking-glass 0666 1000 qemu-libvirtd -" # TODO: make this more configurable
+        systemd.tmpfiles.rules = with cfg.shm; [
+            "f /dev/shm/${name} ${permissions} ${user} ${group} -"
         ];
 
         environment.etc =
         let
-        config = cleanup cfg.config;
-        in mkIf (!isAttrsEmpty config || cfg.extraConfig != "") { # Don't generate an empty file
+        iniConfig = cleanup cfg.config;
+        in mkIf (!isAttrsEmpty iniConfig || cfg.extraConfig != "") { # Don't generate an empty file
             "looking-glass-client.ini" = {
-                text = (generators.toINI {} config) + "\n" + cfg.extraConfig;
+                text = (generators.toINI {} iniConfig) + "\n" + cfg.extraConfig;
                 mode = "0444";
             };
         };
