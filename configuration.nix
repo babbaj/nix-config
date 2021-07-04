@@ -67,8 +67,12 @@ in
   looking-glass = {
     enable = true;
 
-    desktopItem = {
-      arguments = [ "input:grabKeyboardOnFocus" "spice:alwaysShowCursor" "input:rawMouse" ];
+    config = {
+      input = {
+        grabKeyboardOnFocus = true;
+        rawMouse = true;
+      };
+      spice.alwaysShowCursor = true;
     };
   };
 
