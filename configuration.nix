@@ -19,6 +19,8 @@ in
       # Everything that isn't public
       ./secret.nix
 
+      ./looking-glass-module.nix
+
       # Home-manager
       <home-manager/nixos>
 
@@ -62,9 +64,13 @@ in
     onShutdown = "shutdown";
   };
 
-  systemd.tmpfiles.rules = [
-    "f /dev/shm/looking-glass 0666 babbaj qemu-libvirtd -"
-  ];
+  looking-glass = {
+    enable = true;
+
+    desktopItem = {
+      arguments = [ "input:grabKeyboardOnFocus" "spice:alwaysShowCursor" "input:rawMouse" ];
+    };
+  };
 
 
   #systemd.user.services.scream = {
@@ -223,21 +229,9 @@ in
 
   environment.systemPackages = 
   let
-    looking_glass_desktop = pkgs.makeDesktopItem {
-      name = "looking-glass-client";
-      desktopName = "Looking Glass Client";
-      type = "Application";
-      icon = "${pkgs.looking-glass-client.src}/resources/lg-logo.png";
-      exec = "${pkgs.looking-glass-client}/bin/looking-glass-client input:grabKeyboardOnFocus spice:alwaysShowCursor input:rawMouse";
-      terminal = "true";
-    };
-
     looking-glass-obs = pkgs.callPackage ./pkgs/looking-glass/obs-plugin.nix {};
   in with pkgs; [
-    looking_glass_desktop
-
     coreutils
-    looking-glass-client
     jetbrains.idea-ultimate
     jetbrains.clion
     jetbrains.goland
