@@ -42,8 +42,6 @@ stdenv.mkDerivation rec {
     ./0001-Allow-sudo.patch
   ];
 
-  enableParallelBuilding = true;
-
   sourceRoot = "source/client";
 
   postInstall = ''
@@ -61,9 +59,9 @@ stdenv.mkDerivation rec {
       step required to move away from dual booting with other operating systems
       for legacy programs that require high performance graphics.
     '';
-    homepage = "https://looking-glass.hostfission.com/";
+    homepage = "https://looking-glass.io/";
     license = licenses.gpl2Plus;
-    maintainers = [ maintainers.alexbakker ];
+    maintainers = with maintainers; [ alexbakker ];
     platforms = [ "x86_64-linux" ];
   };
 }
