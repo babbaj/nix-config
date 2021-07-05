@@ -40,17 +40,8 @@ in
   boot.extraModprobeConfig = ''
     options v4l2loopback exclusive_caps=1 video_nr=9 card_label="OBS Virtual Output"
   '';
-  boot.initrd.availableKernelModules = [ "vfio-pci" ];
-  # pci ids are probably not necessary anymore
+  boot.initrd.kernelModules = [ "vfio-pci" ];
   boot.kernelParams = [ "default_hugepagesz=1G" "hugepagesz=1G" "amd_iommu=on" "iommu=1" "kvm.ignore_msrs=1" "kvm_amd.npt=1" "kvm_amd.avic=1" "vfio-pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de:1ad9" ];
-  
-  boot.initrd.preDeviceCommands = ''
-    DEVS="0000:28:00.0 0000:28:00.1 0000:28:00.2 0000:28:00.3"
-    for DEV in $DEVS; do
-      echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
-    done
-    modprobe -i vfio-pci
-  '';  
   
   security.pam.loginLimits = [
     { domain = "*"; item = "memlock"; type = "-"; value = "unlimited"; } # unlimited memory limit for vm
