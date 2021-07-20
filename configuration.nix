@@ -35,7 +35,7 @@ in
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelModules = [ "kvm-amd" "v4l2loopback" ];
+  boot.kernelModules = [ "kvm-amd" "v4l2loopback" "snd_aloop" ];
   boot.extraModulePackages = [ pkgs.linuxPackages_5_10.v4l2loopback ];
   boot.extraModprobeConfig = ''
     options v4l2loopback exclusive_caps=1 video_nr=9 card_label="OBS Virtual Output"
@@ -57,19 +57,18 @@ in
     onShutdown = "shutdown";
   };
 
-  looking-glass = {
+  programs.looking-glass = {
     enable = true;
 
-    config = {
+    settings = {
       input = {
         grabKeyboardOnFocus = true;
         rawMouse = true;
       };
       spice.alwaysShowCursor = true;
+      win.fullScreen = true;
     };
   };
-
-  networking.firewall.interfaces.virbr0.allowedUDPPorts = [ 4010 ]; # scream
 
   services.udev.extraRules = ''
     # Unprivileged nvme access
@@ -81,13 +80,12 @@ in
   boot.supportedFilesystems = [ "zfs" ];
 
   #systemd.user.services.obs-replay = {
-  #  enable = true;
   #  description = "OBS Replay";
   #  serviceConfig = {
-  #    Type = "oneshot";
+  #    Type = "simple";
   #    ExecStart = "${pkgs.obs-studio}/bin/obs --startreplaybuffer";
   #  };
-  #
+  # 
   #  wantedBy = [ "gnome-session-initialized.target" ];
   #};
 
@@ -211,9 +209,7 @@ in
   };
 
   environment.systemPackages = 
-  let
-    looking-glass-obs = pkgs.callPackage ./pkgs/looking-glass/obs-plugin.nix {};
-  in with pkgs; [
+  with pkgs; [
     coreutils
     jetbrains.idea-ultimate
     jetbrains.clion
@@ -309,6 +305,8 @@ in
     gdb
     backblaze-b2
     nvtop
+    valgrind
+    mpv
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

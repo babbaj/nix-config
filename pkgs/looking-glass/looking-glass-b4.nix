@@ -16,13 +16,13 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "looking-glass-client";
-  version = "bleeding-edge";
+  version = "B4";
 
   src = fetchFromGitHub {
     owner = "gnif";
     repo = "LookingGlass";
-    rev = "e4e1451eaa20174a5e75f962b246181b37197840";
-    sha256 = "0nzmwfnfi1hxqm3m9iyaiyz3k5q83v5hh34mvwyrp1jck71v3gaf";
+    rev = version;
+    sha256 = "0fwmz0l1dcfwklgvxmv0galgj2q3nss90kc3jwgf6n80x27rsnhf";
     fetchSubmodules = true;
   };
 
@@ -37,12 +37,8 @@ stdenv.mkDerivation rec {
 
   NIX_CFLAGS_COMPILE = "-mavx"; # Fix some sort of AVX compiler problem.
 
-  patches = [
-    ./0001-Allow-sudo.patch
-  ];
-
   postUnpack = ''
-    echo ${src.rev} > source/VERSION
+    echo $version > source/VERSION
     export sourceRoot="source/client"
   '';
 
