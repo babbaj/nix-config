@@ -23,12 +23,7 @@ in
 
       # Home-manager
       <home-manager/nixos>
-
-      #"${builtins.fetchTarball "https://github.com/danielfullmer/nixos-config/archive/2aad9c4254b4372488606b0d0ebf4b89fbd26042.tar.gz"}/modules/nvidia-vgpu"
     ];
-
-  #hardware.nvidia.vgpu.enable = true;
-  #hardware.nvidia.vgpu.unlock.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_5_10;
 
@@ -44,6 +39,13 @@ in
   boot.kernelParams = 
     [ "default_hugepagesz=1G" "hugepagesz=1G" "amd_iommu=on" "iommu=1" "kvm.ignore_msrs=1" "kvm_amd.npt=1" "kvm_amd.avic=1" "vfio-pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de:1ad9" ]
     ++ [ "noibrs" "noibpb" "nopti" "nospectre_v2" "nospectre_v1" "l1tf=off" "nospec_store_bypass_disable" "no_stf_barrier" "mds=off" "tsx=on" "tsx_async_abort=off" "mitigations=off" ]; # make-linux-fast-again.com
+
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable.overrideAttrs ({preFixup ? "", ...}: {
+    preFixup = preFixup + ''
+      sed -i 's/\x83\xfe\x01\x73\x08\x48/\x83\xfe\x00\x72\x08\x48/' $out/lib/libnvidia-fbc.so.460.73.01
+    '';
+  });
+
   
   security.pam.loginLimits = [
     { domain = "*"; item = "memlock"; type = "-"; value = "unlimited"; } # unlimited memory limit for vm
@@ -203,7 +205,7 @@ in
              #./0001-Disable-input-grab-on-startup.patch
              ./0001-cringe-input-patch.patch
             ];
-          });    
+          });
         })
     ];
   };
@@ -221,6 +223,7 @@ in
     (wrapOBS {
       plugins = with obs-studio-plugins; [
         looking-glass-obs
+        (pkgs.callPackage ./pkgs/obs-nvfbc/obs-nvfbc.nix {})
       ];
     })
     minecraft
@@ -307,6 +310,7 @@ in
     nvtop
     valgrind
     mpv
+    asciinema
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
