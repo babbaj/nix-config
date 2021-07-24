@@ -148,14 +148,27 @@ in
   services.ratbagd.enable = true;
 
 
-  # Garbage Collection
-  nix = {
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 30d";
+
+  systemd.user.services.wal-rsync = rec {
+    description = "rsync wal logs ${startAt}";
+    startAt = "hourly";
+
+    serviceConfig = {
+      ExecStart = "${pkgs.rsync}/bin/rsync -av --progress -e '${pkgs.openssh}/bin/ssh' --delete f:/opt/postgres/wal/ /mnt/h/postgreswal/";
     };
-    autoOptimiseStore = true;
+  };
+
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_12;
+    enableTCPIP = false;
+    dataDir = "/opt/postgres/base/data";
+    settings = {
+      restore_command = "${pkgs.gzip}/bin/gzip -d < /mnt/h/postgreswal/%f.gz > %p";
+      hot_standby = "on";
+      max_standby_archive_delay = "-1";
+      max_standby_streaming_delay = "-1";
+    };
   };
 
 
@@ -185,6 +198,16 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.09"; # Did you read the comment?
+
+  # Garbage Collection
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
+    autoOptimiseStore = true;
+  };
 
   nixpkgs = {
     config = {
