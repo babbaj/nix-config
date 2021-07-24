@@ -118,7 +118,10 @@ in
   };
 
   programs.steam.enable = true;
-  programs.java.enable = true;
+  programs.java = {
+    enable = true;
+    package = pkgs.jdk8;
+  };
   programs.gnupg.agent.enable = true;
   virtualisation.docker.enable = true;
   #programs.networkmanager.enable = true;
@@ -300,7 +303,6 @@ in
     gb-backup
     xclip xsel
     handbrake
-    jdk8
     ghidra-bin
     depotdownloader
     file
