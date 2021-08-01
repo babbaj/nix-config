@@ -30,4 +30,11 @@
         win.fullScreen = true;
     };
   };
+
+  services.udev.extraRules = ''
+    # Unprivileged nvme access
+    ATTR{wwid}=="eui.0025385b01421a07", SUBSYSTEM=="block", OWNER="babbaj"
+    KERNEL=="sd*",  SUBSYSTEM=="block", OWNER="babbaj"
+    SUBSYSTEM=="vfio", OWNER="babbaj"
+  '';
 }
