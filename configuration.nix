@@ -19,6 +19,8 @@ in
       # Everything that isn't public
       ./secret.nix
 
+      ./vm-setup.nix
+
       ./looking-glass-module.nix
 
       # Home-manager
@@ -30,54 +32,21 @@ in
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelModules = [ "kvm-amd" "v4l2loopback" "snd_aloop" ];
+  boot.kernelModules = [ "v4l2loopback" "snd_aloop" ];
   boot.extraModulePackages = [ pkgs.linuxPackages_5_10.v4l2loopback ];
   boot.extraModprobeConfig = ''
     options v4l2loopback exclusive_caps=1 video_nr=9 card_label="OBS Virtual Output"
   '';
   boot.initrd.kernelModules = [ "vfio-pci" ];
-  boot.kernelParams = 
-    [ "default_hugepagesz=1G" "hugepagesz=1G" "amd_iommu=on" "iommu=1" "kvm.ignore_msrs=1" "kvm_amd.npt=1" "kvm_amd.avic=1" "vfio-pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de:1ad9" ]
-    ++ [ "noibrs" "noibpb" "nopti" "nospectre_v2" "nospectre_v1" "l1tf=off" "nospec_store_bypass_disable" "no_stf_barrier" "mds=off" "tsx=on" "tsx_async_abort=off" "mitigations=off" ]; # make-linux-fast-again.com
+  boot.kernelParams = [ "noibrs" "noibpb" "nopti" "nospectre_v2" "nospectre_v1" "l1tf=off" "nospec_store_bypass_disable" "no_stf_barrier" "mds=off" "tsx=on" "tsx_async_abort=off" "mitigations=off" ]; # make-linux-fast-again.com
 
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable.overrideAttrs ({preFixup ? "", ...}: {
-    preFixup = preFixup + ''
-      sed -i 's/\x83\xfe\x01\x73\x08\x48/\x83\xfe\x00\x72\x08\x48/' $out/lib/libnvidia-fbc.so.460.73.01
-    '';
-  });
+  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable.overrideAttrs ({preFixup ? "", ...}: {
+  #  preFixup = preFixup + ''
+  #    sed -i 's/\x83\xfe\x01\x73\x08\x48/\x83\xfe\x00\x72\x08\x48/' $out/lib/libnvidia-fbc.so.460.73.01
+  #  '';
+  #});
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
 
-  
-  security.pam.loginLimits = [
-    { domain = "*"; item = "memlock"; type = "-"; value = "unlimited"; } # unlimited memory limit for vm
-  ];
-
-  virtualisation.libvirtd = {
-    enable = true;
-    qemuOvmf = true;
-    qemuRunAsRoot = false;
-    onBoot = "ignore";
-    onShutdown = "shutdown";
-  };
-
-  programs.looking-glass = {
-    enable = true;
-
-    settings = {
-      input = {
-        grabKeyboardOnFocus = true;
-        rawMouse = true;
-      };
-      spice.alwaysShowCursor = true;
-      win.fullScreen = true;
-    };
-  };
-
-  services.udev.extraRules = ''
-    # Unprivileged nvme access
-    ATTR{wwid}=="eui.0025385b01421a07", SUBSYSTEM=="block", OWNER="babbaj"
-    KERNEL=="sd*",  SUBSYSTEM=="block", OWNER="babbaj"
-    SUBSYSTEM=="vfio", OWNER="babbaj"
-  '';
   
   boot.supportedFilesystems = [ "zfs" ];
 
@@ -146,8 +115,6 @@ in
   hardware.pulseaudio.enable = true;
 
   services.ratbagd.enable = true;
-
-
 
   systemd.user.services.wal-rsync = rec {
     description = "rsync wal logs ${startAt}";
@@ -218,7 +185,6 @@ in
     overlays = [
       (self: super:
         {
-          # override with newer version from nixpkgs-unstable
           discord = master.discord; # get updates asap
           steam = master.steam;
 
@@ -226,8 +192,8 @@ in
 
           looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix {};
 
-          qemu = super.qemu.overrideAttrs (old: rec {
-            patches = (old.patches or []) ++ [
+          qemu = super.qemu.overrideAttrs ({patches ? [], ...}: {
+            patches = patches ++ [
              #./0001-Disable-input-grab-on-startup.patch
              ./0001-cringe-input-patch.patch
             ];

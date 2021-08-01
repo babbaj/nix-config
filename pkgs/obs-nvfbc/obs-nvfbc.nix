@@ -1,16 +1,25 @@
-{ stdenv, lib, meson, ninja, pkg-config, obs-studio, mesa, libGL, libX11, fetchFromGitLab }:
+{ stdenv, lib, fetchFromGitLab, meson, ninja, pkg-config
+, obs-studio, libGL, libX11
+}:
 
 stdenv.mkDerivation {
-    pname = "obs-nvfbc";
-    version = "master";
+  pname = "obs-nvfbc";
+  version = "0.0.3";
 
-    src = fetchFromGitLab {
-        owner = "fzwoch";
-        repo = "obs-nvfbc";
-        rev = "010234f2f8cf5bed3fb0711275544441097173aa";
-        sha256 = "0zyvks6gc6fr0a1j5b4y20rcx6ah35v6yiz05f6g3x6bhqi92l33";
-    };
+  src = fetchFromGitLab {
+    owner = "fzwoch";
+    repo = "obs-nvfbc";
+    rev = "v0.0.3";
+    sha256 = "0zyvks6gc6fr0a1j5b4y20rcx6ah35v6yiz05f6g3x6bhqi92l33";
+  };
 
-    nativeBuildInputs = [ meson pkg-config ninja ];
-    buildInputs = [ obs-studio mesa libGL libX11 ];
+  nativeBuildInputs = [ meson pkg-config ninja ];
+  buildInputs = [ obs-studio libGL libX11 ];
+
+  meta = with lib; {
+    description = "OBS Studio source plugin for NVIDIA FBC API";
+    license = licenses.gpl2Only;
+    maintainers = with maintainers; [ babbaj ];
+    platforms = [ "x86_64-linux" ];
+  };
 }
