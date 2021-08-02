@@ -40,14 +40,13 @@ in
   boot.initrd.kernelModules = [ "vfio-pci" ];
   boot.kernelParams = [ "noibrs" "noibpb" "nopti" "nospectre_v2" "nospectre_v1" "l1tf=off" "nospec_store_bypass_disable" "no_stf_barrier" "mds=off" "tsx=on" "tsx_async_abort=off" "mitigations=off" ]; # make-linux-fast-again.com
 
-  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable.overrideAttrs ({preFixup ? "", ...}: {
-  #  preFixup = preFixup + ''
-  #    sed -i 's/\x83\xfe\x01\x73\x08\x48/\x83\xfe\x00\x72\x08\x48/' $out/lib/libnvidia-fbc.so.460.73.01
-  #  '';
-  #});
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable.overrideAttrs ({preFixup ? "", ...}: {
+    preFixup = preFixup + ''
+      sed -i 's/\x83\xfe\x01\x73\x08\x48/\x83\xfe\x00\x72\x08\x48/' $out/lib/libnvidia-fbc.so.460.73.01
+    '';
+  });
+  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
 
-  
   boot.supportedFilesystems = [ "zfs" ];
 
   #systemd.user.services.obs-replay = {
@@ -109,6 +108,7 @@ in
 
   # Configure keymap in X11
   services.xserver.layout = "us";
+
 
   # Enable sound.
   sound.enable = true;
