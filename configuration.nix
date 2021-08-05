@@ -42,7 +42,8 @@ in
 
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable.overrideAttrs ({preFixup ? "", ...}: {
     preFixup = preFixup + ''
-      sed -i 's/\x83\xfe\x01\x73\x08\x48/\x83\xfe\x00\x72\x08\x48/' $out/lib/libnvidia-fbc.so.460.73.01
+      #sed -i 's/\x83\xfe\x01\x73\x08\x48/\x83\xfe\x00\x72\x08\x48/' $out/lib/libnvidia-fbc.so.460.73.01
+      sed -i 's/\x83\xfe\x01\x73\x08\x48/\x83\xfe\x00\x72\x08\x48/' $out/lib/libnvidia-fbc.so.470.57.02
     '';
   });
   #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
@@ -185,7 +186,8 @@ in
     overlays = [
       (self: super:
         {
-          discord = master.discord; # get updates asap
+          # get updates asap
+          discord = master.discord;
           steam = master.steam;
 
           openvpn = stable.openvpn; # openvpn 2.5 is broken with pia

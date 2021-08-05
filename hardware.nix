@@ -13,7 +13,7 @@
   fileSystems."/" =
     { device = "/dev/disk/by-id/nvme-ADATA_SX8200PNP_2K22292H74YA-part1";
       fsType = "btrfs";
-      options = [ "compress-force=zstd:3" "noatime" "space_cache=v2" ];
+      options = [ "compress-force=zstd:3" "noatime" "space_cache=v2" "autodefrag" ];
     };
 
   fileSystems."/boot" =
@@ -43,6 +43,5 @@
     };
 
 
-  # no need :sunglasses:
-  swapDevices = [ ];
+  swapDevices = [ { device = "/dev/disk/by-id/nvme-ADATA_SX8200PNP_2K22292H74YA-part3"; } ];
 }

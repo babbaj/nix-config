@@ -30,6 +30,7 @@
           fullScreen = true;
           jitRender = true;
         };
+        egl.vsync = true;
     };
   };
 
