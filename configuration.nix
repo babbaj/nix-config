@@ -10,6 +10,8 @@ let
   unstable = import <nixos-unstable> { config = baseconfig; }; # TODO: remove
   master = import <master> { config = baseconfig; };
   stable = import <nixos-stable> { config = baseconfig; }; # 20.09
+
+  patchDriver = import ./nvfbc-unlock.nix;
 in
 {
   imports =
@@ -40,12 +42,8 @@ in
   boot.initrd.kernelModules = [ "vfio-pci" ];
   boot.kernelParams = [ "noibrs" "noibpb" "nopti" "nospectre_v2" "nospectre_v1" "l1tf=off" "nospec_store_bypass_disable" "no_stf_barrier" "mds=off" "tsx=on" "tsx_async_abort=off" "mitigations=off" ]; # make-linux-fast-again.com
 
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable.overrideAttrs ({preFixup ? "", ...}: {
-    preFixup = preFixup + ''
-      #sed -i 's/\x83\xfe\x01\x73\x08\x48/\x83\xfe\x00\x72\x08\x48/' $out/lib/libnvidia-fbc.so.460.73.01
-      sed -i 's/\x83\xfe\x01\x73\x08\x48/\x83\xfe\x00\x72\x08\x48/' $out/lib/libnvidia-fbc.so.470.57.02
-    '';
-  });
+  # https://github.com/keylase/nvidia-patch/blob/master/patch-fbc.sh
+  hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
   #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
 
   boot.supportedFilesystems = [ "zfs" ];
