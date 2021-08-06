@@ -215,7 +215,7 @@ in
     (wrapOBS {
       plugins = with obs-studio-plugins; [
         looking-glass-obs
-        (pkgs.callPackage ./pkgs/obs-nvfbc/obs-nvfbc.nix {})
+        obs-nvfbc
       ];
     })
     minecraft
