@@ -229,11 +229,10 @@ in
     go
     goimports
     virt-manager
-    libvirt
     git
-    gcc10
-    clang_11
-    llvm_11
+    clang_12
+    llvm_12
+    gcc11
     compsize
     tdesktop
     sqlite-interactive
@@ -251,12 +250,10 @@ in
     neofetch
     gnupg
     flameshot
-    scream
     pavucontrol
     zoom-us
     qdirstat
     piper # for the mouse
-    libratbag
     direnv
     nix-direnv
     jq
@@ -277,7 +274,6 @@ in
     htop
     rlwrap
     wireshark
-    zfs
     mbuffer
     steam-run-native
     wine
