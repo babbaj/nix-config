@@ -108,10 +108,11 @@ in
   # Configure keymap in X11
   services.xserver.layout = "us";
 
-
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+
+  services.vaultwarden.enable = true;
 
   services.ratbagd.enable = true;
 
@@ -156,6 +157,7 @@ in
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+  networking.firewall.trustedInterfaces = [ "nocom" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -178,7 +180,6 @@ in
   nixpkgs = {
     config = {
       allowUnfree = true;
-      allowBroken = true;
     };
     
     overlays = [
@@ -192,11 +193,28 @@ in
 
           looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix {};
 
+          gb-backup = super.gb-backup.overrideAttrs ({...}: {
+            version = "master";
+            src = pkgs.fetchFromGitHub {
+              owner = "leijurv";
+              repo = "gb";
+              rev = "a58c0858130ed9da79653c7fc7c22148d46fd1ac"; # August 13
+              sha256 = "0c0qywsnwmadqhv29c5h8pgp7jf2r73rpdqk5rcl8p4yq4ps5vvn";
+            };
+          });
+
           qemu = super.qemu.overrideAttrs ({patches ? [], ...}: {
             patches = patches ++ [
              #./0001-Disable-input-grab-on-startup.patch
              ./0001-cringe-input-patch.patch
             ];
+          });
+
+          nix = super.nix.overrideAttrs ({...}: {
+              prePatch = ''
+                substituteInPlace src/nix-build/nix-build.cc \
+                  --replace 'pkgs.runCommandCC or pkgs.runCommand' 'pkgs.runCommand'
+              '';
           });
         })
     ];
@@ -298,6 +316,8 @@ in
     valgrind
     mpv
     asciinema
+    keepassxc
+    bitwarden
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
