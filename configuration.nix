@@ -7,7 +7,6 @@
 
 let
   baseconfig = { allowUnfree = true; };
-  unstable = import <nixos-unstable> { config = baseconfig; }; # TODO: remove
   master = import <master> { config = baseconfig; };
   stable = import <nixos-stable> { config = baseconfig; }; # 20.09
 
@@ -24,6 +23,8 @@ in
       ./vm-setup.nix
 
       ./looking-glass-module.nix
+
+      #./steam.nix
 
       # Home-manager
       <home-manager/nixos>
@@ -44,7 +45,6 @@ in
 
   # https://github.com/keylase/nvidia-patch/blob/master/patch-fbc.sh
   hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
-  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
 
   boot.supportedFilesystems = [ "zfs" ];
 
@@ -85,6 +85,7 @@ in
   };
 
   programs.steam.enable = true;
+
   programs.java = {
     enable = true;
     package = pkgs.jdk8;
@@ -108,6 +109,7 @@ in
   # Configure keymap in X11
   services.xserver.layout = "us";
 
+
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
@@ -115,6 +117,8 @@ in
   services.vaultwarden.enable = true;
 
   services.ratbagd.enable = true;
+
+  services.sshd.enable = true;
 
   systemd.user.services.wal-rsync = rec {
     description = "rsync wal logs ${startAt}";
@@ -158,6 +162,7 @@ in
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
   networking.firewall.trustedInterfaces = [ "nocom" ];
+  networking.firewall.logRefusedConnections = false; # this has been filling my logs with junk
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -187,7 +192,14 @@ in
         {
           # get updates asap
           discord = master.discord;
-          steam = master.steam;
+          steam = master.steam.override { 
+            extraProfile = ''
+              unset VK_ICD_FILENAMES
+              #export VK_ICD_FILENAMES=${config.hardware.nvidia.package}/share/vulkan/icd.d/nvidia_icd.json:${config.hardware.nvidia.package.lib32}/share/vulkan/icd.d/nvidia_icd32.json
+              export VK_ICD_FILENAMES=$(echo /run/opengl-driver{,-32}/share/vulkan/icd.d/* | tr ' ' ':'):/usr/share/vulkan/icd.d/intel_icd.x86_64.json:/usr/share/vulkan/icd.d/intel_icd.i686.json:/usr/share/vulkan/icd.d/lvp_icd.x86_64.json:/usr/share/vulkan/icd.d/lvp_icd.i686.json:/usr/share/vulkan/icd.d/nvidia_icd.json:/usr/share/vulkan/icd.d/nvidia_icd32.json:/usr/share/vulkan/icd.d/radeon_icd.x86_64.json:/usr/share/vulkan/icd.d/radeon_icd.i686.json
+            ''; 
+          };
+          
 
           openvpn = stable.openvpn; # openvpn 2.5 is broken with pia
 
@@ -198,8 +210,8 @@ in
             src = pkgs.fetchFromGitHub {
               owner = "leijurv";
               repo = "gb";
-              rev = "a58c0858130ed9da79653c7fc7c22148d46fd1ac"; # August 13
-              sha256 = "0c0qywsnwmadqhv29c5h8pgp7jf2r73rpdqk5rcl8p4yq4ps5vvn";
+              rev = "fa996208d06766bf523686fbe5831628130d80f7"; # August 16
+              sha256 = "1vggl8d69sf4z2lmixfndwwd6l9gi0fkkrxga7v4w7a7yr96b1vp";
             };
           });
 
@@ -259,7 +271,6 @@ in
     cmake
     gnumake
     pkg-config
-    docker
     docker-compose
     wget
     openssl
@@ -338,7 +349,7 @@ in
 
       programs.direnv = {
         enable = true;
-        enableNixDirenvIntegration = true;
+        nix-direnv.enable = true;
       };
 
       programs.git = {

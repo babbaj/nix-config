@@ -1,6 +1,6 @@
 { stdenv, lib, fetchFromGitHub, fetchpatch, makeDesktopItem, cmake, pkg-config
 , SDL, SDL2_ttf, freefont_ttf, spice-protocol, nettle, libbfd, fontconfig, libffi, expat
-, libXi, libXScrnSaver, libXinerama, libXcursor, libXpresent
+, libXi, libXScrnSaver, libXinerama, libXcursor, libXpresent, libxkbcommon
 , wayland, wayland-protocols
 }:
 
@@ -21,8 +21,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "gnif";
     repo = "LookingGlass";
-    rev = "03ed8b7304b6a6561a1d08b467d57cdcb89d1198"; # August 2
-    sha256 = "0x5sp6s1zlwv8n9l2jbi57iim9rbbpw42mwrklikl1ps1dcgbspl";
+    rev = "c3f7327187fbec8799f214ce2ce8b7ec4b98dcef"; # August 15
+    sha256 = "0i5mq3h7qd0qww9z00srkignx6yiigws3lqaagbbnr1byb8kj1ww";
     fetchSubmodules = true;
   };
 
@@ -32,6 +32,7 @@ stdenv.mkDerivation rec {
     SDL SDL2_ttf freefont_ttf spice-protocol
     libbfd nettle fontconfig libffi expat
     libXi libXScrnSaver libXinerama libXcursor libXpresent
+    libxkbcommon
     wayland wayland-protocols
   ];
 
