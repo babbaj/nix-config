@@ -42,11 +42,11 @@ in
   '';
   boot.initrd.kernelModules = [ "vfio-pci" ];
   boot.kernelParams = [ "noibrs" "noibpb" "nopti" "nospectre_v2" "nospectre_v1" "l1tf=off" "nospec_store_bypass_disable" "no_stf_barrier" "mds=off" "tsx=on" "tsx_async_abort=off" "mitigations=off" ]; # make-linux-fast-again.com
+  boot.supportedFilesystems = [ "zfs" ];
 
   # https://github.com/keylase/nvidia-patch/blob/master/patch-fbc.sh
   hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
 
-  boot.supportedFilesystems = [ "zfs" ];
 
   #systemd.user.services.obs-replay = {
   #  description = "OBS Replay";
@@ -75,6 +75,14 @@ in
   networking.useDHCP = false;
   networking.interfaces.enp34s0.useDHCP = true;
   networking.interfaces.wlp35s0.useDHCP = true;
+
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
+  networking.firewall.trustedInterfaces = [ "nocom" ];
+  networking.firewall.logRefusedConnections = false; # this has been filling my logs with junk
 
 
   # Select internationalisation properties.
@@ -155,14 +163,6 @@ in
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-  networking.firewall.trustedInterfaces = [ "nocom" ];
-  networking.firewall.logRefusedConnections = false; # this has been filling my logs with junk
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -335,7 +335,15 @@ in
     asciinema
     keepassxc
     bitwarden
+    cargo
+    rustc
+    rustup
   ];
+
+  # for intellij
+  environment.etc = with pkgs; {
+    "jdk8".source = jdk8;
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.babbaj = {
