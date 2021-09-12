@@ -1,7 +1,6 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, lib, pkgs, ... }:
 
 
@@ -66,21 +65,14 @@ in
     23.156.128.112 2b2t.org
   '';
 
-  # Set your time zone.
   time.timeZone = "America/New_York";
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
+
   networking.useDHCP = false;
   networking.interfaces.enp34s0.useDHCP = true;
   networking.interfaces.wlp35s0.useDHCP = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.networkmanager.enable = true;
   networking.firewall.trustedInterfaces = [ "nocom" ];
   networking.firewall.logRefusedConnections = false; # this has been filling my logs with junk
 
@@ -100,7 +92,6 @@ in
   };
   programs.gnupg.agent.enable = true;
   virtualisation.docker.enable = true;
-  #programs.networkmanager.enable = true;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -110,13 +101,20 @@ in
   '';
   services.xserver.libinput.mouse.middleEmulation = false; # worst troll ever
 
-  # Enable the GNOME 3 Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
+
   services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.windowManager.i3 = {
+    enable = true;
+    package = pkgs.i3-gaps;
+    extraSessionCommands = ''
+      ${pkgs.picom}/bin/picom &
+      ${pkgs.hsetroot}/bin/hsetroot -solid '#000000'
+    '';
+  };
 
   # Configure keymap in X11
   services.xserver.layout = "us";
-
 
   # Enable sound.
   sound.enable = true;
@@ -338,6 +336,8 @@ in
     cargo
     rustc
     rustup
+    droidcam
+    libsForQt5.dolphin
   ];
 
   # for intellij
@@ -394,6 +394,17 @@ in
 
         historyControl = [ "ignoredups" ];
       };
+
+      programs.alacritty = {
+        enable = true;
+
+        settings = {
+          #background_opacity = 0.9;
+          background_opacity = 0.5;
+        };
+      };
+
+      programs.fzf.enable = true;
     };
 
     useUserPackages = true;
