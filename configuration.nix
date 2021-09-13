@@ -107,6 +107,14 @@ in
   services.xserver.windowManager.i3 = {
     enable = true;
     package = pkgs.i3-gaps;
+    extraPackages = with pkgs; [
+      rofi
+      dmenu
+      i3status
+      i3lock
+      i3blocks
+      dunst
+    ];
     extraSessionCommands = ''
       ${pkgs.picom}/bin/picom &
       ${pkgs.hsetroot}/bin/hsetroot -solid '#000000'
@@ -125,6 +133,8 @@ in
   services.ratbagd.enable = true;
 
   services.sshd.enable = true;
+  
+  services.gnome.gnome-keyring.enable = true;
 
   systemd.user.services.wal-rsync = rec {
     description = "rsync wal logs ${startAt}";
@@ -338,6 +348,7 @@ in
     rustup
     droidcam
     libsForQt5.dolphin
+    nixfmt
   ];
 
   # for intellij
@@ -353,6 +364,8 @@ in
 
   home-manager = {
     users.babbaj = {
+      imports = [ ./i3.nix ];
+
       programs.ssh = {
         enable = true;
         matchBlocks.n = {
