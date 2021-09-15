@@ -67,7 +67,6 @@ in
 
   time.timeZone = "America/New_York";
 
-
   networking.useDHCP = false;
   networking.interfaces.enp34s0.useDHCP = true;
   networking.interfaces.wlp35s0.useDHCP = true;
@@ -94,31 +93,41 @@ in
   virtualisation.docker.enable = true;
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
-  services.xserver.screenSection = ''
-    Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
-  '';
-  services.xserver.libinput.mouse.middleEmulation = false; # worst troll ever
-
-  services.xserver.displayManager.gdm.enable = true;
-
-  services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.windowManager.i3 = {
+  services.xserver = {
     enable = true;
-    package = pkgs.i3-gaps;
-    extraPackages = with pkgs; [
-      rofi
-      dmenu
-      i3status
-      i3lock
-      i3blocks
-      dunst
-    ];
-    extraSessionCommands = ''
-      ${pkgs.picom}/bin/picom &
-      ${pkgs.hsetroot}/bin/hsetroot -solid '#000000'
+    videoDrivers = [ "nvidia" ];
+    screenSection = ''
+      Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
     '';
+    displayManager.setupCommands = '' # the code above usually doesn't work for some reason
+      nvidia-settings --assign CurrentMetaMode="HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
+    '';
+    xrandrHeads = [
+      {
+        output = "DP-0";
+        primary = true;
+      }
+    ];
+
+    libinput.mouse.middleEmulation = false; # worst troll ever
+
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+
+    windowManager.i3 = {
+      enable = true;
+      package = pkgs.i3-gaps;
+      extraPackages = with pkgs; [
+       rofi
+       dmenu
+       i3status
+       i3lock
+      ];
+      extraSessionCommands = ''
+       ${pkgs.picom}/bin/picom &
+       ${pkgs.hsetroot}/bin/hsetroot -solid '#000000'
+      '';
+    };
   };
 
   # Configure keymap in X11
@@ -199,8 +208,8 @@ in
       (self: super:
         {
           # get updates asap
-          discord = master.discord;
-          steam = master.steam.override { 
+          #discord = master.discord;
+          steam = super.steam.override {
             extraProfile = ''
               unset VK_ICD_FILENAMES
               #export VK_ICD_FILENAMES=${config.hardware.nvidia.package.lib32}/share/vulkan/icd.d/nvidia_icd32.json:${config.hardware.nvidia.package}/share/vulkan/icd.d/nvidia_icd.json
@@ -213,7 +222,6 @@ in
               /run/opengl-driver/share/vulkan/icd.d/lvp_icd.x86_64.json:/run/opengl-driver-32/share/vulkan/icd.d/lvp_icd.i686.json
             ''; 
           };
-          
 
           openvpn = stable.openvpn; # openvpn 2.5 is broken with pia
 
@@ -347,7 +355,6 @@ in
     rustc
     rustup
     droidcam
-    libsForQt5.dolphin
     nixfmt
   ];
 
@@ -412,8 +419,7 @@ in
         enable = true;
 
         settings = {
-          #background_opacity = 0.9;
-          background_opacity = 0.5;
+          background_opacity = 0.9;
         };
       };
 

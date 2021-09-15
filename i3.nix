@@ -7,6 +7,11 @@
       default = {
         blocks = [
           {
+            block = "music";
+            player = "spotify";
+            buttons = [ "play" "prev" "next" ];
+          }
+          {
             block = "disk_space";
             path = "/";
             alias = "/";
