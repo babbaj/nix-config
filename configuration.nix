@@ -254,8 +254,25 @@ in
     ];
   };
 
-  environment.systemPackages = 
-  with pkgs; [
+  environment.systemPackages = with pkgs;
+  let
+  obs = (wrapOBS {
+    plugins = with obs-studio-plugins; [
+      looking-glass-obs
+      obs-nvfbc
+    ];
+  });
+  obs-autostart = (makeAutostartItem {
+    name = "com.obsproject.Studio";
+    package = obs;
+  }).overrideAttrs ({buildCommand, ...}: {
+    buildCommand = buildCommand + "\n" + ''
+      substituteInPlace $out/etc/xdg/autostart/com.obsproject.Studio.desktop \
+        --replace 'Exec=obs' 'Exec=obs --startreplaybuffer'
+    '';
+  });
+  in
+  [
     coreutils
     jetbrains.idea-ultimate
     jetbrains.clion
@@ -264,12 +281,8 @@ in
     vlc
     wireguard
     qbittorrent
-    (wrapOBS {
-      plugins = with obs-studio-plugins; [
-        looking-glass-obs
-        obs-nvfbc
-      ];
-    })
+    obs
+    obs-autostart
     minecraft
     multimc
     steam
