@@ -100,7 +100,7 @@ in
       Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
     '';
     displayManager.setupCommands = '' # the code above usually doesn't work for some reason
-      nvidia-settings --assign CurrentMetaMode="HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
+      ${config.hardware.nvidia.package.settings}/bin/nvidia-settings --assign CurrentMetaMode="HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
     '';
     xrandrHeads = [
       {
@@ -112,6 +112,7 @@ in
     libinput.mouse.middleEmulation = false; # worst troll ever
 
     displayManager.gdm.enable = true;
+    #displayManager.lightdm.enable = true;
     desktopManager.gnome.enable = true;
 
     windowManager.i3 = {
@@ -381,6 +382,7 @@ in
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "libvirtd" "input" "docker" ]; # Enable ‘sudo’ for the user.
   };
+  security.sudo.wheelNeedsPassword = false; # troll face
 
   home-manager = {
     users.babbaj = {
@@ -443,5 +445,4 @@ in
     useGlobalPkgs = true;
     verbose = true;
   };
-
 }
