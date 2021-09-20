@@ -112,7 +112,6 @@ in
     libinput.mouse.middleEmulation = false; # worst troll ever
 
     displayManager.gdm.enable = true;
-    #displayManager.lightdm.enable = true;
     desktopManager.gnome.enable = true;
 
     windowManager.i3 = {
@@ -382,7 +381,7 @@ in
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "libvirtd" "input" "docker" ]; # Enable ‘sudo’ for the user.
   };
-  security.sudo.wheelNeedsPassword = false; # troll face
+  #security.sudo.wheelNeedsPassword = false; # troll face
 
   home-manager = {
     users.babbaj = {

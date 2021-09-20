@@ -1,29 +1,5 @@
 { config, pkgs, lib, ... }:
 
-let
-  #halfCores = "0,12,1,13,2,14,3,15,4,16,5,17";
-  nonVmCpus = "6,18,7,19,8,20,9,21,10,22,11,23";
-  allCores = "0-23";
-
-  qemuHook = pkgs.writeShellScript "qemu" ''
-    if [[ $1 == "win10-gpu" ]] && [[ $2 == "prepare" || $2 == "release" || $2 == "started" ]]
-    then
-      if [[ $2 == "prepare" ]]
-      then
-        # isolate cores
-        systemctl set-property --runtime -- user.slice AllowedCPUs=${nonVmCpus}
-        systemctl set-property --runtime -- system.slice AllowedCPUs=${nonVmCpus}
-        systemctl set-property --runtime -- init.scope AllowedCPUs=${nonVmCpus}
-      elif [[ $2 == "release" ]]
-      then
-        # remove core isolation
-        systemctl set-property --runtime -- user.slice AllowedCPUs=${allCores}
-        systemctl set-property --runtime -- system.slice AllowedCPUs=${allCores}
-        systemctl set-property --runtime -- init.scope AllowedCPUs=${allCores}
-      fi
-    fi
-  '';
-in
 {
   boot.kernelModules = [ "kvm-amd"];
   boot.initrd.kernelModules = [ "vfio-pci" ];
@@ -39,15 +15,10 @@ in
   virtualisation.libvirtd = {
     enable = true;
     qemuOvmf = true;
-    qemuRunAsRoot = true;
+    qemuRunAsRoot = false;
     onBoot = "ignore";
     onShutdown = "shutdown";
   };
-
-  systemd.services.libvirtd.preStart = ''
-    mkdir -p /var/lib/libvirt/hooks
-    ln -sf ${qemuHook} /var/lib/libvirt/hooks/qemu
-  '';
 
   programs.looking-glass = {
     enable = true;
