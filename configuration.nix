@@ -237,11 +237,14 @@ in
             };
           });
 
-          qemu = super.qemu.overrideAttrs ({patches ? [], ...}: {
-            patches = patches ++ [
+          qemu = super.qemu.overrideAttrs (old: {
+            patches = old.patches ++ [
              #./0001-Disable-input-grab-on-startup.patch
              ./0001-cringe-input-patch.patch
             ];
+
+            configureFlags = old.configureFlags ++ [ "--enable-linux-io-uring" ];
+            buildInputs = old.buildInputs ++ [ pkgs.liburing ];
           });
 
           nix = super.nix.overrideAttrs ({...}: {
@@ -369,6 +372,7 @@ in
     rustup
     droidcam
     nixfmt
+    libsForQt5.kdenlive
   ];
 
   # for intellij

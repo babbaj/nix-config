@@ -9,7 +9,7 @@
   ];
 
   security.pam.loginLimits = [
-    { domain = "*"; item = "memlock"; type = "-"; value = "unlimited"; } # unlimited memory limit for vm
+    { domain = "*"; item = "memlock"; type = "-"; value = "unlimited"; }
   ];
 
   virtualisation.libvirtd = {
