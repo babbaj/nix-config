@@ -26,14 +26,14 @@
     settings = {
       input = {
         grabKeyboardOnFocus = true;
-          rawMouse = true;
-        };
-        spice.alwaysShowCursor = true;
-        win = {
-          fullScreen = true;
-          jitRender = true;
-        };
-        egl.vsync = true;
+        rawMouse = true;
+      };
+      spice.alwaysShowCursor = true;
+      win = {
+        fullScreen = true;
+        jitRender = true;
+      };
+      egl.vsync = true;
     };
   };
 

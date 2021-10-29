@@ -21,8 +21,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "gnif";
     repo = "LookingGlass";
-    rev = "72f3a9f3cfe46aa54e8465a13b243b33aab91296"; # Sep 10
-    sha256 = "0rsyrvdakas1qjl3n7klggvm6hvgjra9179d26va929iyvr4dln7";
+    rev = "e914e56c48e2cb39f87e5927492761de8dec95be"; # Oct 6
+    sha256 = "0vy2r1g7xl1n7m417f8gciwns76pqcwrqbbzm87wx7q982gpai2b";
     fetchSubmodules = true;
   };
 

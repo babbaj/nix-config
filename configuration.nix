@@ -44,18 +44,10 @@ in
   boot.supportedFilesystems = [ "zfs" ];
 
   # https://github.com/keylase/nvidia-patch/blob/master/patch-fbc.sh
-  hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
+  #hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
 
-  #systemd.user.services.obs-replay = {
-  #  description = "OBS Replay";
-  #  serviceConfig = {
-  #    Type = "simple";
-  #    ExecStart = "${pkgs.obs-studio}/bin/obs --startreplaybuffer";
-  #  };
-  # 
-  #  wantedBy = [ "gnome-session-initialized.target" ];
-  #};
 
   networking.hostName = "nixos"; # Define your hostname.
   networking.hostId = "d5794eb2"; # ZFS requires this
@@ -293,9 +285,9 @@ in
     firefox
     element-desktop
     discord
-    binutils
     go
-    goimports
+    #goimports
+    binutils
     virt-manager
     git
     clang_12
@@ -342,8 +334,7 @@ in
     rlwrap
     wireshark
     mbuffer
-    steam-run-native
-    wine
+    wineWowPackages.staging
     dotnet-sdk_3
     youtube-dl
     usbutils
@@ -365,7 +356,6 @@ in
     valgrind
     mpv
     asciinema
-    keepassxc
     bitwarden
     cargo
     rustc
@@ -373,6 +363,7 @@ in
     droidcam
     nixfmt
     libsForQt5.kdenlive
+    libsForQt5.okular
   ];
 
   # for intellij
