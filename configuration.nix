@@ -44,10 +44,7 @@ in
   boot.supportedFilesystems = [ "zfs" ];
 
   # https://github.com/keylase/nvidia-patch/blob/master/patch-fbc.sh
-  #hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-
-
+  hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
 
   networking.hostName = "nixos"; # Define your hostname.
   networking.hostId = "d5794eb2"; # ZFS requires this
