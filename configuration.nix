@@ -8,8 +8,6 @@ let
   baseconfig = { allowUnfree = true; };
   master = import <master> { config = baseconfig; };
   stable = import <nixos-stable> { config = baseconfig; }; # 20.09
-
-  patchDriver = import ./nvfbc-unlock.nix;
 in
 {
   imports =
@@ -29,12 +27,12 @@ in
       <home-manager/nixos>
     ];
 
-  boot.kernelPackages = pkgs.linuxPackages_5_10;
+  boot.kernelPackages = pkgs.linuxPackages_5_14;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelModules = [ "v4l2loopback" "snd_aloop" ];
+  boot.kernelModules = [ "v4l2loopback" "snd_aloop" "msr" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
   boot.extraModprobeConfig = ''
     options v4l2loopback exclusive_caps=1 video_nr=9 card_label="OBS Virtual Output"
@@ -42,9 +40,6 @@ in
   boot.initrd.kernelModules = [ "vfio-pci" ];
   boot.kernelParams = [ "noibrs" "noibpb" "nopti" "nospectre_v2" "nospectre_v1" "l1tf=off" "nospec_store_bypass_disable" "no_stf_barrier" "mds=off" "tsx=on" "tsx_async_abort=off" "mitigations=off" ]; # make-linux-fast-again.com
   boot.supportedFilesystems = [ "zfs" ];
-
-  # https://github.com/keylase/nvidia-patch/blob/master/patch-fbc.sh
-  hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
 
   networking.hostName = "nixos"; # Define your hostname.
   networking.hostId = "d5794eb2"; # ZFS requires this
@@ -119,6 +114,8 @@ in
     };
   };
 
+  powerManagement.powerUpCommands = ''${config.hardware.nvidia.package.settings}/bin/nvidia-settings --assign CurrentMetaMode="HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"'';
+
   # Configure keymap in X11
   services.xserver.layout = "us";
 
@@ -135,6 +132,7 @@ in
   services.gnome.gnome-keyring.enable = true;
 
   systemd.user.services.wal-rsync = rec {
+    enable = false;
     description = "rsync wal logs ${startAt}";
     startAt = "hourly";
 
@@ -144,7 +142,7 @@ in
   };
 
   services.postgresql = {
-    enable = true;
+    enable = false;
     package = pkgs.postgresql_12;
     enableTCPIP = false;
     dataDir = "/opt/postgres/base/data";
@@ -186,6 +184,11 @@ in
       options = "--delete-older-than 30d";
     };
     autoOptimiseStore = true;
+
+    package = pkgs.nix_2_4;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
   };
 
   nixpkgs = {
@@ -216,17 +219,9 @@ in
 
           looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix {};
 
-          gb-backup = super.gb-backup.overrideAttrs ({...}: {
-            version = "master";
-            src = pkgs.fetchFromGitHub {
-              owner = "leijurv";
-              repo = "gb";
-              rev = "fa996208d06766bf523686fbe5831628130d80f7"; # August 16
-              sha256 = "1vggl8d69sf4z2lmixfndwwd6l9gi0fkkrxga7v4w7a7yr96b1vp";
-            };
-          });
+          gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix {};
 
-          qemu = super.qemu.overrideAttrs (old: {
+          qemu = (super.qemu.override { hostCpuOnly = true; }).overrideAttrs (old: {
             patches = old.patches ++ [
              #./0001-Disable-input-grab-on-startup.patch
              ./0001-cringe-input-patch.patch
@@ -236,12 +231,13 @@ in
             buildInputs = old.buildInputs ++ [ pkgs.liburing ];
           });
 
-          nix = super.nix.overrideAttrs ({...}: {
-              prePatch = ''
-                substituteInPlace src/nix-build/nix-build.cc \
-                  --replace 'pkgs.runCommandCC or pkgs.runCommand' 'pkgs.runCommand'
-              '';
-          });
+          #nix = pkgs.nix_2_4.overrideAttrs ({...}: {
+          #    prePatch = ''
+          #      substituteInPlace src/nix-build/nix-build.cc \
+          #        --replace 'pkgs.runCommandCC or pkgs.runCommand' 'pkgs.runCommand'
+          #    '';
+          #});
+
         })
     ];
   };
@@ -263,6 +259,8 @@ in
         --replace 'Exec=obs' 'Exec=obs --startreplaybuffer'
     '';
   });
+
+  mining-vm = (import <nixpkgs/nixos> { configuration = ./ethminer-vm.nix; }).vm;
   in
   [
     coreutils
@@ -283,7 +281,6 @@ in
     element-desktop
     discord
     go
-    #goimports
     binutils
     virt-manager
     git
@@ -361,6 +358,13 @@ in
     nixfmt
     libsForQt5.kdenlive
     libsForQt5.okular
+    screen
+    monero
+    monero-gui
+    #xmrig
+    xmrig-mo
+    ethminer
+    mining-vm
   ];
 
   # for intellij
