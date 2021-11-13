@@ -1,5 +1,8 @@
 { config, lib, pkgs, modulesPath, ... }:
 
+let
+  patchDriver = import ./nvfbc-unlock.nix;
+in
 {
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
@@ -10,10 +13,13 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # https://github.com/keylase/nvidia-patch/blob/master/patch-fbc.sh
+  hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
+
   fileSystems."/" =
     { device = "/dev/disk/by-id/nvme-ADATA_SX8200PNP_2K22292H74YA-part1";
       fsType = "btrfs";
-      options = [ "compress-force=zstd:3" "noatime" "space_cache=v2" "autodefrag" ];
+      options = [ "compress-force=zstd:1" "noatime" "space_cache=v2" "autodefrag" ];
     };
 
   fileSystems."/boot" =
