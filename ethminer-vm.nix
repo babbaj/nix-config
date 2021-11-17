@@ -25,6 +25,7 @@ with lib;
       diskSize = 1000; # MB
       memorySize = 2048; # MB
 
+      # TODO: completely stateless
       diskImage = "/tmp/nixos-ethminer.qcow2";
 
       forwardPorts = [
@@ -56,6 +57,7 @@ with lib;
         DynamicUser = true;
         ExecStartPre = "${pkgs.ethminer}/bin/ethminer --list-devices";
         Restart = "always";
+        RestartSec = 5;
       };
 
       script = ''

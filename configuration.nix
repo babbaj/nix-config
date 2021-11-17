@@ -260,6 +260,7 @@ in
     '';
   });
 
+  # basically equivalent to nix-build '<nixpkgs/nixos>' -A vm --arg configuration ./ethminer-vm.nix
   mining-vm = (import <nixpkgs/nixos> { configuration = ./ethminer-vm.nix; }).vm;
   in
   [
@@ -359,9 +360,7 @@ in
     libsForQt5.kdenlive
     libsForQt5.okular
     screen
-    monero
     monero-gui
-    #xmrig
     xmrig-mo
     ethminer
     mining-vm
