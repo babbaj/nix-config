@@ -146,7 +146,6 @@ EndSection
         pciutils
         htop
         gwe
-        compsize
       ];
 
     # we could alternatively hook root or a custom user
