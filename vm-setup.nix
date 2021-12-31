@@ -36,7 +36,11 @@
         fullScreen = true;
         jitRender = true;
       };
-      egl.vsync = true;
+      egl = {
+        #vsync = true;
+        noSwapDamage = true;
+        noBufferAge = true;
+      };
     };
   };
 

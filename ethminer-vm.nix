@@ -1,10 +1,10 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, modulesPath, ... }:
 
 with lib;
 {
   imports = [
-    <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
-    <nixpkgs/nixos/modules/virtualisation/qemu-vm.nix>
+    (modulesPath + "/profiles/qemu-guest.nix")
+    (modulesPath + "/virtualisation/qemu-vm.nix")
   ];
 
   config = {
@@ -36,7 +36,7 @@ with lib;
         }
       ];
 
-      qemu.options = [
+      qemu.options = [#lib.mkForce [
         "-nographic"
         "-cpu host"
         "-device vfio-pci,host=0000:28:00.0"

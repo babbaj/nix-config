@@ -7,7 +7,6 @@
 let
   baseconfig = { allowUnfree = true; };
   master = import <master> { config = baseconfig; };
-  stable = import <nixos-stable> { config = baseconfig; }; # 20.09
 in
 {
   imports =
@@ -21,13 +20,16 @@ in
 
       ./looking-glass-module.nix
 
+      ./scripts.nix
+
       #./steam.nix
 
       # Home-manager
-      <home-manager/nixos>
+      #<home-manager/nixos>
+      /home/babbaj/home-manager/nixos/default.nix
     ];
 
-  boot.kernelPackages = pkgs.linuxPackages_5_14;
+  boot.kernelPackages = pkgs.linuxPackages_5_15;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -39,7 +41,7 @@ in
   '';
   boot.initrd.kernelModules = [ "vfio-pci" ];
   boot.kernelParams = [ "noibrs" "noibpb" "nopti" "nospectre_v2" "nospectre_v1" "l1tf=off" "nospec_store_bypass_disable" "no_stf_barrier" "mds=off" "tsx=on" "tsx_async_abort=off" "mitigations=off" ]; # make-linux-fast-again.com
-  boot.supportedFilesystems = [ "zfs" ];
+  #boot.supportedFilesystems = [ "zfs" ];
 
   networking.hostName = "nixos"; # Define your hostname.
   networking.hostId = "d5794eb2"; # ZFS requires this
@@ -58,7 +60,6 @@ in
   networking.networkmanager.enable = true;
   networking.firewall.trustedInterfaces = [ "nocom" ];
   networking.firewall.logRefusedConnections = false; # this has been filling my logs with junk
-
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -79,24 +80,36 @@ in
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
+    #dpi = 144;
     videoDrivers = [ "nvidia" ];
+    #deviceSection = ''
+    #  Option "UseEDIDDpi" "False"
+    #  Option "DPI" "144 x 144"
+    #'';
     screenSection = ''
       Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
     '';
+
     displayManager.setupCommands = '' # the code above usually doesn't work for some reason
       ${config.hardware.nvidia.package.settings}/bin/nvidia-settings --assign CurrentMetaMode="HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
     '';
     xrandrHeads = [
       {
-        output = "DP-0";
+        output = "HDMI-0";
         primary = true;
       }
     ];
 
     libinput.mouse.middleEmulation = false; # worst troll ever
 
-    displayManager.gdm.enable = true;
+    displayManager.gdm = {
+      #enable = true;
+      wayland = false; # gdm keeps using wayland when xorg is selected
+    };
+    displayManager.lightdm.enable = true;
     desktopManager.gnome.enable = true;
+
+    logFile = "/var/log/X.0.log"; # lightdm sets the log file to here but gdm does not
 
     windowManager.i3 = {
       enable = true;
@@ -114,7 +127,7 @@ in
     };
   };
 
-  powerManagement.powerUpCommands = ''${config.hardware.nvidia.package.settings}/bin/nvidia-settings --assign CurrentMetaMode="HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"'';
+  powerManagement.powerUpCommands = ''${config.hardware.nvidia.package.settings}/bin/nvidia-settings --assign CurrentMetaMode="HDMI-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}, DVI-I-1: nvidia-auto-select +3840+1080"'';
 
   # Configure keymap in X11
   services.xserver.layout = "us";
@@ -185,7 +198,7 @@ in
     };
     autoOptimiseStore = true;
 
-    package = pkgs.nix_2_4;
+    #package = pkgs.nix_2_4;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -199,8 +212,6 @@ in
     overlays = [
       (self: super:
         {
-          # get updates asap
-          #discord = master.discord;
           steam = super.steam.override {
             extraProfile = ''
               unset VK_ICD_FILENAMES
@@ -215,7 +226,7 @@ in
             ''; 
           };
 
-          openvpn = stable.openvpn; # openvpn 2.5 is broken with pia
+          openvpn = super.openvpn_24; # openvpn 2.5 is broken with pia
 
           looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix {};
 
@@ -230,6 +241,8 @@ in
             configureFlags = old.configureFlags ++ [ "--enable-linux-io-uring" ];
             buildInputs = old.buildInputs ++ [ pkgs.liburing ];
           });
+
+          mapcrafter = (pkgs.callPackage ./pkgs/mapcrafter/mapcrafter.nix {});
 
           #nix = pkgs.nix_2_4.overrideAttrs ({...}: {
           #    prePatch = ''
@@ -247,7 +260,10 @@ in
   obs = (wrapOBS {
     plugins = with obs-studio-plugins; [
       looking-glass-obs
-      obs-nvfbc
+      (obs-nvfbc.overrideAttrs(old: {
+        version = "0.0.4";
+        src = old.src // { sha256 = "sha256-U/zma1BrOTRAJAYMOcmaeL0UqF3ihysDwceyeW1r0b8="; };
+      }))
     ];
   });
   obs-autostart = (makeAutostartItem {
@@ -261,7 +277,9 @@ in
   });
 
   # basically equivalent to nix-build '<nixpkgs/nixos>' -A vm --arg configuration ./ethminer-vm.nix
-  mining-vm = (import <nixpkgs/nixos> { configuration = ./ethminer-vm.nix; }).vm;
+  vmNixos = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/af1af9d0a9d0771d4bd946fd277d761aca839d16.tar.gz") + "/nixos";
+  #mining-vm = (import <nixpkgs/nixos> { configuration = ./ethminer-vm.nix; }).vm;
+  mining-vm = (import vmNixos { configuration = ./ethminer-vm.nix; }).vm;
   in
   [
     coreutils
@@ -364,11 +382,19 @@ in
     xmrig-mo
     ethminer
     mining-vm
+    nheko
+    nix-top
+    nmap
+    age
+    mapcrafter
   ];
 
   # for intellij
   environment.etc = with pkgs; {
     "jdk8".source = jdk8;
+    "jdk".source = jdk;
+    "jdk11".source = jdk11;
+    "jdk181".source = (import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/5a012fdbb3f7752b333cb631c39d73518e930559.tar.gz") {}).jdk8;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -380,6 +406,7 @@ in
 
   home-manager = {
     users.babbaj = {
+      home.enableNixpkgsReleaseCheck = false;
       imports = [ ./i3.nix ];
 
       programs.ssh = {
@@ -404,6 +431,10 @@ in
           key = "F044309848A07CAC";
           signByDefault = true;
         };
+
+        extraConfig = {
+          submodule.recurse = true;
+        };
       };
 
       services.gpg-agent.enable = true;
@@ -412,7 +443,8 @@ in
       programs.bash = {
         enable = true;
         bashrcExtra = ''
-          PATH=$PATH:~/bin
+          export PATH=$PATH:~/bin
+          #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${lib.makeLibraryPath [ pkgs.xorg.libXxf86vm ]}
         '';
 
         shellAliases = {
@@ -429,6 +461,13 @@ in
 
         settings = {
           background_opacity = 0.9;
+        };
+      };
+      programs.kitty = {
+        enable = true;
+
+        settings = {
+          background_opacity = "0.9";
         };
       };
 

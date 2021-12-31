@@ -15,6 +15,7 @@ in
 
   # https://github.com/keylase/nvidia-patch/blob/master/patch-fbc.sh
   hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
+  hardware.nvidia.modesetting.enable = true;
 
   fileSystems."/" =
     { device = "/dev/disk/by-id/nvme-ADATA_SX8200PNP_2K22292H74YA-part1";

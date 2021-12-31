@@ -1,7 +1,7 @@
-{ stdenv, lib, fetchFromGitHub, fetchpatch, makeDesktopItem, cmake, pkg-config
-, SDL, SDL2_ttf, freefont_ttf, spice-protocol, nettle, libbfd, fontconfig, libffi, expat
-, libXi, libXScrnSaver, libXinerama, libXcursor, libXpresent, libxkbcommon
-, wayland, wayland-protocols
+{ stdenv, lib, fetchFromGitHub, makeDesktopItem, cmake, pkg-config
+, freefont_ttf, spice-protocol, nettle, libbfd, fontconfig, libffi, expat
+, libxkbcommon, libGL, libXext, libXrandr, libXi, libXScrnSaver, libXinerama
+, libXcursor, libXpresent, wayland, wayland-protocols 
 }:
 
 let
@@ -13,34 +13,44 @@ let
     icon = "lg-logo";
     terminal = true;
   };
-in
-stdenv.mkDerivation rec {
+in stdenv.mkDerivation rec {
   pname = "looking-glass-client";
   version = "bleeding-edge";
 
   src = fetchFromGitHub {
     owner = "gnif";
     repo = "LookingGlass";
-    rev = "a21eee26ab04e05c7e457b2afe4d49aac952d021"; # Nov 1
-    sha256 = "sha256-5AxaN9YcSurLX0OF1T8/lkBsuGa0PpfLnejRm1ARdsc=";
+    rev = "74444f8eeda44d894a814db6db837c239189c7d1"; # Dec 25 (B5)
+    sha256 = "sha256-lXpRSGY7mjJdoqyB2TrKSfoT3Zl6ikTD+OHB0gkptiY=";
     fetchSubmodules = true;
   };
 
   nativeBuildInputs = [ cmake pkg-config ];
 
   buildInputs = [
-    SDL SDL2_ttf freefont_ttf spice-protocol
-    libbfd nettle fontconfig libffi expat
-    libXi libXScrnSaver libXinerama libXcursor libXpresent
+    libGL
+    freefont_ttf
+    spice-protocol
+    expat
+    libbfd
+    nettle
+    fontconfig
+    libffi
     libxkbcommon
-    wayland wayland-protocols
+    libXi
+    libXScrnSaver
+    libXinerama
+    libXcursor
+    libXpresent
+    libXext
+    libXrandr
+    wayland
+    wayland-protocols
   ];
 
   NIX_CFLAGS_COMPILE = "-mavx"; # Fix some sort of AVX compiler problem.
 
-  patches = [
-    ./0001-Allow-sudo.patch
-  ];
+  patches = [ ./0001-Allow-sudo.patch ];
 
   postUnpack = ''
     echo ${src.rev} > source/VERSION
