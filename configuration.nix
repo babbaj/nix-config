@@ -6,7 +6,6 @@
 
 let
   baseconfig = { allowUnfree = true; };
-  master = import <master> { config = baseconfig; };
 in
 {
   imports =
@@ -80,12 +79,8 @@ in
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    #dpi = 144;
     videoDrivers = [ "nvidia" ];
-    #deviceSection = ''
-    #  Option "UseEDIDDpi" "False"
-    #  Option "DPI" "144 x 144"
-    #'';
+
     screenSection = ''
       Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
     '';
@@ -133,8 +128,17 @@ in
   services.xserver.layout = "us";
 
   # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  #sound.enable = true;
+  #hardware.pulseaudio.enable = true;
+  # Pipewire
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+};
 
   services.vaultwarden.enable = true;
 
@@ -250,7 +254,6 @@ in
           #        --replace 'pkgs.runCommandCC or pkgs.runCommand' 'pkgs.runCommand'
           #    '';
           #});
-
         })
     ];
   };
