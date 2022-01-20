@@ -18,6 +18,7 @@
     qemu = {
       ovmf.enable = true;
       runAsRoot = false;
+      package = pkgs.qemu_kvm; # host cpu only
     };
     onBoot = "ignore";
     onShutdown = "shutdown";

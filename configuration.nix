@@ -240,9 +240,6 @@ in
           looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix {};
 
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix {};
-
-          qemu = qemu_kvm; # host cpu only
-
         })
     ];
   };
@@ -464,7 +461,8 @@ in
         enable = true;
 
         settings = {
-          background_opacity = "0.9";
+          background_opacity = "0.8";
+          scrollback_lines = "-1";
         };
       };
 
