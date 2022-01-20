@@ -241,9 +241,8 @@ in
 
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix {};
 
-          qemu = qemu_kvm;
+          qemu = qemu_kvm; # host cpu only
 
-          mapcrafter = (pkgs.callPackage ./pkgs/mapcrafter/mapcrafter.nix {});
         })
     ];
   };
@@ -384,8 +383,6 @@ in
     nheko
     nix-top
     nmap
-    age
-    mapcrafter
     tmux
   ];
 
