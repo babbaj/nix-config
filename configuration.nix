@@ -409,6 +409,9 @@ in
           hostname = "192.168.69.2";
           user = "root";
         };
+        extraConfig = ''
+          SetEnv TERM=xterm-256color
+        '';
       };
 
       programs.direnv = {
