@@ -38,8 +38,8 @@
       };
       egl = {
         #vsync = true;
-        noSwapDamage = true;
-        noBufferAge = true;
+        #noSwapDamage = true;
+        #noBufferAge = true;
       };
     };
   };

@@ -21,11 +21,14 @@ in
 
       ./scripts.nix
 
-      #./steam.nix
+      ./steam.nix
 
       # Home-manager
-      #<home-manager/nixos>
-      /home/babbaj/home-manager/nixos/default.nix
+
+       <home-manager/nixos>
+      #/home/babbaj/home-manager/nixos/default.nix
+
+      ./memflow.nix
     ];
 
   boot.kernelPackages = pkgs.linuxPackages_5_15;
@@ -41,6 +44,8 @@ in
   boot.initrd.kernelModules = [ "vfio-pci" ];
   boot.kernelParams = [ "noibrs" "noibpb" "nopti" "nospectre_v2" "nospectre_v1" "l1tf=off" "nospec_store_bypass_disable" "no_stf_barrier" "mds=off" "tsx=on" "tsx_async_abort=off" "mitigations=off" ]; # make-linux-fast-again.com
   #boot.supportedFilesystems = [ "zfs" ];
+
+  memflow.kvm.enable = true;
 
   networking.hostName = "nixos"; # Define your hostname.
   networking.hostId = "d5794eb2"; # ZFS requires this
@@ -138,7 +143,7 @@ in
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-};
+  };
 
   services.vaultwarden.enable = true;
 
@@ -236,24 +241,9 @@ in
 
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix {};
 
-          qemu = (super.qemu.override { hostCpuOnly = true; }).overrideAttrs (old: {
-            patches = old.patches ++ [
-             #./0001-Disable-input-grab-on-startup.patch
-             ./0001-cringe-input-patch.patch
-            ];
-
-            configureFlags = old.configureFlags ++ [ "--enable-linux-io-uring" ];
-            buildInputs = old.buildInputs ++ [ pkgs.liburing ];
-          });
+          qemu = qemu_kvm;
 
           mapcrafter = (pkgs.callPackage ./pkgs/mapcrafter/mapcrafter.nix {});
-
-          #nix = pkgs.nix_2_4.overrideAttrs ({...}: {
-          #    prePatch = ''
-          #      substituteInPlace src/nix-build/nix-build.cc \
-          #        --replace 'pkgs.runCommandCC or pkgs.runCommand' 'pkgs.runCommand'
-          #    '';
-          #});
         })
     ];
   };
@@ -263,9 +253,14 @@ in
   obs = (wrapOBS {
     plugins = with obs-studio-plugins; [
       looking-glass-obs
-      (obs-nvfbc.overrideAttrs(old: {
-        version = "0.0.4";
-        src = old.src // { sha256 = "sha256-U/zma1BrOTRAJAYMOcmaeL0UqF3ihysDwceyeW1r0b8="; };
+      (obs-nvfbc.overrideAttrs(old: rec {
+        version = "0.0.5";
+        src = pkgs.fetchFromGitLab {
+          owner = "fzwoch";
+          repo = "obs-nvfbc";
+          rev = "v${version}";
+          sha256 = "sha256-Si+TGYWpNPtUUFT+M571lCYslPyeYX92MdYV9EGgcyQ=";
+        };
       }))
     ];
   });
@@ -358,7 +353,7 @@ in
     inetutils
     dmidecode
     i2c-tools
-    libreoffice-qt
+    #libreoffice-qt
     gb-backup
     xclip xsel
     handbrake
@@ -376,6 +371,7 @@ in
     cargo
     rustc
     rustup
+    rust-cbindgen
     droidcam
     nixfmt
     libsForQt5.kdenlive
@@ -390,6 +386,7 @@ in
     nmap
     age
     mapcrafter
+    tmux
   ];
 
   # for intellij
@@ -410,7 +407,7 @@ in
   home-manager = {
     users.babbaj = {
       home.enableNixpkgsReleaseCheck = false;
-      imports = [ ./i3.nix ];
+      #imports = [ ./i3.nix ];
 
       programs.ssh = {
         enable = true;
@@ -446,7 +443,7 @@ in
       programs.bash = {
         enable = true;
         bashrcExtra = ''
-          export PATH=$PATH:~/bin
+          export PATH=$PATH:~/bin:~/.cargo/bin
           #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${lib.makeLibraryPath [ pkgs.xorg.libXxf86vm ]}
         '';
 

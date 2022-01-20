@@ -1,7 +1,8 @@
 { stdenv, lib, fetchFromGitHub, makeDesktopItem, cmake, pkg-config
 , freefont_ttf, spice-protocol, nettle, libbfd, fontconfig, libffi, expat
 , libxkbcommon, libGL, libXext, libXrandr, libXi, libXScrnSaver, libXinerama
-, libXcursor, libXpresent, wayland, wayland-protocols 
+, libXcursor, libXpresent, wayland, wayland-protocols
+, pipewire, libpulseaudio
 }:
 
 let
@@ -20,8 +21,8 @@ in stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "gnif";
     repo = "LookingGlass";
-    rev = "74444f8eeda44d894a814db6db837c239189c7d1"; # Dec 25 (B5)
-    sha256 = "sha256-lXpRSGY7mjJdoqyB2TrKSfoT3Zl6ikTD+OHB0gkptiY=";
+    rev = "15f76339c831589a441ec970fa41f69c66b409da"; # Jan 18
+    sha256 = "sha256-QfRBHqg8hue0tMeTwHlBE8javLbXFkrEtjw5oCePpCg=";
     fetchSubmodules = true;
   };
 
@@ -46,9 +47,13 @@ in stdenv.mkDerivation rec {
     libXrandr
     wayland
     wayland-protocols
+    pipewire.dev
+    libpulseaudio
   ];
 
   NIX_CFLAGS_COMPILE = "-mavx"; # Fix some sort of AVX compiler problem.
+
+  #cmakeFlags = [ "-DENABLE_PIPEWIRE=no" ];
 
   patches = [ ./0001-Allow-sudo.patch ];
 
