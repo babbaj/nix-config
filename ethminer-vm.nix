@@ -71,17 +71,25 @@ with lib;
 
     systemd.services.nvidiaoc = 
     let
-      settings = config.hardware.nvidia.package.settings;
+      nvidia = config.hardware.nvidia.package;
+      settings = nvidia.settings;
+      script = pkgs.writeScript "overclock.sh" ''
+        #!${pkgs.stdenv.shell}
+        set -e
+        nvidia-smi -i 0 -pl 125
+        nvidia-settings -c :0 -a [gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=-500 -a [gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=1400 -a [gpu:0]/GPUFanControlState=1 -a [fan:0]/GPUTargetFanSpeed=50
+      '';
     in {
       description = "overclock gpu and set fan speed";
       wantedBy = [ "multi-user.target" ];
       after = [ "display-manager.service" ];
+      path = [ nvidia.bin settings ];
       environment = {
         DISPLAY = ":0";
         XAUTHORITY = "/var/run/lightdm/root/:0"; # ~/.Xauthority doesnt work outside of the DE but X is ran with this for -auth and it works
       };
       serviceConfig = {
-        ExecStart = "${settings}/bin/nvidia-settings -c :0 -a [gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=-500 -a [gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=1400 -a [gpu:0]/GPUFanControlState=1 -a [fan:0]/GPUTargetFanSpeed=50";
+        ExecStart = "${script}";
       };
     };
 
