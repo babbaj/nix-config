@@ -77,7 +77,7 @@ with lib;
         #!${pkgs.stdenv.shell}
         set -e
         nvidia-smi -i 0 -pl 125
-        nvidia-settings -c :0 -a [gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=-500 -a [gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=1400 -a [gpu:0]/GPUFanControlState=1 -a [fan:0]/GPUTargetFanSpeed=50
+        nvidia-settings -c :0 -a [gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=-800 -a [gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=1400 -a [gpu:0]/GPUFanControlState=1 -a [fan:0]/GPUTargetFanSpeed=50
       '';
     in {
       description = "overclock gpu and set fan speed";
