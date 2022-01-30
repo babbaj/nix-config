@@ -3,10 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 { config, lib, pkgs, ... }:
 
-
-let
-  baseconfig = { allowUnfree = true; };
-in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -17,9 +13,8 @@ in
       ./scripts.nix
       ./steam.nix
       # Home-manager
-       <home-manager/nixos>
+      #<home-manager/nixos>
       #/home/babbaj/home-manager/nixos/default.nix
-      ./memflow.nix
       ./pipewire.nix
     ];
 
@@ -188,7 +183,7 @@ in
       dates = "weekly";
       options = "--delete-older-than 30d";
     };
-    autoOptimiseStore = true;
+    settings.auto-optimise-store = true;
 
     #package = pkgs.nix_2_4;
     extraOptions = ''
@@ -224,7 +219,7 @@ in
 
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix {};
 
-          polymc = pkgs.libsForQt5.callPackage ((fetchTarball "https://github.com/NixOS/nixpkgs/archive/37df4305c65ab6d3f34beebbacca491b4d122769.tar.gz") + "/pkgs/games/polymc/default.nix") {};
+          polymc = pkgs.libsForQt5.callPackage ((fetchTarball { url = "https://github.com/NixOS/nixpkgs/archive/37df4305c65ab6d3f34beebbacca491b4d122769.tar.gz"; sha256 = "sha256:18s42yc406x4x5s0h86xv3m3pn5pq7kld0mc6dmmd74rmy6ki55m"; }) + "/pkgs/games/polymc/default.nix") {};
         })
     ];
   };
@@ -256,9 +251,9 @@ in
   });
 
   # basically equivalent to nix-build '<nixpkgs/nixos>' -A vm --arg configuration ./ethminer-vm.nix
-  vmNixos = (fetchTarball "https://github.com/NixOS/nixpkgs/archive/af1af9d0a9d0771d4bd946fd277d761aca839d16.tar.gz") + "/nixos";
+  vmNixos = (fetchTarball { url = "https://github.com/NixOS/nixpkgs/archive/af1af9d0a9d0771d4bd946fd277d761aca839d16.tar.gz"; sha256 = "sha256:1ia6k0fjaynn9jgv0sgq22w9114awgkd3l8q7i0m69nb00y0fx0d"; }) + "/nixos";
   #mining-vm = (import <nixpkgs/nixos> { configuration = ./ethminer-vm.nix; }).vm;
-  mining-vm = (import vmNixos { configuration = ./ethminer-vm.nix; }).vm;
+  mining-vm = (import vmNixos { configuration = ./ethminer-vm.nix; inherit (pkgs) system; }).vm;
   in
   [
     coreutils
@@ -373,7 +368,6 @@ in
     "jdk8".source = jdk8;
     "jdk".source = jdk;
     "jdk11".source = jdk11;
-    "jdk181".source = (import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/5a012fdbb3f7752b333cb631c39d73518e930559.tar.gz") {}).jdk8;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
