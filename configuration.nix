@@ -11,25 +11,18 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware.nix
-
       # Everything that isn't public
       ./secret.nix
-
       ./vm-setup.nix
-
-      ./looking-glass-module.nix
-
       ./scripts.nix
-
       ./steam.nix
-
       # Home-manager
-
        <home-manager/nixos>
       #/home/babbaj/home-manager/nixos/default.nix
-
       ./memflow.nix
+      ./pipewire.nix
     ];
+
 
   boot.kernelPackages = pkgs.linuxPackages_5_15;
 
@@ -133,17 +126,7 @@ in
   services.xserver.layout = "us";
 
   # Enable sound.
-  #sound.enable = true;
-  #hardware.pulseaudio.enable = true;
-  # Pipewire
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
+  profiles.pipewire.enable = true;
 
   services.vaultwarden.enable = true;
 
@@ -240,6 +223,8 @@ in
           looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix {};
 
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix {};
+
+          polymc = pkgs.libsForQt5.callPackage ((fetchTarball "https://github.com/NixOS/nixpkgs/archive/37df4305c65ab6d3f34beebbacca491b4d122769.tar.gz") + "/pkgs/games/polymc/default.nix") {};
         })
     ];
   };
@@ -287,7 +272,7 @@ in
     obs
     obs-autostart
     minecraft
-    multimc
+    polymc
     steam
     google-chrome
     firefox
@@ -329,7 +314,7 @@ in
     linuxPackages.perf
     iotop
     iperf
-    gnome3.networkmanagerapplet
+    networkmanagerapplet
     gnome.gnome-tweaks
     psmisc # future installer requires killall
     lepton

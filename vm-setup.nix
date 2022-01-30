@@ -1,6 +1,10 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+      ./looking-glass-module.nix
+  ];
+
   boot.kernelModules = [ "kvm-amd"];
   boot.initrd.kernelModules = [ "vfio-pci" ];
   boot.kernelParams = [ 
@@ -38,7 +42,7 @@
         jitRender = true;
       };
       egl = {
-        #vsync = true;
+        vsync = true;
         #noSwapDamage = true;
         #noBufferAge = true;
       };

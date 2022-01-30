@@ -2,7 +2,7 @@
 , freefont_ttf, spice-protocol, nettle, libbfd, fontconfig, libffi, expat
 , libxkbcommon, libGL, libXext, libXrandr, libXi, libXScrnSaver, libXinerama
 , libXcursor, libXpresent, wayland, wayland-protocols
-, pipewire, libpulseaudio
+, pipewire, libpulseaudio, libsamplerate
 }:
 
 let
@@ -21,8 +21,8 @@ in stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "gnif";
     repo = "LookingGlass";
-    rev = "15f76339c831589a441ec970fa41f69c66b409da"; # Jan 18
-    sha256 = "sha256-QfRBHqg8hue0tMeTwHlBE8javLbXFkrEtjw5oCePpCg=";
+    rev = "febd081202ce0d64c6698d11f17fa14a93d84d17"; # Jan 27
+    sha256 = "sha256-zwAF45u0fWej7AUVDr//iDZtLldgFi3t0fXXgAhP0JE=";
     fetchSubmodules = true;
   };
 
@@ -49,6 +49,7 @@ in stdenv.mkDerivation rec {
     wayland-protocols
     pipewire.dev
     libpulseaudio
+    libsamplerate
   ];
 
   NIX_CFLAGS_COMPILE = "-mavx"; # Fix some sort of AVX compiler problem.
