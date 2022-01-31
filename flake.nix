@@ -1,6 +1,4 @@
 {
-  description = "A very basic flake";
-
   inputs = {
     home-manager.url = "github:nix-community/home-manager";
     #nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
