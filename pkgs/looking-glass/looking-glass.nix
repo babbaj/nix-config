@@ -3,6 +3,7 @@
 , libxkbcommon, libGL, libXext, libXrandr, libXi, libXScrnSaver, libXinerama
 , libXcursor, libXpresent, wayland, wayland-protocols
 , pipewire, libpulseaudio, libsamplerate
+, src # flake input
 }:
 
 let
@@ -18,13 +19,14 @@ in stdenv.mkDerivation rec {
   pname = "looking-glass-client";
   version = "bleeding-edge";
 
-  src = fetchFromGitHub {
+  /*src = fetchFromGitHub {
     owner = "gnif";
     repo = "LookingGlass";
     rev = "febd081202ce0d64c6698d11f17fa14a93d84d17"; # Jan 27
     sha256 = "sha256-zwAF45u0fWej7AUVDr//iDZtLldgFi3t0fXXgAhP0JE=";
     fetchSubmodules = true;
-  };
+  };*/
+  inherit src;
 
   nativeBuildInputs = [ cmake pkg-config ];
 

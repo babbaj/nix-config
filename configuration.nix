@@ -215,11 +215,9 @@
 
           openvpn = super.openvpn_24; # openvpn 2.5 is broken with pia
 
-          looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix {};
+          #looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix {};
 
-          gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix {};
-
-          polymc = pkgs.libsForQt5.callPackage ((fetchTarball { url = "https://github.com/NixOS/nixpkgs/archive/37df4305c65ab6d3f34beebbacca491b4d122769.tar.gz"; sha256 = "sha256:18s42yc406x4x5s0h86xv3m3pn5pq7kld0mc6dmmd74rmy6ki55m"; }) + "/pkgs/games/polymc/default.nix") {};
+          #gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix {};
         })
     ];
   };

@@ -36,16 +36,24 @@ with lib;
         }
       ];
 
-      qemu.options = [#lib.mkForce [
+      qemu.options = #lib.mkPostMerge (lib.remove "-device virtio-keyboard")
+      /*(lib.mkMerge [[
         "-nographic"
         "-cpu host"
         "-device vfio-pci,host=0000:28:00.0"
         "-device vfio-pci,host=0000:28:00.1"
         "-device vfio-pci,host=0000:28:00.2"
         "-device vfio-pci,host=0000:28:00.3"
-      ];
+      ]]);/**/
+      ([
+        "-nographic"
+        "-cpu host"
+        "-device vfio-pci,host=0000:28:00.0"
+        "-device vfio-pci,host=0000:28:00.1"
+        "-device vfio-pci,host=0000:28:00.2"
+        "-device vfio-pci,host=0000:28:00.3"
+      ]);/**/
     };
-
     
     systemd.services.ethminer = {
       path = [ pkgs.cudatoolkit ];
@@ -63,6 +71,7 @@ with lib;
       script = ''
         ${pkgs.ethminer}/bin/ethminer \
           --farm-recheck 200 \
+          --exit \
           --report-hashrate \
           --cuda \
           --pool stratum://47hHuiextmkRwsz4KQhvDL1m6BoW8qXax5sGkjDeArq1QGs27VzkGyHNHB3odsdbFmeJxs2z6Ab3HHkGwDtgBqjhNdETj7s.2060-miner:~ethash@gulf.moneroocean.stream:10128;
@@ -77,7 +86,7 @@ with lib;
         #!${pkgs.stdenv.shell}
         set -e
         nvidia-smi -i 0 -pl 125
-        nvidia-settings -c :0 -a [gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=-800 -a [gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=1400 -a [gpu:0]/GPUFanControlState=1 -a [fan:0]/GPUTargetFanSpeed=50
+        nvidia-settings -c :0 -a [gpu:0]/GPUGraphicsClockOffsetAllPerformanceLevels=-500 -a [gpu:0]/GPUMemoryTransferRateOffsetAllPerformanceLevels=1400 -a [gpu:0]/GPUFanControlState=1 -a [fan:0]/GPUTargetFanSpeed=50
       '';
     in {
       description = "overclock gpu and set fan speed";
