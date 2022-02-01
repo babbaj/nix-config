@@ -45,7 +45,7 @@
         memflow.nixosModule
         ./configuration.nix
       ];
-      pkgs = pkgs;
+      inherit pkgs;
       #specialArgs = { inherit inputs; };
     };
   };

@@ -2,13 +2,14 @@
 
 let
   patchDriver = import ./nvfbc-unlock.nix;
+  kernel = config.boot.kernelPackages.kernel;
 
   pkgsPath = modulesPath + "../../../pkgs";
   nvidia_generic = args: let
     imported = import (pkgsPath + "/os-specific/linux/nvidia-x11/generic.nix") args;
   in
     pkgs.callPackage imported {
-      kernel = config.boot.kernelPackages.kernel;
+      inherit kernel;
       lib32 = (pkgs.pkgsi686Linux.callPackage imported {
         libsOnly = true;
         kernel = null;
@@ -38,7 +39,12 @@ in
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/7be7dc7e-97f2-43d4-ab33-134dd5f64a71";
       fsType = "btrfs";
-      options = [ "compress-force=zstd:1" "noatime" "space_cache=v2" "autodefrag" ];
+      options =
+        [ "compress-force=zstd:1" "noatime" "space_cache=v2" ]
+        ++
+        # https://www.reddit.com/r/selfhosted/comments/sgy96t/psa_linux_516_has_major_regression_in_btrfs/
+        (if kernel.kernelOlder "5.16" then [ "autodefrag"]
+        else lib.warn "Disabling autodefrag for linux 5.16" []);
     };
 
   fileSystems."/boot" =
