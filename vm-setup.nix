@@ -42,6 +42,7 @@
         jitRender = true;
       };
       egl = {
+        preset = "yay";
         vsync = true;
         #noSwapDamage = true;
         #noBufferAge = true;

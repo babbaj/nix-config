@@ -43,7 +43,7 @@ in
         [ "compress-force=zstd:1" "noatime" "space_cache=v2" ]
         ++
         # https://www.reddit.com/r/selfhosted/comments/sgy96t/psa_linux_516_has_major_regression_in_btrfs/
-        (if kernel.kernelOlder "5.16" then [ "autodefrag"]
+        (if kernel.kernelOlder "5.16" then [ "autodefrag" ]
         else lib.warn "Disabling autodefrag for linux 5.16" []);
     };
 
