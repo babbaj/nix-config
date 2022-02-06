@@ -4,7 +4,7 @@ let
   patchDriver = import ./nvfbc-unlock.nix;
   kernel = config.boot.kernelPackages.kernel;
 
-  pkgsPath = modulesPath + "../../../pkgs";
+  pkgsPath = modulesPath + "/../../pkgs";
   nvidia_generic = args: let
     imported = import (pkgsPath + "/os-specific/linux/nvidia-x11/generic.nix") args;
   in
