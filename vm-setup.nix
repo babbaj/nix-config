@@ -2,7 +2,7 @@
 
 {
   imports = [
-      ./looking-glass-module.nix
+    ./looking-glass-module.nix
   ];
 
   boot.kernelModules = [ "kvm-amd"];

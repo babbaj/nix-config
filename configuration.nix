@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, modulesPath, ... }:
 
 {
   imports =
@@ -227,15 +227,7 @@
   obs = (wrapOBS {
     plugins = with obs-studio-plugins; [
       looking-glass-obs
-      (obs-nvfbc.overrideAttrs(old: rec {
-        version = "0.0.5";
-        src = pkgs.fetchFromGitLab {
-          owner = "fzwoch";
-          repo = "obs-nvfbc";
-          rev = "v${version}";
-          sha256 = "sha256-Si+TGYWpNPtUUFT+M571lCYslPyeYX92MdYV9EGgcyQ=";
-        };
-      }))
+      obs-nvfbc
     ];
   });
   obs-autostart = (makeAutostartItem {
@@ -249,9 +241,7 @@
   });
 
   # basically equivalent to nix-build '<nixpkgs/nixos>' -A vm --arg configuration ./ethminer-vm.nix
-  vmNixos = (fetchTarball { url = "https://github.com/NixOS/nixpkgs/archive/af1af9d0a9d0771d4bd946fd277d761aca839d16.tar.gz"; sha256 = "sha256:1ia6k0fjaynn9jgv0sgq22w9114awgkd3l8q7i0m69nb00y0fx0d"; }) + "/nixos";
-  #mining-vm = (import <nixpkgs/nixos> { configuration = ./ethminer-vm.nix; }).vm;
-  mining-vm = (import vmNixos { configuration = ./ethminer-vm.nix; inherit (pkgs) system; }).vm;
+  mining-vm = (import "${modulesPath}/../" { configuration = ./ethminer-vm.nix; inherit (pkgs) system; }).vm;
   in
   [
     coreutils
@@ -451,6 +441,9 @@
       };
 
       programs.fzf.enable = true;
+
+      # Autostart easyeffects daemon
+      services.easyeffects.enable = true;
     };
 
     useUserPackages = true;

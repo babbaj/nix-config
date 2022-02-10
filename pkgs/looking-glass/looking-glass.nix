@@ -4,6 +4,7 @@
 , libXcursor, libXpresent, wayland, wayland-protocols
 , pipewire, libpulseaudio, libsamplerate
 , src # flake input
+, terminal ? true
 }:
 
 let
@@ -13,7 +14,7 @@ let
     type = "Application";
     exec = "looking-glass-client";
     icon = "lg-logo";
-    terminal = true;
+    inherit terminal;
   };
 in stdenv.mkDerivation rec {
   pname = "looking-glass-client";
@@ -54,9 +55,10 @@ in stdenv.mkDerivation rec {
     libsamplerate
   ];
 
-  NIX_CFLAGS_COMPILE = "-mavx"; # Fix some sort of AVX compiler problem.
+  #NIX_CFLAGS_COMPILE = "-mavx"; # Fix some sort of AVX compiler problem.
+  #NIX_CFLAGS_COMPILE = "-msse4.1";
 
-  #cmakeFlags = [ "-DENABLE_PIPEWIRE=no" ];
+  cmakeFlags = [ "-DOPTIMIZE_FOR_NATIVE=OFF" ];
 
   patches = [ ./0001-Allow-sudo.patch ];
 

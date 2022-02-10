@@ -1,9 +1,9 @@
 {
   inputs = {
     home-manager.url = "github:nix-community/home-manager";
-    #nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # Updates faster but requires more compiling
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    #nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     memflow.url = "github:memflow/memflow-nixos";
     polymc.url = "github:PolyMC/PolyMC";
 
@@ -31,7 +31,7 @@
       config.allowUnfree = true;
       overlays = [
         (final: prev: {
-          looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src-fixed; };
+          looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src-fixed; terminal = false; };
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix { src = gb-src; };
         })
         polymc.overlay
