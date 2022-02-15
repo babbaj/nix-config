@@ -11,10 +11,6 @@
       ./secret.nix
       ./vm-setup.nix
       ./scripts.nix
-      ./steam.nix
-      # Home-manager
-      #<home-manager/nixos>
-      #/home/babbaj/home-manager/nixos/default.nix
       ./pipewire.nix
     ];
 
@@ -256,7 +252,6 @@
     obs-autostart
     minecraft
     polymc
-    steam
     google-chrome
     firefox
     element-desktop
@@ -369,6 +364,7 @@
     users.babbaj = {
       home.enableNixpkgsReleaseCheck = false;
       #imports = [ ./i3.nix ];
+      imports = [ ./steam-proton.nix ];
 
       programs.ssh = {
         enable = true;
