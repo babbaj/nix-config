@@ -57,6 +57,7 @@ in
       fsType = "ext4";
     };
 
+  # This can't exist when it's using the vfio driver
   fileSystems."/mnt/c" =
     { device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_500GB_S5H7NS0NB47461B-part4";
       fsType = "ntfs-3g";

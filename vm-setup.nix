@@ -7,11 +7,27 @@
 
   boot.kernelModules = [ "kvm-amd"];
   boot.initrd.kernelModules = [ "vfio-pci" ];
-  boot.kernelParams = [ 
+  boot.kernelParams = 
+  let
+    gpuIds = "10de:1e89,10de:10f8,10de:1ad8,10de:1ad9";
+    ssdId = "144d:a808";
+  in [ 
     "amd_iommu=on" "iommu=1" "kvm.ignore_msrs=1" "kvm.report_ignored_msrs=0" "kvm_amd.npt=1" "kvm_amd.avic=1" 
-    "vfio-pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de:1ad9" 
+    "vfio-pci.ids=${gpuIds}"
+    #"pcie_acs_override=downstream,multifunction"
     "default_hugepagesz=1G"
   ];
+
+  /*boot.kernelPatches = [
+    {
+      name = "acs-override-patch";
+      patch = pkgs.fetchurl {
+        name = "acs-override-patch.patch";
+        url = https://aur.archlinux.org/cgit/aur.git/plain/add-acs-overrides.patch?h=linux-vfio&id=85ceebfa8ff5bf51483df3e27ebf9222cb860d12;
+        sha256 = "sha256-uQvnt5ZSvmH31QaRAA9qjHWiQNwu7iZnto2YT2dYP3c=";
+      };
+    }
+  ];*/
 
   security.pam.loginLimits = [
     { domain = "*"; item = "memlock"; type = "-"; value = "unlimited"; }

@@ -3,7 +3,8 @@
     home-manager.url = "github:nix-community/home-manager";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # Updates faster but requires more compiling
-    nixpkgs-fresh.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs-unstable-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
     memflow.url = "github:memflow/memflow-nixos";
     polymc.url = "github:PolyMC/PolyMC";
 
@@ -17,7 +18,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-fresh, home-manager, memflow, polymc, looking-glass-src, gb-src }: 
+  outputs = { self, nixpkgs, nixpkgs-unstable-small, nixpkgs-master, home-manager, memflow, polymc, looking-glass-src, gb-src }: 
   let
     looking-glass-src-fixed = builtins.fetchGit {
       url = "https://github.com/gnif/LookingGlass";
@@ -27,7 +28,9 @@
 
     system = "x86_64-linux";
 
-    freshPkgs = import nixpkgs-fresh { inherit system; };
+    pkgsUnstableSmall = import nixpkgs-unstable-small { inherit system; };
+    pkgsMaster = import nixpkgs-master { inherit system; config.allowUnfree = true; };
+
     pkgs = import nixpkgs {
       inherit system;
       config.allowUnfree = true;
@@ -35,9 +38,10 @@
         (final: prev: {
           looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src-fixed; };
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix { src = gb-src; };
-          kitty = freshPkgs.kitty;
+          kitty = pkgsUnstableSmall.kitty;
 
-          spice-gtk = freshPkgs.spice-gtk; # https://nixpk.gs/pr-tracker.html?pr=159340
+          spice-gtk = pkgsUnstableSmall.spice-gtk; # https://nixpk.gs/pr-tracker.html?pr=159340
+          discord = pkgsMaster.discord;
         })
         polymc.overlay
       ];

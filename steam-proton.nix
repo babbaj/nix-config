@@ -11,8 +11,7 @@ in
 {
   # For some reason a normal symlink doesn't work and recursive symlinking on every activation is too slow
   home.activation.proton-activation = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    if [[ ! -d '${path}' ]]
-    then
+    if [[ ! -d ${path} ]]; then
       cp -r --reflink=auto ${proton-ge} ${path}
     fi
   '';

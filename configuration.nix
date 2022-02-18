@@ -347,6 +347,7 @@
     nix-top
     nmap
     tmux
+    geekbench
   ];
 
   # for intellij
