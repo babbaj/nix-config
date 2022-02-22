@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchFromGitHub, makeDesktopItem, cmake, pkg-config
+{ stdenv, lib, fetchFromGitHub, makeDesktopItem, copyDesktopItems, cmake, pkg-config
 , freefont_ttf, spice-protocol, nettle, libbfd, fontconfig, libffi, expat
 , libxkbcommon, libGL, libXext, libXrandr, libXi, libXScrnSaver, libXinerama
 , libXcursor, libXpresent, wayland, wayland-protocols
@@ -29,7 +29,9 @@ in stdenv.mkDerivation rec {
   };*/
   inherit src;
 
-  nativeBuildInputs = [ cmake pkg-config ];
+  nativeBuildInputs = [ cmake pkg-config copyDesktopItems ];
+
+  desktopItems = [ desktopItem ];
 
   buildInputs = [
     libGL
@@ -67,9 +69,9 @@ in stdenv.mkDerivation rec {
     export sourceRoot="source/client"
   '';
 
+
   postInstall = ''
     mkdir -p $out/share/pixmaps
-    ln -s ${desktopItem}/share/applications $out/share/
     cp $src/resources/lg-logo.png $out/share/pixmaps
   '';
 

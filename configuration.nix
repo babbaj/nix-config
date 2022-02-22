@@ -263,8 +263,8 @@
     binutils
     virt-manager
     git
-    clang_12
-    llvm_12
+    clang_13
+    llvm_13
     gcc11
     compsize
     tdesktop
@@ -298,7 +298,6 @@
     networkmanagerapplet
     gnome.gnome-tweaks
     psmisc # future installer requires killall
-    lepton
     unzip
     p7zip
     unrar
@@ -348,6 +347,7 @@
     nmap
     tmux
     geekbench
+    lutris
   ];
 
   # for intellij

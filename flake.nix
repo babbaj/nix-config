@@ -38,10 +38,8 @@
         (final: prev: {
           looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src-fixed; };
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix { src = gb-src; };
-          kitty = pkgsUnstableSmall.kitty;
 
-          spice-gtk = pkgsUnstableSmall.spice-gtk; # https://nixpk.gs/pr-tracker.html?pr=159340
-          discord = pkgsMaster.discord;
+          droidcam = pkgsUnstableSmall.droidcam; # https://nixpk.gs/pr-tracker.html?pr=160576
         })
         polymc.overlay
       ];
