@@ -348,6 +348,7 @@
     tmux
     geekbench
     lutris
+    squashfsTools
   ];
 
   # for intellij
