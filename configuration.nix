@@ -12,6 +12,7 @@
       ./vm-setup.nix
       ./scripts.nix
       ./pipewire.nix
+      #./metrics.nix
     ];
 
 
@@ -249,7 +250,7 @@
     jetbrains.goland
     jetbrains.rider
     vlc
-    wireguard
+    wireguard-tools
     qbittorrent
     obs
     obs-autostart
@@ -260,6 +261,7 @@
     element-desktop
     discord
     go
+    lepton
     binutils
     virt-manager
     git
@@ -307,7 +309,9 @@
     wireshark
     mbuffer
     wineWowPackages.staging
-    dotnet-sdk_3
+    #dotnet-sdk_3
+    dotnet-sdk
+    mono
     youtube-dl
     usbutils
     lm_sensors
@@ -349,6 +353,8 @@
     geekbench
     lutris
     squashfsTools
+    xsecurelock
+    nix-diff
   ];
 
   # for intellij
@@ -398,7 +404,7 @@
         };
 
         extraConfig = {
-          submodule.recurse = true;
+          #submodule.recurse = true;
         };
       };
 
@@ -421,13 +427,6 @@
         historyControl = [ "ignoredups" ];
       };
 
-      programs.alacritty = {
-        enable = true;
-
-        settings = {
-          background_opacity = 0.9;
-        };
-      };
       programs.kitty = {
         enable = true;
 

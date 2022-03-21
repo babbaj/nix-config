@@ -7,6 +7,7 @@
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     memflow.url = "github:memflow/memflow-nixos";
     polymc.url = "github:PolyMC/PolyMC";
+    #polymc.url = "github:Babbaj/PolyMC/nix-refactor";
 
     looking-glass-src = {
       url = "github:gnif/LookingGlass";

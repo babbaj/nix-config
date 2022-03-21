@@ -30,10 +30,6 @@ in
         pulse.enable = true;
         jack.enable = true;
 
-        # Default session manager
-        media-session.enable = true;
-
-
         config.pipewire = {
           "context.properties" = {
             #"link.max-buffers" = 64;

@@ -63,6 +63,10 @@
         #noSwapDamage = true;
         #noBufferAge = true;
       };
+      audio = {
+        micAlwaysAllow = true;
+        micShowIndicator = false;
+      };
     };
   };
 
