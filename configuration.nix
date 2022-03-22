@@ -355,6 +355,7 @@
     squashfsTools
     xsecurelock
     nix-diff
+    gpu-screen-recorder-gtk # from the flake
   ];
 
   # for intellij
