@@ -39,9 +39,9 @@
         (final: prev: {
           looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src-fixed; };
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix { src = gb-src; };
-          
+
           gpu-screen-recorder-gtk = pkgs.callPackage ./pkgs/gpu-screen-recorder/gpu-screen-recorder-gtk.nix {};
-          gpu-screen-recorder = pkgs.callPackage ./pkgs/gpu-screen-recorder/gpu-screen-recorder.nix {};
+          gpu-screen-recorder = pkgs.callPackage ./pkgs/gpu-screen-recorder/gpu-screen-recorder-cli.nix {};
         })
         polymc.overlay
       ];

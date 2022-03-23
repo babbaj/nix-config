@@ -3,12 +3,12 @@
 
 stdenv.mkDerivation rec {
   pname = "gpu-screen-recorder";
-  version = "2022-03-22";
+  version = "1.0.0";
 
   src = fetchgit {
     url = "https://repo.dec05eba.com/gpu-screen-recorder";
-    rev = "821cacf9ffe4870ba98f32c5698a6d655341add4";
-    sha256 = "sha256-7Tf3NGutC8XY4ijZFgJOIiDGuvRVXO4RG1U7he8x5mM=";
+    rev = "36fd4516db06bcb192e49055319d1778bbed0322";
+    sha256 = "sha256-hYEHM4FOYcPmQ5Yxh520PKy8HiD+G0xv9hrn8SmA07w=";
   };
 
   nativeBuildInputs = [ 
