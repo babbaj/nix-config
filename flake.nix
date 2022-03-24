@@ -10,7 +10,10 @@
     #polymc.url = "github:Babbaj/PolyMC/nix-refactor";
 
     looking-glass-src = {
-      url = "github:gnif/LookingGlass";
+      url = "ssh://git@github.com/gnif/LookingGlass.git";
+      type = "git";
+      ref = "master";
+      submodules = true;
       flake = false;
     };
     gb-src = {
@@ -21,12 +24,6 @@
 
   outputs = { self, nixpkgs, nixpkgs-unstable-small, nixpkgs-master, home-manager, memflow, polymc, looking-glass-src, gb-src }: 
   let
-    looking-glass-src-fixed = builtins.fetchGit {
-      url = "https://github.com/gnif/LookingGlass";
-      inherit (looking-glass-src) rev;
-      submodules = true;
-    };
-
     system = "x86_64-linux";
 
     pkgsUnstableSmall = import nixpkgs-unstable-small { inherit system; };
@@ -37,7 +34,7 @@
       config.allowUnfree = true;
       overlays = [
         (final: prev: {
-          looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src-fixed; };
+          looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src; };
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix { src = gb-src; };
 
           gpu-screen-recorder-gtk = pkgs.callPackage ./pkgs/gpu-screen-recorder/gpu-screen-recorder-gtk.nix {};
