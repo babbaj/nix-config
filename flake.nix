@@ -2,6 +2,7 @@
   inputs = {
     home-manager.url = "github:nix-community/home-manager";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    #nixpkgs.url = "github:nixos/nixpkgs/pull/160343/merge"; # Gnome 42
     # Updates faster but requires more compiling
     nixpkgs-unstable-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
@@ -29,16 +30,35 @@
     pkgsUnstableSmall = import nixpkgs-unstable-small { inherit system; };
     pkgsMaster = import nixpkgs-master { inherit system; config.allowUnfree = true; };
 
-    pkgs = import nixpkgs {
+    nixpkgsPatched = let
+      pkgs = (import nixpkgs { inherit system; });
+    in pkgs.stdenv.mkDerivation {
+      name = "nixpkgs-patched";
+      src = nixpkgs;
+      patches = with pkgs; [
+        (fetchpatch { # https://github.com/NixOS/nixpkgs/pull/166320
+          url = "https://github.com/NixOS/nixpkgs/commit/8d636482f1eb7113e629ae604074e4c706068c1f.patch";
+          sha256 = "sha256-06iiQBNBPHimiRIccF1AdAEA2CTFbQYlRqzzp9/UxSg=";
+        })
+        (fetchpatch { # https://github.com/NixOS/nixpkgs/pull/166347
+          url = "https://github.com/NixOS/nixpkgs/commit/553b2f048a98c8432d04dfa38bb3e295d1b1c504.patch";
+          sha256 = "sha256-/je+fBDK7qSYRkO835nleVdZuc9WJIHyZP5fgDh8V9Q=";
+        })
+      ];
+
+      dontFixup = true;
+      installPhase = ''
+        cp -R . $out
+      '';
+    };
+
+    pkgs = import nixpkgsPatched {
       inherit system;
       config.allowUnfree = true;
       overlays = [
         (final: prev: {
           looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src; };
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix { src = gb-src; };
-
-          gpu-screen-recorder-gtk = pkgs.callPackage ./pkgs/gpu-screen-recorder/gpu-screen-recorder-gtk.nix {};
-          gpu-screen-recorder = pkgs.callPackage ./pkgs/gpu-screen-recorder/gpu-screen-recorder-cli.nix {};
         })
         polymc.overlay
       ];
