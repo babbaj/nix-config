@@ -2,7 +2,6 @@
   inputs = {
     home-manager.url = "github:nix-community/home-manager";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    #nixpkgs.url = "github:nixos/nixpkgs/pull/160343/merge"; # Gnome 42
     # Updates faster but requires more compiling
     nixpkgs-unstable-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
@@ -49,6 +48,24 @@
       dontFixup = true;
       installPhase = ''
         cp -R . $out
+        #mv $(realpath .) $out
+      '';
+    };
+
+    home-manager-patched = pkgs.stdenv.mkDerivation {
+      name = "home-manager-patched";
+      src = "${home-manager}";
+      patches = with pkgs; [
+        (fetchpatch { # https://github.com/nix-community/home-manager/pull/2850
+          url = "https://github.com/nix-community/home-manager/commit/a8aff212acf9a94a4d0129099d84fff66843c4f3.patch";
+          sha256 = "sha256-+FYoQbJBj5MTL4UjXswECPf5FKLlGrTKzlWecf2PEVg=";
+        })
+      ];
+      dontBuild = true;
+      dontFixup = true;
+      installPhase = ''
+        cp -R . $out
+        #mv $(realpath .) $out
       '';
     };
 
@@ -67,7 +84,7 @@
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
-        home-manager.nixosModule
+        (import "${home-manager-patched}/nixos")
         memflow.nixosModule
         ./configuration.nix
       ];

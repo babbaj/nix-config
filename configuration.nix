@@ -408,6 +408,8 @@
         extraConfig = {
           #submodule.recurse = true;
         };
+
+        difftastic.enable = true;
       };
 
       services.gpg-agent.enable = true;
