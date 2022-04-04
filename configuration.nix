@@ -378,7 +378,7 @@
     users.babbaj = {
       home.enableNixpkgsReleaseCheck = false;
       imports = [
-        ./i3.nix
+        ./home/i3.nix
         ./home/steam-proton.nix
         ./home/ssh.nix
         ./home/direnv.nix
