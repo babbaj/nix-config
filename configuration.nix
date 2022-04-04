@@ -388,6 +388,7 @@
         ./home/gpg-agent.nix
         ./home/fzf.nix
         ./home/easyeffects.nix
+        ./home/htop.nix
       ];
     };
 
