@@ -47,14 +47,13 @@
 
       dontFixup = true;
       installPhase = ''
-        cp -R . $out
-        #mv $(realpath .) $out
+        mv $(realpath .) $out
       '';
     };
 
-    home-manager-patched = pkgs.stdenv.mkDerivation {
+    /*home-manager-patched = pkgs.stdenv.mkDerivation {
       name = "home-manager-patched";
-      src = "${home-manager}";
+      src = home-manager;
       patches = with pkgs; [
         (fetchpatch { # https://github.com/nix-community/home-manager/pull/2850
           url = "https://github.com/nix-community/home-manager/commit/a8aff212acf9a94a4d0129099d84fff66843c4f3.patch";
@@ -64,10 +63,23 @@
       dontBuild = true;
       dontFixup = true;
       installPhase = ''
-        cp -R . $out
-        #mv $(realpath .) $out
+        mv $(realpath .) $out
       '';
-    };
+    };*/
+    home-manager-patched = pkgs.runCommand "home-manager-patched" {
+      src = home-manager;
+      patches = with pkgs; [
+        (fetchpatch { # https://github.com/nix-community/home-manager/pull/2850
+          url = "https://github.com/nix-community/home-manager/commit/a8aff212acf9a94a4d0129099d84fff66843c4f3.patch";
+          sha256 = "sha256-+FYoQbJBj5MTL4UjXswECPf5FKLlGrTKzlWecf2PEVg=";
+        })
+      ];
+    } ''
+      runHook unpackPhase
+      cd source
+      runHook patchPhase
+      mv $(realpath .) $out
+    '';
 
     pkgs = import nixpkgsPatched {
       inherit system;

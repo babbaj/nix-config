@@ -187,6 +187,7 @@
 
     #package = pkgs.nix_2_4;
     extraOptions = ''
+      #experimental-features = nix-command flakes ca-derivations
       experimental-features = nix-command flakes
     '';
   };
@@ -376,85 +377,18 @@
   home-manager = {
     users.babbaj = {
       home.enableNixpkgsReleaseCheck = false;
-      #imports = [ ./i3.nix ];
-      imports = [ ./steam-proton.nix ];
-
-      programs.ssh = {
-        enable = true;
-        matchBlocks.n = {
-          hostname = "192.168.69.2";
-          user = "root";
-        };
-        extraConfig = ''
-          SetEnv TERM=xterm-256color
-        '';
-      };
-
-      programs.direnv = {
-        enable = true;
-        nix-direnv.enable = true;
-      };
-
-      programs.git = {
-        enable = true;
-        userName = "Babbaj";
-        userEmail = "babbaj45@gmail.com";
-
-        signing = {
-          key = "F044309848A07CAC";
-          signByDefault = true;
-        };
-
-        extraConfig = {
-          #submodule.recurse = true;
-        };
-
-        difftastic.enable = true;
-      };
-
-      services.gpg-agent.enable = true;
-      services.gpg-agent.pinentryFlavor = "gnome3";
-
-      programs.bash = {
-        enable = true;
-        bashrcExtra = ''
-          # https://stackoverflow.com/questions/9457233/unlimited-bash-history
-          export HISTTIMEFORMAT="[%F %T] "
-          export HISTFILE=~/.bash_eternal_history
-          PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
-
-          export PATH=$PATH:~/bin:~/.cargo/bin
-          #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${lib.makeLibraryPath [ pkgs.xorg.libXxf86vm ]}
-        '';
-        historyFileSize = -1;
-        historySize = -1;
-
-        shellAliases = {
-          pbcopy = "xclip -selection clipboard";
-          pbpaste = "xclip -selection clipboard -o";
-          cp = "cp --reflink=auto";
-        };
-
-        historyControl = [ "ignoredups" ];
-      };
-
-      programs.kitty = {
-        enable = true;
-
-        settings = {
-          background_opacity = "0.8";
-          scrollback_lines = "-1";
-        };
-        keybindings = {
-          # Pause key (push to talk)
-          "0xff13" = "discard_event";
-        };
-      };
-
-      programs.fzf.enable = true;
-
-      # Autostart easyeffects daemon
-      services.easyeffects.enable = true;
+      imports = [
+        ./i3.nix
+        ./home/steam-proton.nix
+        ./home/ssh.nix
+        ./home/direnv.nix
+        ./home/git.nix
+        ./home/bash.nix
+        ./home/kitty.nix
+        ./home/gpg-agent.nix
+        ./home/fzf.nix
+        ./home/easyeffects.nix
+      ];
     };
 
     useUserPackages = true;
