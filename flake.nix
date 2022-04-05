@@ -35,10 +35,6 @@
       name = "nixpkgs-patched";
       src = nixpkgs;
       patches = with pkgs; [
-        (fetchpatch { # https://github.com/NixOS/nixpkgs/pull/166320
-          url = "https://github.com/NixOS/nixpkgs/commit/8d636482f1eb7113e629ae604074e4c706068c1f.patch";
-          sha256 = "sha256-06iiQBNBPHimiRIccF1AdAEA2CTFbQYlRqzzp9/UxSg=";
-        })
         (fetchpatch { # https://github.com/NixOS/nixpkgs/pull/166347
           url = "https://github.com/NixOS/nixpkgs/commit/553b2f048a98c8432d04dfa38bb3e295d1b1c504.patch";
           sha256 = "sha256-/je+fBDK7qSYRkO835nleVdZuc9WJIHyZP5fgDh8V9Q=";
@@ -69,10 +65,7 @@
     home-manager-patched = pkgs.runCommand "home-manager-patched" {
       src = home-manager;
       patches = with pkgs; [
-        (fetchpatch { # https://github.com/nix-community/home-manager/pull/2850
-          url = "https://github.com/nix-community/home-manager/commit/a8aff212acf9a94a4d0129099d84fff66843c4f3.patch";
-          sha256 = "sha256-+FYoQbJBj5MTL4UjXswECPf5FKLlGrTKzlWecf2PEVg=";
-        })
+        
       ];
     } ''
       runHook unpackPhase
