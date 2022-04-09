@@ -114,11 +114,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1649084009,
-        "narHash": "sha256-jfU0rYnMbL8jMNH+o+BYGxsb7d+HrtbFYtG5/kbQDLc=",
+        "lastModified": 1649313500,
+        "narHash": "sha256-UQN+1klTXrTvxJlakMUbXr9GW9Y1jOTFTyuI8QffKN8=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "0382c5f75e9b4ffb0cdc75535c3e249019710a02",
+        "rev": "66ffa7a0a6411c7c73a648bd0b426c73e2a14fa0",
         "type": "github"
       },
       "original": {
@@ -146,11 +146,11 @@
     "looking-glass-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1647676327,
-        "narHash": "sha256-Z8qAKnklaTBwyFNEoJvmjT23r4UXW2+cg7hLOLVBNOA=",
+        "lastModified": 1649485151,
+        "narHash": "sha256-YpK/6KfDHRj+vY5bGZSy9emCitFMUMVsDP/N/Y8VKAY=",
         "ref": "master",
-        "rev": "f3fe774f6933ac5860ff9c276160055367c95055",
-        "revCount": 2880,
+        "rev": "4bbdd302842be4c53461b3bdd34d3038b5792eec",
+        "revCount": 2882,
         "submodules": true,
         "type": "git",
         "url": "ssh://git@github.com/gnif/LookingGlass.git"
@@ -182,11 +182,11 @@
         "scanflow": "scanflow"
       },
       "locked": {
-        "lastModified": 1649097604,
-        "narHash": "sha256-LFciR7OlZ1XAS3X20Av97cQunUtNZrpg7qJLLTaMsx4=",
+        "lastModified": 1649275282,
+        "narHash": "sha256-q8F+PDZqH78roCEYtdd+l1HOmpU7LFxgBfOaP5tIC9k=",
         "owner": "memflow",
         "repo": "memflow-nixos",
-        "rev": "f6c99e6b5bc76b41863691451f3fb200b4b1b458",
+        "rev": "94e992a15146d3f0b50d8607d59577c6ce1d6d91",
         "type": "github"
       },
       "original": {
@@ -230,11 +230,11 @@
     "memflow-kvm": {
       "flake": false,
       "locked": {
-        "lastModified": 1648637485,
-        "narHash": "sha256-M0wtgkv34lv1XXwZjRdLJkuLrJJvyz+D9yZ3d3IhBY8=",
+        "lastModified": 1649272211,
+        "narHash": "sha256-/wSEi9M3eO+Kkc5HxZwsKWAtZeKzQtg23WEGTOmiABo=",
         "ref": "main",
-        "rev": "4213e094126eeb211562c2323c298e1bf55b8dd8",
-        "revCount": 87,
+        "rev": "61c8bdb097ce629bfdafdb0b2f6173a521756712",
+        "revCount": 89,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/memflow/memflow-kvm.git"
@@ -300,11 +300,11 @@
     "memflow-qemu": {
       "flake": false,
       "locked": {
-        "lastModified": 1647802968,
-        "narHash": "sha256-JqUchK6ym1equaB8cnme2mM3xEdklIFcJXz2t4qqMiU=",
+        "lastModified": 1649270250,
+        "narHash": "sha256-/LDRFp4Sj/xeySJsp5LN6zgxQUsf37p20e3vTjXr/Sw=",
         "owner": "memflow",
         "repo": "memflow-qemu",
-        "rev": "a81c4a1168663b3c2bbfc3ff7fc788a1421585ce",
+        "rev": "6ddd3f982ff7120897da598b644b40836450ec77",
         "type": "github"
       },
       "original": {
@@ -361,11 +361,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1649120228,
-        "narHash": "sha256-S1CAYUU46BtlCiT333/Hn39xdHOiA95WxlydsDNPlLg=",
+        "lastModified": 1649316675,
+        "narHash": "sha256-69HdgcPQx/WWRI53VQguqKZrV/q2aLpx1E69DTj9Tvs=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "4561be306455a4ed12c5c66408816298d14eb8f9",
+        "rev": "d888104e4c7679adee2bf0b06349083fc156771c",
         "type": "github"
       },
       "original": {
@@ -377,11 +377,11 @@
     },
     "nixpkgs-unstable-small": {
       "locked": {
-        "lastModified": 1649101149,
-        "narHash": "sha256-JYIQGG8VrBtZWdfr6/XWGWet4SdoU4fXTrphO1yy1sg=",
+        "lastModified": 1649270075,
+        "narHash": "sha256-m4QzKyk2xtJNKK07MWQK0b0fafj0/4fPlFa4F/YPehw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "924d6ff34dfd6628989df44e5160b7784dbb07e6",
+        "rev": "a64987375ffc8e9cc093150596c9bee215e4d6f4",
         "type": "github"
       },
       "original": {
@@ -393,11 +393,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1648632716,
-        "narHash": "sha256-kCmnDeiaMsdhfnNKjxdOzwRh2H6eQb8yWAL+nNabC/Y=",
+        "lastModified": 1649225869,
+        "narHash": "sha256-u1zLtPmQzhT9mNXyM8Ey9pk7orDrIKdwooeGDEXm5xM=",
         "owner": "NixOS",
         "repo": "Nixpkgs",
-        "rev": "710fed5a2483f945b14f4a58af2cd3676b42d8c8",
+        "rev": "b6966d911da89e5a7301aaef8b4f0a44c77e103c",
         "type": "github"
       },
       "original": {
@@ -425,11 +425,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1649012074,
-        "narHash": "sha256-vQUROcJ3FfT3GTB/nJrXwVvjuq8WfK0ImN+RUgDVN1c=",
+        "lastModified": 1649225869,
+        "narHash": "sha256-u1zLtPmQzhT9mNXyM8Ey9pk7orDrIKdwooeGDEXm5xM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "bc4b9eef3ce3d5a90d8693e8367c9cbfc9fc1e13",
+        "rev": "b6966d911da89e5a7301aaef8b4f0a44c77e103c",
         "type": "github"
       },
       "original": {
@@ -464,11 +464,11 @@
         "quazip": "quazip"
       },
       "locked": {
-        "lastModified": 1649099014,
-        "narHash": "sha256-jy7poEVGy2Y37gVQdbLJxgQsu3HG92DgCge5lk5XVBs=",
+        "lastModified": 1649235158,
+        "narHash": "sha256-Hh9VXMhEegnT2dijInKeIg4elGXYOgZo1dzBrOZz4K4=",
         "owner": "PolyMC",
         "repo": "PolyMC",
-        "rev": "bbc6b71138f95e1f7cae812d786242bb54fa8863",
+        "rev": "fa870bc026b21aca7b3859cde8ba3f843a98e023",
         "type": "github"
       },
       "original": {
@@ -527,11 +527,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1649039748,
-        "narHash": "sha256-WJvIJcbiXtQig2j/AocM2zg714JyyEpwviDD19nQWQc=",
+        "lastModified": 1649212438,
+        "narHash": "sha256-inr/6z2/3aekw3HP51dSSjbY6oPaaOmd1yHqRbnPHr0=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "87d24beaf538aeed40f1d25c10a27fb527f19d7d",
+        "rev": "69e0fdf70582e1b1e3b4d84e5201ca72b58b5b9f",
         "type": "github"
       },
       "original": {
