@@ -29,9 +29,10 @@
     pkgsUnstableSmall = import nixpkgs-unstable-small { inherit system; };
     pkgsMaster = import nixpkgs-master { inherit system; config.allowUnfree = true; };
 
-    nixpkgsPatched = let
+
+    nixpkgs-patched = let
       pkgs = (import nixpkgs { inherit system; });
-    in pkgs.stdenv.mkDerivation {
+    in pkgs.applyPatches {
       name = "nixpkgs-patched";
       src = nixpkgs;
       patches = with pkgs; [
@@ -40,41 +41,9 @@
           sha256 = "sha256-/je+fBDK7qSYRkO835nleVdZuc9WJIHyZP5fgDh8V9Q=";
         })
       ];
-
-      dontFixup = true;
-      installPhase = ''
-        mv $(realpath .) $out
-      '';
     };
 
-    /*home-manager-patched = pkgs.stdenv.mkDerivation {
-      name = "home-manager-patched";
-      src = home-manager;
-      patches = with pkgs; [
-        (fetchpatch { # https://github.com/nix-community/home-manager/pull/2850
-          url = "https://github.com/nix-community/home-manager/commit/a8aff212acf9a94a4d0129099d84fff66843c4f3.patch";
-          sha256 = "sha256-+FYoQbJBj5MTL4UjXswECPf5FKLlGrTKzlWecf2PEVg=";
-        })
-      ];
-      dontBuild = true;
-      dontFixup = true;
-      installPhase = ''
-        mv $(realpath .) $out
-      '';
-    };*/
-    home-manager-patched = pkgs.runCommand "home-manager-patched" {
-      src = home-manager;
-      patches = with pkgs; [
-        
-      ];
-    } ''
-      runHook unpackPhase
-      cd source
-      runHook patchPhase
-      mv $(realpath .) $out
-    '';
-
-    pkgs = import nixpkgsPatched {
+    pkgs = import nixpkgs-patched {
       inherit system;
       config.allowUnfree = true;
       overlays = [
@@ -83,6 +52,14 @@
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix { src = gb-src; };
         })
         polymc.overlay
+      ];
+    };
+
+    home-manager-patched = pkgs.applyPatches {
+      name = "home-manager-patched";
+      src = home-manager;
+      patches = with pkgs; [
+        
       ];
     };
   in {

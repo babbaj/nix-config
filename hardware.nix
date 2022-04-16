@@ -26,6 +26,8 @@ in
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  hardware.i2c.enable = true;
+
   #hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
   # 495.46 crashes xorg with looking-glass
   hardware.nvidia.package = patchDriver (nvidia_generic {

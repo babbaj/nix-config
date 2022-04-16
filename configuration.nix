@@ -13,6 +13,7 @@
       ./scripts.nix
       ./pipewire.nix
       #./metrics.nix
+      ./openrgb.nix
     ];
 
 
@@ -258,6 +259,7 @@
     minecraft
     polymc
     google-chrome
+    ungoogled-chromium
     firefox
     element-desktop
     discord
@@ -354,10 +356,14 @@
     geekbench
     lutris
     squashfsTools
+    squashfuse
     xsecurelock
     nix-diff
     gpu-screen-recorder
     gpu-screen-recorder-gtk
+    gimp
+    fdupes
+    duperemove
   ];
 
   # for intellij
@@ -384,6 +390,7 @@
         ./home/direnv.nix
         ./home/git.nix
         ./home/bash.nix
+        ./home/zoxide.nix
         ./home/kitty.nix
         ./home/gpg-agent.nix
         ./home/fzf.nix
