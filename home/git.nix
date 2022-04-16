@@ -15,6 +15,6 @@
       #submodule.recurse = true;
     };
 
-    difftastic.enable = true;
+    #difftastic.enable = true;
   };
 }

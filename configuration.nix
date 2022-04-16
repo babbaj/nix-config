@@ -396,6 +396,7 @@
         ./home/fzf.nix
         ./home/easyeffects.nix
         ./home/htop.nix
+        ./home/firefox.nix
       ];
     };
 
