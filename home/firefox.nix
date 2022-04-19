@@ -71,8 +71,7 @@ let
     # containing the word "telemetry."
     "browser.newtabpage.activity-stream.feeds.telemetry" = false;
     "browser.newtabpage.activity-stream.telemetry" = false;
-    "browser.newtabpage.activity-stream.telemetry.structuredIngestion.endpoint" =
-      "";
+    "browser.newtabpage.activity-stream.telemetry.structuredIngestion.endpoint" = "";
     "browser.newtabpage.activity-stream.telemetry.ut.events" = false;
     "browser.ping-centre.telemetry" = false;
     "browser.urlbar.eventTelemetry.enabled" = false;
@@ -99,24 +98,20 @@ let
 
     # Attempt to disable every boolean preference containing the word
     # "recommend."
-    "browser.newtabpage.activity-stream.feeds.recommendationprovider" =
-      false;
+    "browser.newtabpage.activity-stream.feeds.recommendationprovider" = false;
     "extensions.htmlaboutaddons.recommendations.enabled" = false;
     "remote.prefs.recommended" = false;
 
     # Disable the proprietary Pocket service.
     # https://support.mozilla.org/en-US/kb/disable-or-re-enable-pocket-for-firefox
-    "browser.newtabpage.activity-stream.discoverystream.saveToPocketCard.enabled" =
-      false;
-    "browser.newtabpage.activity-stream.section.highlights.includePocket" =
-      false;
+    "browser.newtabpage.activity-stream.discoverystream.saveToPocketCard.enabled" = false;
+    "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
     "extensions.pocket.api" = "";
     "extensions.pocket.enabled" = false;
     "extensions.pocket.onSaveRecs" = false;
     "extensions.pocket.showHome" = false;
     "extensions.pocket.site" = false;
-    "services.sync.prefs.sync.browser.newtabpage.activity-stream.section.highlights.includePocket" =
-      false;
+    "services.sync.prefs.sync.browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
 
     # According to Bugzilla, this is only used for feature detection in
     # JS-land of whether or not Form Autofill is available:

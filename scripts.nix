@@ -61,4 +61,14 @@
       ExecStart = "${script}";
     };
   };
+
+  systemd.user.services.backup-headless = {
+    description = "Backup headless database";
+    path = with pkgs; [ rsync openssh ];
+    startAt = "daily";
+    script = ''
+      mkdir /home/babbaj/headless-backup || true
+      rsync -v --progress n:/opt/slave/headless.db /home/babbaj/headless-backup/headless-$(date +"%m-%d-%Y").db
+    '';
+  };
 }
