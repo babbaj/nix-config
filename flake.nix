@@ -44,7 +44,11 @@
           url = "https://github.com/NixOS/nixpkgs/commit/a6a25ec43d65f9dbf77ed52d28f582fb6ed03d68.patch";
           sha256 = "sha256-zwkSXVL3zka6cvY+qGymP8BCfSEKRebVI6N6M2bNn6s=";
         })
-        ./fix-background.patch
+        #./fix-background.patch
+        (fetchpatch { # https://github.com/NixOS/nixpkgs/pull/168794
+          url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/169521.patch";
+          sha256 = "sha256-dxnexsy7HVc6VMEUMb5wPt2apbYw4YfU5JsNIbwFjsE=";
+        })
       ];
     };
 
@@ -63,8 +67,7 @@
     nixosSystem = args:
       import "${nixpkgs-patched}/nixos/lib/eval-config.nix" (args // {
         modules = args.modules ++ [ {
-            system.nixos.versionSuffix =
-              ".${pkgs.lib.substring 0 8 (self.lastModifiedDate or self.lastModified or "19700101")}.${self.shortRev or "dirty"}";
+            system.nixos.versionSuffix = ".${pkgs.lib.substring 0 8 (self.lastModifiedDate or self.lastModified or "19700101")}.${self.shortRev or "dirty"}";
             system.nixos.revision = pkgs.lib.mkIf (self ? rev) self.rev;
         } ];
       });

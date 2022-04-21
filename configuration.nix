@@ -364,7 +364,7 @@
     gimp
     fdupes
     duperemove
-    #nixos-artwork.wallpapers.simple-blue
+    nixos-artwork.wallpapers.simple-dark-gray # dark gray background
   ];
 
   # for intellij
