@@ -1,0 +1,39 @@
+diff --git a/nixos/modules/services/x11/desktop-managers/gnome.nix b/nixos/modules/services/x11/desktop-managers/gnome.nix
+index 258d39d4918..480688aebb0 100644
+--- a/nixos/modules/services/x11/desktop-managers/gnome.nix
++++ b/nixos/modules/services/x11/desktop-managers/gnome.nix
+@@ -439,6 +439,7 @@ in
+         gnome-shell-extensions
+         gnome-themes-extra
+         pkgs.gnome-tour # GNOME Shell detects the .desktop file on first log-in.
++        pkgs.nixos-artwork.wallpapers.simple-blue
+         pkgs.nixos-artwork.wallpapers.simple-dark-gray
+         pkgs.nixos-artwork.wallpapers.simple-dark-gray-bottom
+         pkgs.gnome-user-docs
+diff --git a/pkgs/data/misc/nixos-artwork/wallpapers.nix b/pkgs/data/misc/nixos-artwork/wallpapers.nix
+index f8d22637cf3..4d5f30e94b9 100644
+--- a/pkgs/data/misc/nixos-artwork/wallpapers.nix
++++ b/pkgs/data/misc/nixos-artwork/wallpapers.nix
+@@ -14,6 +14,22 @@ let
+         mkdir -p $out/share/backgrounds/nixos
+         ln -s $src $out/share/backgrounds/nixos/${src.name}
+ 
++        mkdir -p $out/share/gnome-background-properties/
++        cat <<EOF > $out/share/gnome-background-properties/${name}.xml
++<?xml version="1.0" encoding="UTF-8"?>
++<!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
++<wallpapers>
++  <wallpaper deleted="false">
++    <name>${name}</name>
++    <filename>${src}</filename>
++    <options>zoom</options>
++    <shade_type>solid</shade_type>
++    <pcolor>#ffffff</pcolor>
++    <scolor>#000000</scolor>
++  </wallpaper>
++</wallpapers>
++EOF
++
+         # TODO: is this path still needed?
+         mkdir -p $out/share/artwork/gnome
+         ln -s $src $out/share/artwork/gnome/${src.name}

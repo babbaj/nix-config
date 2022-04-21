@@ -44,6 +44,7 @@
           url = "https://github.com/NixOS/nixpkgs/commit/a6a25ec43d65f9dbf77ed52d28f582fb6ed03d68.patch";
           sha256 = "sha256-zwkSXVL3zka6cvY+qGymP8BCfSEKRebVI6N6M2bNn6s=";
         })
+        ./fix-background.patch
       ];
     };
 
@@ -59,6 +60,16 @@
       ];
     };
 
+    nixosSystem = args:
+      import "${nixpkgs-patched}/nixos/lib/eval-config.nix" (args // {
+        modules = args.modules ++ [ {
+            system.nixos.versionSuffix =
+              ".${pkgs.lib.substring 0 8 (self.lastModifiedDate or self.lastModified or "19700101")}.${self.shortRev or "dirty"}";
+            system.nixos.revision = pkgs.lib.mkIf (self ? rev) self.rev;
+        } ];
+      });
+
+
     home-manager-patched = pkgs.applyPatches {
       name = "home-manager-patched";
       src = home-manager;
@@ -67,7 +78,7 @@
       ];
     };
   in {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nixos = nixosSystem {
       inherit system;
       modules = [
         (import "${home-manager-patched}/nixos")

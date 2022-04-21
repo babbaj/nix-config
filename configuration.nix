@@ -364,6 +364,7 @@
     gimp
     fdupes
     duperemove
+    #nixos-artwork.wallpapers.simple-blue
   ];
 
   # for intellij
