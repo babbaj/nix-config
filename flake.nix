@@ -40,15 +40,6 @@
         #  url = "https://github.com/NixOS/nixpkgs/commit/553b2f048a98c8432d04dfa38bb3e295d1b1c504.patch";
         #  sha256 = "sha256-/je+fBDK7qSYRkO835nleVdZuc9WJIHyZP5fgDh8V9Q=";
         #})
-        (fetchpatch { # https://github.com/NixOS/nixpkgs/pull/168794
-          url = "https://github.com/NixOS/nixpkgs/commit/a6a25ec43d65f9dbf77ed52d28f582fb6ed03d68.patch";
-          sha256 = "sha256-zwkSXVL3zka6cvY+qGymP8BCfSEKRebVI6N6M2bNn6s=";
-        })
-        #./fix-background.patch
-        (fetchpatch { # https://github.com/NixOS/nixpkgs/pull/168794
-          url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/169521.patch";
-          sha256 = "sha256-dxnexsy7HVc6VMEUMb5wPt2apbYw4YfU5JsNIbwFjsE=";
-        })
       ];
     };
 

@@ -75,6 +75,8 @@
     enable = true;
     videoDrivers = [ "nvidia" ];
 
+    excludePackages = [ pkgs.xterm ];
+
     screenSection = ''
       Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
     '';
@@ -365,6 +367,7 @@
     fdupes
     duperemove
     nixos-artwork.wallpapers.simple-dark-gray # dark gray background
+    bat
   ];
 
   # for intellij
@@ -377,7 +380,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.babbaj = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "libvirtd" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" "libvirtd" "input" ]; # Enable ‘sudo’ for the user.
   };
   #security.sudo.wheelNeedsPassword = false; # troll face
 
