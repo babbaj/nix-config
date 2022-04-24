@@ -243,6 +243,11 @@
         --replace 'Exec=obs' 'Exec=obs --startreplaybuffer'
     '';
   });
+  #glib is cringe https://github.com/GNOME/glib/blob/bc0d62424579f507f8d7af13bd29b6d86723f65f/gio/gdesktopappinfo.c#L2498-L2523
+  fake-xterm = pkgs.runCommand "xterm-imposter" {} ''
+    mkdir -p $out/bin
+    ln -s ${pkgs.kitty}/bin/kitty $out/bin/xterm
+  '';
 
   # basically equivalent to nix-build '<nixpkgs/nixos>' -A vm --arg configuration ./ethminer-vm.nix
   mining-vm = (import "${modulesPath}/../" { configuration = ./ethminer-vm.nix; inherit (pkgs) system; }).vm;
@@ -368,6 +373,7 @@
     duperemove
     nixos-artwork.wallpapers.simple-dark-gray # dark gray background
     bat
+    fake-xterm
   ];
 
   # for intellij
