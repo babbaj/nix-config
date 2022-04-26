@@ -275,8 +275,8 @@
     binutils
     virt-manager
     git
-    clang_13
-    llvm_13
+    clang_14
+    llvm_14
     gcc11
     compsize
     tdesktop
