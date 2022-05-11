@@ -79,6 +79,9 @@
     #cleanup = "zap";
   };
 
+  # https://github.com/malob/nixpkgs/blob/master/modules/darwin/security/pam.nix
+  security.pam.enableSudoTouchIdAuth = true;
+
   # https://github.com/LnL7/nix-darwin/blob/master/modules/system/activation-scripts.nix
   system.activationScripts.postUserActivation.text = ''
     /usr/local/bin/dockutil --remove all --no-restart
