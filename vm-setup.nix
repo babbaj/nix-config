@@ -59,7 +59,7 @@
       };
       egl = {
         preset = "yay";
-        vsync = true;
+        vsync = true; # this seems to consistently add a frame of latency without fully fixing tearing
         #noSwapDamage = true;
         #noBufferAge = true;
       };

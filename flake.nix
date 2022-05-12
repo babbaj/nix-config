@@ -39,7 +39,6 @@
     pkgsUnstableSmall = import nixpkgs-unstable-small { inherit system; };
     pkgsMaster = import nixpkgs-master { inherit system; config.allowUnfree = true; };
 
-
     nixpkgs-patched = let
       pkgs = (import nixpkgs { inherit system; });
     in pkgs.applyPatches {
@@ -65,15 +64,6 @@
       ];
     };
 
-    nixosSystem = args:
-      import "${nixpkgs-patched}/nixos/lib/eval-config.nix" (args // {
-        modules = args.modules ++ [ {
-            system.nixos.versionSuffix = ".${pkgs.lib.substring 0 8 (self.lastModifiedDate or self.lastModified or "19700101")}.${self.shortRev or "dirty"}";
-            system.nixos.revision = pkgs.lib.mkIf (self ? rev) self.rev;
-        } ];
-      });
-
-
     home-manager-patched = pkgs.applyPatches {
       name = "home-manager-patched";
       src = home-manager;
@@ -81,6 +71,14 @@
         
       ];
     };
+
+    nixosSystem = args:
+      import "${nixpkgs-patched}/nixos/lib/eval-config.nix" (args // {
+        modules = args.modules ++ [ {
+            system.nixos.versionSuffix = ".${pkgs.lib.substring 0 8 (self.lastModifiedDate or self.lastModified or "19700101")}.${self.shortRev or "dirty"}";
+            system.nixos.revision = pkgs.lib.mkIf (self ? rev) self.rev;
+        } ];
+      });
   in {
     nixosConfigurations.nixos = nixosSystem {
       inherit system;

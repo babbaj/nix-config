@@ -42,7 +42,7 @@ in
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/7be7dc7e-97f2-43d4-ab33-134dd5f64a71";
       fsType = "btrfs";
-      options = [ "compress-force=zstd:1" "noatime" "space_cache=v2 autodefrag" ];
+      options = [ "compress-force=zstd:1" "noatime" "space_cache=v2" "autodefrag" ];
     };
 
   fileSystems."/boot" =
@@ -58,12 +58,12 @@ in
   # This can't exist when it's using the vfio driver
   fileSystems."/mnt/c" =
     { device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_500GB_S5H7NS0NB47461B-part4";
-      fsType = "ntfs-3g";
+      fsType = "ntfs3";
     };
 
   fileSystems."/mnt/g" =
     { device = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_1TB_S3Z8NB0M554645B-part2";
-      fsType = "ntfs-3g";
+      fsType = "ntfs3";
     };
 
   fileSystems."/mnt/d" =
