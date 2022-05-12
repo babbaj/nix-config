@@ -1,6 +1,8 @@
-{ ... }:
+{ pkgs, lib, ... }:
 
 let
+  inherit (pkgs.stdenv.hostPlatform) isDarwin;
+
   settings = {
     # Homepage and new windows → Blank Page.
     "browser.startup.homepage" = "https://browserleaks.com/ip";
@@ -176,5 +178,8 @@ in
       inherit settings;
       id = 0;
     };
+
+    # Dummy package so that we can install Firefox with Homebrew.
+    package = lib.mkIf isDarwin (pkgs.runCommandLocal "" { } "mkdir $out");
   };
 }

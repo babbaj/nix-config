@@ -1,5 +1,7 @@
-{ ... }:
+{ pkgs, lib, ... }:
 
+let inherit (pkgs.stdenv.hostPlatform) isDarwin;
+in
 {
   programs.kitty = {
     enable = true;
@@ -13,5 +15,8 @@
       # Pause key (push to talk)
       "0xff13" = "discard_event";
     };
+
+    # Dummy package so that we can install kitty with Homebrew.
+    package = lib.mkIf isDarwin (pkgs.runCommandLocal "" { } "mkdir $out");
   };
 }
