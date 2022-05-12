@@ -35,9 +35,9 @@
 
   # The gnupg agent configuration that comes with home-manager doesn't work on
   # macOS.
-  programs.gnupg.agent = { 
-    enable = true; 
-    enableSSHSupport = true; 
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
   };
 
   users.nix.configureBuildUsers = true;
@@ -48,10 +48,30 @@
   system.defaults.dock.wvous-tl-corner = 2; # Top Left → Mission Control
   system.defaults.dock.wvous-tr-corner = 13; # Top Right → Lock Screen
 
-  system.defaults.NSGlobalDomain.AppleInterfaceStyle = "Dark";
-
   # Date and Time
   time.timeZone = "America/New_York";
+
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+
+    overlays = [
+      (self: super:
+        {
+          dockutil = super.dockutil.overrideAttrs(old: {
+              postInstall = ''
+                substituteInPlace $out/bin/dockutil \
+                    --replace '/usr/bin/python' '${pkgs.python2}/bin/python'
+              '';
+          });
+        })
+    ];
+  };
+
+  environment.systemPackages = with pkgs; [
+      pv
+  ];
 
   # List Homebrew packages that we want to manage. Some Nix packages of MacOS
   # applications aren't mature. Homebrew must be installed out-of-band.
@@ -66,9 +86,6 @@
     ];
 
     brews = [
-      # TODO: package newest version with nix
-      # currently have to manually install from the releases page on github
-      #"dockutil"
       "pinentry-mac"
     ];
 
@@ -84,7 +101,7 @@
       "telegram"
     ];
 
-    #cleanup = "zap";
+    cleanup = "zap";
   };
 
   # https://github.com/malob/nixpkgs/blob/master/modules/darwin/security/pam.nix
@@ -92,15 +109,15 @@
 
   # https://github.com/LnL7/nix-darwin/blob/master/modules/system/activation-scripts.nix
   system.activationScripts.postUserActivation.text = ''
-    /usr/local/bin/dockutil --remove all --no-restart
-    /usr/local/bin/dockutil --add /Applications/Firefox.app --no-restart
-    /usr/local/bin/dockutil --add /Applications/Element.app --no-restart
-    /usr/local/bin/dockutil --add /Applications/Discord.app --no-restart
-    /usr/local/bin/dockutil --add /Applications/Visual\ Studio\ Code.app --no-restart
-    /usr/local/bin/dockutil --add /System/Applications/Notes.app --no-restart
-    /usr/local/bin/dockutil --add /System/Applications/Utilities/Terminal.app --no-restart
-    /usr/local/bin/dockutil --add /System/Applications/System\ Preferences.app --no-restart
-    /usr/local/bin/dockutil --add ~/Downloads --section others --view fan --display folder --sort dateadded
+    ${pkgs.dockutil}/bin/dockutil --remove all --no-restart
+    ${pkgs.dockutil}/bin/dockutil --add /Applications/Firefox.app --no-restart
+    ${pkgs.dockutil}/bin/dockutil --add /Applications/Element.app --no-restart
+    ${pkgs.dockutil}/bin/dockutil --add /Applications/Discord.app --no-restart
+    ${pkgs.dockutil}/bin/dockutil --add /Applications/Visual\ Studio\ Code.app --no-restart
+    ${pkgs.dockutil}/bin/dockutil --add /System/Applications/Notes.app --no-restart
+    ${pkgs.dockutil}/bin/dockutil --add /System/Applications/Utilities/Terminal.app --no-restart
+    ${pkgs.dockutil}/bin/dockutil --add /System/Applications/System\ Preferences.app --no-restart
+    ${pkgs.dockutil}/bin/dockutil --add ~/Downloads --section others --view fan --display folder --sort dateadded
 
 
     # By default, this directory has unsafe permissions.

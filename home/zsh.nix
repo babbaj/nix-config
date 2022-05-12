@@ -18,6 +18,7 @@ in
       save = 1000000;
       path = "${config.xdg.dataHome}/zsh/history";
       ignoreDups = true;
+      share = true;
     };
 
     sessionVariables = {
@@ -53,6 +54,9 @@ in
       # Input / Output
       # Allow comments even in interactive shells.
       setopt interactivecomments
+
+      # .zprofile doesnt seem to get executed anymore
+      eval "$(/opt/homebrew/bin/brew shellenv)"
     '';
   };
 }
