@@ -13,13 +13,20 @@
           ../home/direnv.nix
           ../home/git.nix
           ../home/kitty.nix
-          ../home/fzf.nix
           ../home/firefox.nix
+          ../home/zsh.nix
         ];
       };
       useUserPackages = true;
       useGlobalPkgs = true;
       verbose = true;
+  };
+
+  programs.zsh = {
+      enable = true;
+      enableFzfCompletion = true;
+      enableFzfHistory = true;
+      enableSyntaxHighlighting = true;
   };
 
   networking.computerName = "soybook";
@@ -70,10 +77,11 @@
       "discord"
       "element"
       "firefox"
-      "launchcontrol"
       "steam"
       "visual-studio-code"
       "kitty"
+      "spotify"
+      "telegram"
     ];
 
     #cleanup = "zap";
