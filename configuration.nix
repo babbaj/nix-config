@@ -51,7 +51,7 @@
   networking.interfaces.wlp35s0.useDHCP = true;
 
   networking.networkmanager.enable = true;
-  networking.firewall.trustedInterfaces = [ "nocom" ];
+  networking.firewall.trustedInterfaces = [ "nocom" "hetzner" ];
   networking.firewall.logRefusedConnections = false; # this has been filling my logs with junk
 
   # Select internationalisation properties.
@@ -374,6 +374,7 @@
     nixos-artwork.wallpapers.simple-dark-gray # dark gray background
     bat
     fake-xterm
+    gnomeExtensions.gsconnect
   ];
 
   # for intellij
