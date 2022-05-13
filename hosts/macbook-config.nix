@@ -74,6 +74,7 @@
       pv
       mpv
       wget
+      smartmontools # smartctl
   ];
 
   # List Homebrew packages that we want to manage. Some Nix packages of MacOS
