@@ -93,9 +93,19 @@ in
       # Input / Output
       # Allow comments even in interactive shells.
       setopt interactivecomments
-
-      # .zprofile doesnt seem to get executed anymore
+    '' + lib.optionalString isDarwin ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
     '';
+
+  initExtra = ''
+    ## Keybindings section
+    # Navigate words with ctrl+arrow keys
+    bindkey '^[Oc' forward-word                                     #
+    bindkey '^[Od' backward-word                                    #
+    bindkey '^[[1;3D' backward-word                                 # alt+left
+    bindkey '^[[1;3C' forward-word                                  # alt+right
+    bindkey '^H' backward-kill-word                                 # delete previous word with ctrl
+    bindkey '^[[Z' undo                                             # Shift+tab undo last action
+  '';
   };
 }

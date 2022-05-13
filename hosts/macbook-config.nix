@@ -15,6 +15,7 @@
           ../home/kitty.nix
           ../home/firefox.nix
           ../home/zsh.nix
+          ../home/fzf.nix
           ../home/htop.nix
         ];
       };
@@ -41,8 +42,6 @@
     enableSSHSupport = true;
   };
 
-  users.nix.configureBuildUsers = true;
-
   services.nix-daemon.enable = true;
 
   # Dock
@@ -51,6 +50,15 @@
 
   # Date and Time
   time.timeZone = "America/New_York";
+
+  users = {
+    users.babbaj = {
+      home = "/Users/babbaj";
+      isHidden = false;
+      shell = pkgs.zsh;
+    };
+    nix.configureBuildUsers = true;
+  };
 
   nixpkgs = {
     config = {
