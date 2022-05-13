@@ -15,6 +15,7 @@
           ../home/kitty.nix
           ../home/firefox.nix
           ../home/zsh.nix
+          ../home/htop.nix
         ];
       };
       useUserPackages = true;
@@ -71,6 +72,8 @@
 
   environment.systemPackages = with pkgs; [
       pv
+      mpv
+      wget
   ];
 
   # List Homebrew packages that we want to manage. Some Nix packages of MacOS
@@ -99,6 +102,10 @@
       "kitty"
       "spotify"
       "telegram"
+      # java
+      "zulu8"
+      "zulu17"
+      "manymc"
     ];
 
     cleanup = "zap";
@@ -114,8 +121,8 @@
     ${pkgs.dockutil}/bin/dockutil --add /Applications/Element.app --no-restart
     ${pkgs.dockutil}/bin/dockutil --add /Applications/Discord.app --no-restart
     ${pkgs.dockutil}/bin/dockutil --add /Applications/Visual\ Studio\ Code.app --no-restart
+    ${pkgs.dockutil}/bin/dockutil --add /Applications/kitty.app --no-restart
     ${pkgs.dockutil}/bin/dockutil --add /System/Applications/Notes.app --no-restart
-    ${pkgs.dockutil}/bin/dockutil --add /System/Applications/Utilities/Terminal.app --no-restart
     ${pkgs.dockutil}/bin/dockutil --add /System/Applications/System\ Preferences.app --no-restart
     ${pkgs.dockutil}/bin/dockutil --add ~/Downloads --section others --view fan --display folder --sort dateadded
 
