@@ -48,7 +48,6 @@
 
   # Dock
   system.defaults.dock.wvous-tl-corner = 2; # Top Left → Mission Control
-  system.defaults.dock.wvous-tr-corner = 13; # Top Right → Lock Screen
 
   # Date and Time
   time.timeZone = "America/New_York";
