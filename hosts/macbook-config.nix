@@ -15,8 +15,10 @@
           ../home/kitty.nix
           ../home/firefox.nix
           ../home/zsh.nix
+          ../home/starship.nix
           ../home/fzf.nix
           ../home/htop.nix
+          ../home/github.nix
         ];
       };
       useUserPackages = true;
@@ -83,6 +85,7 @@
       mpv
       wget
       smartmontools # smartctl
+      bat
   ];
 
   # List Homebrew packages that we want to manage. Some Nix packages of MacOS
