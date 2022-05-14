@@ -54,7 +54,7 @@ in
     history = {
       size = 1000000;
       save = 1000000;
-      path = "${config.xdg.dataHome}/zsh/history";
+      #path = "${config.xdg.dataHome}/zsh/history";
       ignoreDups = true;
       share = true;
       extended = true;
