@@ -41,7 +41,8 @@ in
         cdtemp  = "cd `mktemp -d`";
         rm      = "rm -Iv";
         df      = "df -h";
-        zreload = "export ZSH_RELOADING_SHELL=1; source $ZDOTDIR/.zshenv; source $ZDOTDIR/.zshrc; unset ZSH_RELOADING_SHELL";
+        #zreload = "export ZSH_RELOADING_SHELL=1; source $ZDOTDIR/.zshenv; source $ZDOTDIR/.zshrc; unset ZSH_RELOADING_SHELL";
+        zreload = "omz reload";
       }
       (lib.mkIf (!isDarwin) {
         pbcopy = "xclip -selection clipboard";
@@ -57,6 +58,17 @@ in
       ignoreDups = true;
       share = true;
       extended = true;
+    };
+
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "per-directory-history"
+        "ripgrep" # adds completion for ripgrep
+        "safe-paste"
+        "sudo" # press escape twice
+        "copybuffer" # ctrl+o
+      ];
     };
 
     sessionVariables = {

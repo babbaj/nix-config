@@ -14,6 +14,7 @@
       ./pipewire.nix
       #./metrics.nix
       ./openrgb.nix
+      #./wifi.nix
     ];
 
 
@@ -131,7 +132,7 @@
   services.ratbagd.enable = true;
 
   services.sshd.enable = true;
-  
+
   services.gnome.gnome-keyring.enable = true;
 
   systemd.user.services.wal-rsync = rec {
@@ -199,7 +200,7 @@
     config = {
       allowUnfree = true;
     };
-    
+
     overlays = [
       (self: super:
         {
@@ -208,13 +209,13 @@
               unset VK_ICD_FILENAMES
               #export VK_ICD_FILENAMES=${config.hardware.nvidia.package.lib32}/share/vulkan/icd.d/nvidia_icd32.json:${config.hardware.nvidia.package}/share/vulkan/icd.d/nvidia_icd.json
               #export VK_ICD_FILENAMES=$(echo /run/opengl-driver{,-32}/share/vulkan/icd.d/* | tr ' ' ':'):/usr/share/vulkan/icd.d/intel_icd.x86_64.json:/usr/share/vulkan/icd.d/intel_icd.i686.json:/usr/share/vulkan/icd.d/lvp_icd.x86_64.json:/usr/share/vulkan/icd.d/lvp_icd.i686.json:/usr/share/vulkan/icd.d/nvidia_icd.json:/usr/share/vulkan/icd.d/nvidia_icd32.json:/usr/share/vulkan/icd.d/radeon_icd.x86_64.json:/usr/share/vulkan/icd.d/radeon_icd.i686.json
-              
+
               export VK_ICD_FILENAMES=/run/opengl-driver/share/vulkan/icd.d/intel_icd.x86_64.json:/run/opengl-driver-32/share/vulkan/icd.d/intel_icd.i686.json:\
               /run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json:/run/opengl-driver-32/share/vulkan/icd.d/radeon_icd.i686.json:\
               /run/opengl-driver/share/vulkan/icd.d/amd_icd64.json:/run/opengl-driver-32/share/vulkan/icd.d/amd_icd32.json:\
               /run/opengl-driver/share/vulkan/icd.d/nvidia_icd.json:/run/opengl-driver-32/share/vulkan/icd.d/nvidia_icd.json:\
               /run/opengl-driver/share/vulkan/icd.d/lvp_icd.x86_64.json:/run/opengl-driver-32/share/vulkan/icd.d/lvp_icd.i686.json
-            ''; 
+            '';
           };
 
           openvpn = super.openvpn_24; # openvpn 2.5 is broken with pia
@@ -375,6 +376,7 @@
     bat
     fake-xterm
     gnomeExtensions.gsconnect
+    ripgrep
   ];
 
   # for intellij
@@ -388,6 +390,7 @@
   users.users.babbaj = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "libvirtd" "input" ]; # Enable ‘sudo’ for the user.
+    shell = pkgs.zsh;
   };
   #security.sudo.wheelNeedsPassword = false; # troll face
 
@@ -401,6 +404,8 @@
         ./home/direnv.nix
         ./home/git.nix
         ./home/bash.nix
+        ./home/zsh.nix
+        ./home/starship.nix
         ./home/zoxide.nix
         ./home/kitty.nix
         ./home/gpg-agent.nix

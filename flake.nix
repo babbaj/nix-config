@@ -8,6 +8,7 @@
     memflow.url = "github:memflow/memflow-nixos";
     polymc.url = "github:PolyMC/PolyMC";
     #polymc.url = "github:Babbaj/PolyMC/nix-refactor";
+
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-21.11-darwin";
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
@@ -29,10 +30,10 @@
     };
   };
 
-  outputs = inputs@{ 
+  outputs = inputs@{
     self, nixpkgs, nixpkgs-unstable-small, nixpkgs-master, home-manager, memflow, polymc, looking-glass-src, gb-src,
     darwin, nixpkgs-darwin, home-manager-darwin, malob-nixpkgs
-   }: 
+   }:
   let
     system = "x86_64-linux";
 
@@ -68,7 +69,7 @@
       name = "home-manager-patched";
       src = home-manager;
       patches = with pkgs; [
-        
+
       ];
     };
 
