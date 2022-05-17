@@ -63,12 +63,15 @@ in
     oh-my-zsh = {
       enable = true;
       plugins = [
-        "per-directory-history"
+        "per-directory-history" # ctrl+g to switch between global and local
         "ripgrep" # adds completion for ripgrep
         "safe-paste"
         "sudo" # press escape twice
         "copybuffer" # ctrl+o
       ];
+      extraConfig = ''
+        export HISTORY_START_WITH_GLOBAL=true
+      '';
     };
 
     sessionVariables = {

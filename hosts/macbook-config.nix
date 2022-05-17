@@ -137,7 +137,6 @@
     ${pkgs.dockutil}/bin/dockutil --add /System/Applications/System\ Preferences.app --no-restart
     ${pkgs.dockutil}/bin/dockutil --add ~/Downloads --section others --view fan --display folder --sort dateadded
 
-
     # By default, this directory has unsafe permissions.
     # TODO: Capture this with a Nix expression.
     chmod 700 ~/.gnupg

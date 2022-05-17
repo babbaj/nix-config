@@ -403,6 +403,7 @@
         ./home/ssh.nix
         ./home/direnv.nix
         ./home/git.nix
+        ./home/github.nix
         ./home/bash.nix
         ./home/zsh.nix
         ./home/starship.nix
