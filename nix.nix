@@ -11,8 +11,9 @@ in
     # TODO: Understand how nix-darwin referencing an older version of Nix will
     # cause my entire installation to downgrade.
     package = pkgs.nixFlakes;
-  
+
     extraOptions = ''
+      sandbox = true
       experimental-features = nix-command flakes
     '';
 

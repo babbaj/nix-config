@@ -43,6 +43,8 @@ in
         df      = "df -h";
         #zreload = "export ZSH_RELOADING_SHELL=1; source $ZDOTDIR/.zshenv; source $ZDOTDIR/.zshrc; unset ZSH_RELOADING_SHELL";
         zreload = "omz reload";
+
+        b2 = "${pkgs.backblaze-b2}/bin/backblaze-b2";
       }
       (lib.mkIf (!isDarwin) {
         pbcopy = "xclip -selection clipboard";

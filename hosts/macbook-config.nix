@@ -85,6 +85,8 @@
       wget
       smartmontools # smartctl
       bat
+      ripgrep
+      jq
   ];
 
   # List Homebrew packages that we want to manage. Some Nix packages of MacOS
@@ -130,6 +132,7 @@
     ${pkgs.dockutil}/bin/dockutil --remove all --no-restart
     ${pkgs.dockutil}/bin/dockutil --add /Applications/Firefox.app --no-restart
     ${pkgs.dockutil}/bin/dockutil --add /Applications/Element.app --no-restart
+    ${pkgs.dockutil}/bin/dockutil --add /Applications/Telegram.app --no-restart
     ${pkgs.dockutil}/bin/dockutil --add /Applications/Discord.app --no-restart
     ${pkgs.dockutil}/bin/dockutil --add /Applications/Visual\ Studio\ Code.app --no-restart
     ${pkgs.dockutil}/bin/dockutil --add /Applications/kitty.app --no-restart
