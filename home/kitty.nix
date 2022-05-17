@@ -15,6 +15,9 @@ in
       # Pause key (push to talk)
       "0xff13" = "discard_event";
     };
+    extraConfig = lib.mkIf isDarwin ''
+      watcher $HOME/.fig/tools/kitty-integration.py
+    '';
 
     # Dummy package so that we can install kitty with Homebrew.
     package = lib.mkIf isDarwin (pkgs.runCommandLocal "" { } "mkdir $out");

@@ -111,17 +111,30 @@ in
       setopt interactivecomments
     '' + lib.optionalString isDarwin ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
+
+      # Fig pre block. Keep at the top of this file.
+      . "$HOME/.fig/shell/zprofile.pre.zsh"
+
+      # Fig post block. Keep at the bottom of this file.
+      . "$HOME/.fig/shell/zprofile.post.zsh"
     '';
 
-  initExtra = ''
-    ## Keybindings section
-    # Navigate words with ctrl+arrow keys
-    bindkey '^[Oc' forward-word                                     #
-    bindkey '^[Od' backward-word                                    #
-    bindkey '^[[1;3D' backward-word                                 # alt+left
-    bindkey '^[[1;3C' forward-word                                  # alt+right
-    bindkey '^H' backward-kill-word                                 # delete previous word with ctrl
-    bindkey '^[[Z' undo                                             # Shift+tab undo last action
-  '';
+    initExtra = ''
+      ## Keybindings section
+      # Navigate words with ctrl+arrow keys
+      bindkey '^[Oc' forward-word               #
+      bindkey '^[Od' backward-word              #
+      bindkey '^[[1;3D' backward-word           # alt+left
+      bindkey '^[[1;3C' forward-word            # alt+right
+      bindkey '^H' backward-kill-word           # delete previous word with ctrl
+      bindkey '^[[Z' undo                       # Shift+tab undo last action
+    '' + lib.optionalString isDarwin ''
+      . "$HOME/.fig/shell/zshrc.post.zsh"
+    '';
+
+    initExtraFirst = lib.mkIf isDarwin ''
+      export PATH=$PATH:~/.local/bin:~/.fig/bin
+      . "$HOME/.fig/shell/zshrc.pre.zsh"
+    '';
   };
 }

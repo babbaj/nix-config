@@ -119,6 +119,8 @@
       "zulu8"
       "zulu17"
       "manymc"
+      "rectangle"
+      "fig"
     ];
 
     cleanup = "zap";
