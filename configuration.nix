@@ -7,8 +7,6 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware.nix
-      # Everything that isn't public
-      ./secret.nix
       ./vm-setup.nix
       ./scripts.nix
       ./pipewire.nix
