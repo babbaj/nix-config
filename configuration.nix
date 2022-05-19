@@ -100,6 +100,7 @@
     };
     displayManager.lightdm.enable = true;
     desktopManager.gnome.enable = true;
+    #desktopManager.plasma5.enable = true;
 
     logFile = "/var/log/X.0.log"; # lightdm sets the log file to here but gdm does not
 
