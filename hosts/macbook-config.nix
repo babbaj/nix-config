@@ -81,7 +81,6 @@
 
   environment.systemPackages = with pkgs; [
       pv
-      mpv
       wget
       smartmontools # smartctl
       bat
@@ -119,8 +118,11 @@
       "zulu8"
       "zulu17"
       "manymc"
-      "rectangle"
-      "fig"
+      "rectangle" # window snapping
+      "fig" # terminal ide style auto completion, extremely soy and bloated
+      "hot" # temp monitoring
+      "mpv"
+      "vlc"
     ];
 
     cleanup = "zap";
