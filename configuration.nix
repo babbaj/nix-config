@@ -7,8 +7,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware.nix
-      # Everything that isn't public
-      ./secret.nix
+      ./wireguard.nix
       ./vm-setup.nix
       ./scripts.nix
       ./pipewire.nix
@@ -78,13 +77,13 @@
 
     excludePackages = [ pkgs.xterm ];
 
-    screenSection = ''
+    /*screenSection = ''
       Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
     '';
 
     displayManager.setupCommands = '' # the code above usually doesn't work for some reason
       ${config.hardware.nvidia.package.settings}/bin/nvidia-settings --assign CurrentMetaMode="HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
-    '';
+    '';*/
     xrandrHeads = [
       {
         output = "HDMI-0";

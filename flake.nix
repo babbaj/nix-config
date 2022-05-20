@@ -5,9 +5,13 @@
     # Updates faster but requires more compiling
     nixpkgs-unstable-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
+    #inputs.agenix.url = "github:ryantm/agenix";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     memflow.url = "github:memflow/memflow-nixos";
     polymc.url = "github:PolyMC/PolyMC";
-    #polymc.url = "github:Babbaj/PolyMC/nix-refactor";
 
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-21.11-darwin";
     darwin.url = "github:lnl7/nix-darwin";
@@ -31,7 +35,7 @@
   };
 
   outputs = inputs@{
-    self, nixpkgs, nixpkgs-unstable-small, nixpkgs-master, home-manager, memflow, polymc, looking-glass-src, gb-src,
+    self, nixpkgs, nixpkgs-unstable-small, nixpkgs-master, home-manager, agenix, memflow, polymc, looking-glass-src, gb-src,
     darwin, nixpkgs-darwin, home-manager-darwin, malob-nixpkgs
    }:
   let
@@ -86,6 +90,7 @@
       modules = [
         (import "${home-manager-patched}/nixos")
         memflow.nixosModule
+        agenix.nixosModules.age
         ./configuration.nix
       ];
       inherit pkgs;

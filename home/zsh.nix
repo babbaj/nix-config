@@ -26,11 +26,6 @@ in
 
     shellAliases = lib.mkMerge [
       rec {
-        # currently only support switch for darwin
-        oscfg = if !isDarwin then
-          "nixos-rebuild --use-remote-sudo"
-          else "pushd ~/nix-config; darwin-rebuild switch --flake '.#soybook'; popd";
-
         ls      = "${pkgs.exa}/bin/exa --color=auto --group-directories-first --classify";
         lst     = "${ls} --tree";
         la      = "${ls} --all";
@@ -50,6 +45,7 @@ in
         pbcopy = "xclip -selection clipboard";
         pbpaste = "xclip -selection clipboard -o";
         cp = "cp --reflink=auto";
+        oscfg = "pushd ~/nix-config; darwin-rebuild switch --flake '.#soybook'; popd";
       })
       (genCdAliases 100)
      ];
