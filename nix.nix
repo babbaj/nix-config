@@ -1,7 +1,5 @@
 { pkgs, inputs, ... }:
 
-let inherit (pkgs.stdenv.hostPlatform) isDarwin;
-in
 {
   nix = {
     # This specifies the Nix package nix-darwin references. Without this, Nix
@@ -29,7 +27,7 @@ in
       # Make sure the flake registry follows nixpkgs-unstable, which we
       # defined in our flake.nix. These are the defaults:
       # https://github.com/NixOS/flake-registry/blob/master/flake-registry.json.
-      nixpkgs.flake = if isDarwin then inputs.nixpkgs-darwin else inputs.nixpkgs;
+      nixpkgs.flake = inputs.nixpkgs;
     };
 
     gc = {

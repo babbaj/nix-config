@@ -13,13 +13,10 @@
     memflow.url = "github:memflow/memflow-nixos";
     polymc.url = "github:PolyMC/PolyMC";
 
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-21.11-darwin";
     darwin.url = "github:lnl7/nix-darwin";
-    darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
     # For using Touch ID for sudo authentication.
     malob-nixpkgs.url = "github:malob/nixpkgs";
-    home-manager-darwin.url = "github:nix-community/home-manager";
-    home-manager-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
 
     looking-glass-src = {
       url = "ssh://git@github.com/gnif/LookingGlass.git";
@@ -36,7 +33,7 @@
 
   outputs = inputs@{
     self, nixpkgs, nixpkgs-unstable-small, nixpkgs-master, home-manager, agenix, memflow, polymc, looking-glass-src, gb-src,
-    darwin, nixpkgs-darwin, home-manager-darwin, malob-nixpkgs
+    darwin, malob-nixpkgs
    }:
   let
     system = "x86_64-linux";
@@ -100,11 +97,10 @@
     darwinConfigurations.soybook = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          home-manager-darwin.darwinModules.home-manager
+          home-manager.darwinModules.home-manager
           malob-nixpkgs.darwinModules.security-pam
           ./hosts/macbook-config.nix
         ];
-        #pkgs =
         specialArgs = {
           inherit inputs;
         };
