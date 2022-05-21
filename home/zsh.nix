@@ -26,7 +26,7 @@ in
 
     shellAliases = lib.mkMerge [
       rec {
-        oscfg = "pushd ~/nix-config; darwin-rebuild switch --flake '.#soybook'; popd";
+        oscfg = "cd ~/nix-config; darwin-rebuild switch --flake '.#soybook'; cd $OLDPWD";
         ls      = "${pkgs.exa}/bin/exa --color=auto --group-directories-first --classify";
         lst     = "${ls} --tree";
         la      = "${ls} --all";
