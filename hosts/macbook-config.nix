@@ -59,12 +59,7 @@
     overlays = [
       (self: super:
         {
-          dockutil = super.dockutil.overrideAttrs(old: {
-              postInstall = ''
-                substituteInPlace $out/bin/dockutil \
-                    --replace '/usr/bin/python' '${pkgs.python2}/bin/python'
-              '';
-          });
+
         })
     ];
   };
@@ -76,6 +71,7 @@
       bat
       ripgrep
       jq
+      mediainfo
   ];
 
   # List Homebrew packages that we want to manage. Some Nix packages of MacOS

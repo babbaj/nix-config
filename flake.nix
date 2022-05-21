@@ -104,6 +104,7 @@
           malob-nixpkgs.darwinModules.security-pam
           ./hosts/macbook-config.nix
         ];
+        #pkgs =
         specialArgs = {
           inherit inputs;
         };

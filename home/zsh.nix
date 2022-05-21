@@ -26,6 +26,7 @@ in
 
     shellAliases = lib.mkMerge [
       rec {
+        oscfg = "pushd ~/nix-config; darwin-rebuild switch --flake '.#soybook'; popd";
         ls      = "${pkgs.exa}/bin/exa --color=auto --group-directories-first --classify";
         lst     = "${ls} --tree";
         la      = "${ls} --all";
@@ -45,14 +46,13 @@ in
         pbcopy = "xclip -selection clipboard";
         pbpaste = "xclip -selection clipboard -o";
         cp = "cp --reflink=auto";
-        oscfg = "pushd ~/nix-config; darwin-rebuild switch --flake '.#soybook'; popd";
       })
       (genCdAliases 100)
      ];
 
     history = {
-      size = 1000000;
-      save = 1000000;
+      size = 100000000;
+      save = 100000000;
       ignoreDups = true;
       share = true;
       extended = true;
