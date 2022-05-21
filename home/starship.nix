@@ -10,11 +10,28 @@
     settings = {
       # This line replaces add_newline = false
       add_newline = false;
-      format = "$username$hostname$directory$git_branch$nix_shell$git_commit$git_state$git_status$cmd_duration$jobs$status$character";
+      format = "$username$hostname$directory$shell$shlvl$git_branch$nix_shell$git_commit$git_state$git_status$cmd_duration$jobs$status$character";
 
       cmd_duration = {
         disabled = false;
         min_time = 10000;
+      };
+
+      # indicator if bash
+      shell = {
+        disabled = false;
+        zsh_indicator = "";
+        bash_indicator = "bash ";
+        format = "[$indicator]($style)";
+      };
+
+      shlvl = {
+        disabled = false;
+        symbol = "↕️";
+      };
+
+      status = {
+        disabled = false;
       };
 
       directory = {
@@ -53,7 +70,7 @@
       };
 
       username = {
-        disabled = true;
+        disabled = false;
         show_always = true;
         style_user = "fg:purple";
         style_root = "bold fg:red";
