@@ -396,24 +396,8 @@
 
   home-manager = {
     users.babbaj = {
-      home.enableNixpkgsReleaseCheck = false;
       imports = [
-        ./home/i3.nix
-        ./home/steam-proton.nix
-        ./home/ssh.nix
-        ./home/direnv.nix
-        ./home/git.nix
-        ./home/github.nix
-        ./home/bash.nix
-        ./home/zsh.nix
-        ./home/starship.nix
-        ./home/zoxide.nix
-        ./home/kitty.nix
-        ./home/gpg-agent.nix
-        ./home/fzf.nix
-        ./home/easyeffects.nix
-        ./home/htop.nix
-        ./home/firefox.nix
+        ./home/home.nix
       ];
     };
 

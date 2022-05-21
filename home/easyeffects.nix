@@ -1,6 +1,8 @@
-{ ... }:
+{ pkgs, ... }:
 
+let inherit (pkgs.stdenv.hostPlatform) isLinux;
+in
 {
   # Autostart easyeffects daemon
-  services.easyeffects.enable = true;
+  services.easyeffects.enable = isLinux;
 }

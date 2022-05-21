@@ -7,18 +7,8 @@
 
   home-manager = {
       users.babbaj = {
-        home.enableNixpkgsReleaseCheck = true;
         imports = [
-          ../home/ssh.nix
-          ../home/direnv.nix
-          ../home/git.nix
-          ../home/kitty.nix
-          ../home/firefox.nix
-          ../home/zsh.nix
-          ../home/starship.nix
-          ../home/fzf.nix
-          ../home/htop.nix
-          ../home/github.nix
+          ../home/home.nix
         ];
       };
       useUserPackages = true;

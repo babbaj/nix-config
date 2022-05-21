@@ -1,7 +1,9 @@
 { config, lib, pkgs, ... }:
 
+let inherit (pkgs.stdenv.hostPlatform) isLinux;
+in
 {
-  programs.i3status-rust = {
+  programs.i3status-rust = lib.mkIf isLinux {
     enable = true;
     bars = {
       default = {
