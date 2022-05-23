@@ -62,13 +62,18 @@ in stdenv.mkDerivation rec {
 
   cmakeFlags = [ "-DOPTIMIZE_FOR_NATIVE=OFF" ];
 
-  patches = [ ./0001-Allow-sudo.patch ];
+  patches = [
+    #./0001-Allow-sudo.patch
+    ./fix-build.patch
+  ];
 
   postUnpack = ''
     echo ${src.rev} > source/VERSION
-    export sourceRoot="source/client"
   '';
 
+  postPatch = ''
+    cd client
+  '';
 
   postInstall = ''
     mkdir -p $out/share/pixmaps
