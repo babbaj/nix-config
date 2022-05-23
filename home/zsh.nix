@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  inherit (pkgs.stdenv.hostPlatform) isDarwin;
+  inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
 
   genCdAliases = len:
     let
@@ -26,7 +26,7 @@ in
 
     shellAliases = lib.mkMerge [
       rec {
-        oscfg = "cd ~/nix-config; darwin-rebuild switch --flake '.#soybook'; cd $OLDPWD";
+        oscfg = lib.mkIf isDarwin "cd ~/nix-config; darwin-rebuild switch --flake '.#soybook'; cd $OLDPWD";
         ls      = "${pkgs.exa}/bin/exa --color=auto --group-directories-first --classify";
         lst     = "${ls} --tree";
         la      = "${ls} --all";
@@ -42,7 +42,7 @@ in
 
         b2 = "${pkgs.backblaze-b2}/bin/backblaze-b2";
       }
-      (lib.mkIf (!isDarwin) {
+      (lib.mkIf isLinux {
         pbcopy = "xclip -selection clipboard";
         pbpaste = "xclip -selection clipboard -o";
         cp = "cp --reflink=auto";
