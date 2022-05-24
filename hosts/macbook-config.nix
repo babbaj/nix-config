@@ -88,6 +88,7 @@
 
     brews = [
       "pinentry-mac"
+      "wireguard-tools"
     ];
 
     casks = [
