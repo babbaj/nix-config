@@ -218,11 +218,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1653153149,
-        "narHash": "sha256-8B/tWWZziFq4DqnAm9uO7M4Z4PNfllYg5+teX1e5yDQ=",
+        "lastModified": 1653340164,
+        "narHash": "sha256-t6BPApyasx6FOv2cEVyFBXvkEDrknyUe7bngMbNSBkA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "94780dd888881bf35165dfdd334a57ef6b14ead8",
+        "rev": "e66f0ff69a6c0698b35034b842c4b68814440778",
         "type": "github"
       },
       "original": {
@@ -271,11 +271,11 @@
     "looking-glass-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1653207598,
-        "narHash": "sha256-JHWqnOpvdomndCHf5tEq9Z4UkYMCXW02ZvDG8NzwScg=",
+        "lastModified": 1653341060,
+        "narHash": "sha256-yrWpo+vVZieLiXvxfd1AKJ9uWtcL9f/VdAuhLJB4Jxk=",
         "ref": "master",
-        "rev": "247e867f188bc6901500d966f46d285b30b98c7b",
-        "revCount": 2929,
+        "rev": "c0da28247dca4e81a0b73a9065fd46aa8c3b55de",
+        "revCount": 2935,
         "submodules": true,
         "type": "git",
         "url": "ssh://git@github.com/gnif/LookingGlass.git"
@@ -544,11 +544,11 @@
     },
     "nixpkgs-master_2": {
       "locked": {
-        "lastModified": 1653262524,
-        "narHash": "sha256-S85Pd465DEjBe3cDrnadWPWBtOyY8aFrEbOoDM6HZEE=",
+        "lastModified": 1653341373,
+        "narHash": "sha256-kj3mWUWgkm5bZmG+l///NmLhJcD9x0c2B+OfkUy7+pY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "bc38fcac7d0fd9aba0af3b8ae897ca7ff6b09383",
+        "rev": "7c7d71d90e7d715847809a65fa2463c668e58ab3",
         "type": "github"
       },
       "original": {
@@ -592,11 +592,11 @@
     },
     "nixpkgs-unstable-small": {
       "locked": {
-        "lastModified": 1653086549,
-        "narHash": "sha256-9Gt55P+hh70m/vx0zS5iJrMFrU4Rf0uO+nG9NFxTW1U=",
+        "lastModified": 1653315696,
+        "narHash": "sha256-7tLCnzCz/fq86NEoF9+g/NkQRA2J+nkgytc7l2HuWnY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "98bcd08cb1778d103bac1149621b3568014aadbd",
+        "rev": "c11d9597c1b3cdc4fb44cbab48deec2cfbaa5281",
         "type": "github"
       },
       "original": {
@@ -695,11 +695,11 @@
         "quazip": "quazip"
       },
       "locked": {
-        "lastModified": 1653260953,
-        "narHash": "sha256-RK77TbKMDoNDWJSROmxG5cC+sv/gsVy7prfOSMFMdEg=",
+        "lastModified": 1653295650,
+        "narHash": "sha256-zRMdvSS9Z/LONfkCaERbOcOo4gW1iNrK8CThLOdjMbM=",
         "owner": "PolyMC",
         "repo": "PolyMC",
-        "rev": "ac4497a1f232de78b3efc5e2ff0d5ca9ed224ad1",
+        "rev": "dca4ea5ceaa30f1285570d2bf32ea112118b9204",
         "type": "github"
       },
       "original": {

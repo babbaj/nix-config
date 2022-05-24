@@ -57,14 +57,12 @@ in stdenv.mkDerivation rec {
     libsamplerate
   ];
 
-  #NIX_CFLAGS_COMPILE = "-mavx"; # Fix some sort of AVX compiler problem.
-  #NIX_CFLAGS_COMPILE = "-msse4.1";
+  NIX_CFLAGS_COMPILE = "-march=native";
 
-  cmakeFlags = [ "-DOPTIMIZE_FOR_NATIVE=OFF" ];
+  #cmakeFlags = [ "-DOPTIMIZE_FOR_NATIVE=OFF" ];
 
   patches = [
     #./0001-Allow-sudo.patch
-    ./fix-build.patch
   ];
 
   postUnpack = ''
