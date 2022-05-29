@@ -3,6 +3,7 @@
 {
   imports = [
     ../nix.nix
+    ./wireguard.nix
   ];
 
   home-manager = {
@@ -110,6 +111,7 @@
       "hot" # temp monitoring
       "mpv"
       "vlc"
+      "coconutbattery"
     ];
 
     cleanup = "zap";

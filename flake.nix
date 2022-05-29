@@ -99,7 +99,7 @@
         modules = [
           home-manager.darwinModules.home-manager
           malob-nixpkgs.darwinModules.security-pam
-          ./hosts/macbook-config.nix
+          ./macbook/macbook-config.nix
         ];
         specialArgs = {
           inherit inputs;
