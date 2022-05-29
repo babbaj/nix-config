@@ -1,0 +1,22 @@
+diff --git a/client/displayservers/X11/x11.c b/client/displayservers/X11/x11.c
+index 68776526..5f796d52 100644
+--- a/client/displayservers/X11/x11.c
++++ b/client/displayservers/X11/x11.c
+@@ -1047,7 +1047,7 @@ static void x11XInputEvent(XGenericEventCookie *cookie)
+       if (x11.ewmhHasFocusEvent)
+       {
+         // if meta ungrab for move/resize
+-        if (xie->mode == XINotifyUngrab)
++        if (xie->mode == XINotifyUngrab || xie->mode == XINotifyGrab)
+           setFocus(true, xie->event_x, xie->event_y);
+         return;
+       }
+@@ -1095,7 +1095,7 @@ static void x11XInputEvent(XGenericEventCookie *cookie)
+       atomic_store(&x11.lastWMEvent, microtime());
+       XIEnterEvent *xie = cookie->data;
+       if (x11.entered || xie->event != x11.window ||
+-          xie->mode != XINotifyNormal)
++          (xie->mode != XINotifyNormal && xie->mode != XINotifyUngrab))
+         return;
+ 
+       app_updateCursorPos(xie->event_x, xie->event_y);

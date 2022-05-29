@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchFromGitHub, makeDesktopItem, copyDesktopItems, cmake, pkg-config
+{ stdenv, lib, fetchFromGitHub, makeDesktopItem, copyDesktopItems, cmake, pkg-config, git
 , freefont_ttf, spice-protocol, nettle, libbfd, fontconfig, libffi, expat
 , libxkbcommon, libGL, libXext, libXrandr, libXi, libXScrnSaver, libXinerama
 , libXcursor, libXpresent, wayland, wayland-protocols
@@ -29,7 +29,7 @@ in stdenv.mkDerivation rec {
   };*/
   inherit src;
 
-  nativeBuildInputs = [ cmake pkg-config copyDesktopItems ];
+  nativeBuildInputs = [ git cmake pkg-config copyDesktopItems ];
 
   desktopItems = [ desktopItem ];
 
@@ -63,6 +63,7 @@ in stdenv.mkDerivation rec {
 
   patches = [
     #./0001-Allow-sudo.patch
+    ./fix-pointer-grab.patch
   ];
 
   postUnpack = ''
