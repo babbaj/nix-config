@@ -30,7 +30,7 @@
   ];*/
 
   security.pam.loginLimits = [
-    #{ domain = "*"; item = "memlock"; type = "-"; value = "unlimited"; }
+    { domain = "*"; item = "memlock"; type = "-"; value = "unlimited"; }
   ];
 
   virtualisation.libvirtd = {
