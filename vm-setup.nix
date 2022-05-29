@@ -7,12 +7,12 @@
 
   boot.kernelModules = [ "kvm-amd"];
   boot.initrd.kernelModules = [ "vfio-pci" ];
-  boot.kernelParams = 
+  boot.kernelParams =
   let
     gpuIds = "10de:1e89,10de:10f8,10de:1ad8,10de:1ad9";
     ssdId = "144d:a808";
-  in [ 
-    "amd_iommu=on" "iommu=1" "kvm.ignore_msrs=1" "kvm.report_ignored_msrs=0" "kvm_amd.npt=1" "kvm_amd.avic=1" 
+  in [
+    "amd_iommu=on" "iommu=1" "kvm.ignore_msrs=1" "kvm.report_ignored_msrs=0" "kvm_amd.npt=1" "kvm_amd.avic=1"
     "vfio-pci.ids=${gpuIds}"
     #"pcie_acs_override=downstream,multifunction"
     "default_hugepagesz=1G"
@@ -30,7 +30,7 @@
   ];*/
 
   security.pam.loginLimits = [
-    { domain = "*"; item = "memlock"; type = "-"; value = "unlimited"; }
+    #{ domain = "*"; item = "memlock"; type = "-"; value = "unlimited"; }
   ];
 
   virtualisation.libvirtd = {
@@ -64,7 +64,7 @@
         #noBufferAge = true;
       };
       audio = {
-        micAlwaysAllow = true;
+        micDefault = "allow";
         micShowIndicator = false;
       };
     };

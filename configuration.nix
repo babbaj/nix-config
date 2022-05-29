@@ -377,6 +377,7 @@
     fake-xterm
     gnomeExtensions.gsconnect
     ripgrep
+    mumble
   ];
 
   # for intellij

@@ -30,7 +30,7 @@ in
         ls      = "${pkgs.exa}/bin/exa --color=auto --group-directories-first --classify";
         lst     = "${ls} --tree";
         la      = "${ls} --all";
-        ll      = "${ls} --all --long --header --group";
+        ll      = "${ls} --all --long --git --header --group";
         llt     = "${ll} --tree";
         tree    = "${ls} --tree";
 
