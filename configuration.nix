@@ -107,14 +107,14 @@
       enable = true;
       package = pkgs.i3-gaps;
       extraPackages = with pkgs; [
-       rofi
-       dmenu
-       i3status
-       i3lock
+        rofi
+        dmenu
+        i3status
+        i3lock
       ];
       extraSessionCommands = ''
-       ${pkgs.picom}/bin/picom &
-       ${pkgs.hsetroot}/bin/hsetroot -solid '#000000'
+        ${pkgs.picom}/bin/picom &
+        ${pkgs.hsetroot}/bin/hsetroot -solid '#000000'
       '';
     };
   };
@@ -385,6 +385,7 @@
     "jdk8".source = jdk8;
     "jdk".source = jdk;
     "jdk11".source = jdk11;
+    "zulu8".source = zulu8;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
