@@ -14,6 +14,7 @@
       #./metrics.nix
       ./openrgb.nix
       #./wifi.nix
+      ./nix.nix
     ];
 
 
@@ -190,10 +191,6 @@
     settings.auto-optimise-store = true;
 
     #package = pkgs.nix_2_4;
-    extraOptions = ''
-      #experimental-features = nix-command flakes ca-derivations
-      experimental-features = nix-command flakes
-    '';
   };
 
   nixpkgs = {
@@ -334,7 +331,7 @@
     xclip xsel
     handbrake
     ghidra-bin
-    depotdownloader
+    #depotdownloader
     file
     qtcreator
     gdb

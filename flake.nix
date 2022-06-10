@@ -51,6 +51,10 @@
         #  url = "https://github.com/NixOS/nixpkgs/commit/553b2f048a98c8432d04dfa38bb3e295d1b1c504.patch";
         #  sha256 = "sha256-/je+fBDK7qSYRkO835nleVdZuc9WJIHyZP5fgDh8V9Q=";
         #})
+        (fetchpatch { # discord
+          url = "https://github.com/NixOS/nixpkgs/commit/808aad6ceec1647edc14d1a8f901b9cf7a6fda17.patch";
+          sha256 = "sha256-F2PC52yOyK8gUT9TR+6sIW+YPBSIyPbL4ZZaWlKzqWw=";
+        })
       ];
     };
 
@@ -61,8 +65,9 @@
         (final: prev: {
           looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src; };
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix { src = gb-src; };
+          polymc = polymc.packages.${system}.default.override { extraJDKs = [ pkgs.zulu8 ]; };
         })
-        polymc.overlay
+        #polymc.overlay
       ];
     };
 
@@ -91,7 +96,7 @@
         ./configuration.nix
       ];
       inherit pkgs;
-      #specialArgs = { inherit inputs; };
+      specialArgs = { inherit inputs; };
     };
 
     darwinConfigurations.soybook = darwin.lib.darwinSystem {
@@ -101,9 +106,7 @@
           malob-nixpkgs.darwinModules.security-pam
           ./macbook/macbook-config.nix
         ];
-        specialArgs = {
-          inherit inputs;
-        };
+        specialArgs = { inherit inputs; };
       };
   };
 }

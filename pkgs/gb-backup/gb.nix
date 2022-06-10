@@ -1,4 +1,4 @@
-{ lib, makeWrapper, buildGoModule, fetchFromGitHub, lepton 
+{ lib, makeWrapper, buildGoModule, fetchFromGitHub, lepton
 , src # flake input
 }:
 
@@ -8,7 +8,7 @@ buildGoModule {
 
   inherit src;
 
-  vendorSha256 = "sha256-m+J0keS+RzfTqdm7jYKrNIm/Fy9fN7P4gig3bWoIqJI=";
+  vendorSha256 = "sha256-S0/P1s4eUusq0kgn6HvtsxULlIrkTvpEtvUyFPCCxo0=";
 
   nativeBuildInputs = [ makeWrapper ];
 

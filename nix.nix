@@ -8,11 +8,11 @@
     #
     # TODO: Understand how nix-darwin referencing an older version of Nix will
     # cause my entire installation to downgrade.
-    package = pkgs.nixFlakes;
+    #package = pkgs.nixFlakes;
 
     extraOptions = ''
       sandbox = true
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes recursive-nix
     '';
 
     # This is the default Nix expression search path. The default value assumes
