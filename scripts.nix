@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  systemd.user.services.update-sky = 
+  systemd.user.services.update-sky =
   let config = pkgs.writeText "mapcrafter-config" ''
     output_dir = /tmp/mapcrafter-output
 
@@ -44,7 +44,7 @@
     mkdir /tmp/skyexport
     echo "Running exporter with $skycache"
     java -jar /home/babbaj/SkyCacheExporter/build/libs/SkyCacheExporter-1.0-SNAPSHOT-standalone.jar $skycache /tmp/skyexport # TODO: package the exporter
-    
+
     mkdir /tmp/mapcrafter-output
 
     echo 'Running mapcrafter'
@@ -69,6 +69,24 @@
     script = ''
       mkdir /home/babbaj/headless-backup || true
       rsync -v --progress n:/opt/slave/headless.db /home/babbaj/headless-backup/headless-$(date +"%m-%d-%Y").db
+    '';
+  };
+
+  systemd.user.services.skycache-rsync = {
+    #enable = false;
+    description = "Hourly skycache backup";
+    path = with pkgs; [ rsync openssh ];
+    startAt = "hourly";
+    script = ''
+      set -e
+      set -x
+
+      dirname="skycache-$(date +%s)"
+      tmpdir=/tmp/$dirname
+
+      rsync -rpt n:/opt/slave/skymason/ $tmpdir
+      mkdir /home/babbaj/skycache || true
+      mv $tmpdir /home/babbaj/skycache/$dirname
     '';
   };
 }

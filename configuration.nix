@@ -35,6 +35,8 @@
   boot.tmpOnTmpfs = true;
   boot.cleanTmpDir = true;
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   memflow.kvm.enable = true;
 
   networking.hostName = "nixos"; # Define your hostname.
@@ -42,6 +44,7 @@
 
   networking.extraHosts = ''
     127.0.0.1 babbaj.proxy.localhost
+    127.0.0.1 normieslayer.proxy.localhost
     23.156.128.112 2b2t.org
   '';
 
@@ -66,7 +69,7 @@
 
   programs.java = {
     enable = true;
-    package = pkgs.jdk8;
+    #package = pkgs.jdk8;
   };
   programs.gnupg.agent.enable = true;
   virtualisation.docker.enable = true;
@@ -159,6 +162,13 @@
     };
   };
 
+  # warp-svc
+  systemd.packages = with pkgs; [
+    cloudflare-warp
+  ];
+
+  services.mullvad-vpn.enable = true;
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -220,6 +230,8 @@
           #looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix {};
 
           #gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix {};
+
+          #bzip2 = super.bzip2_1_1;
         })
     ];
   };
@@ -352,8 +364,8 @@
     screen
     monero-gui
     xmrig-mo
-    ethminer
-    mining-vm
+    #ethminer
+    #mining-vm
     nheko
     nix-top
     nmap
@@ -375,6 +387,8 @@
     gnomeExtensions.gsconnect
     ripgrep
     mumble
+    cloudflare-warp # warp-cli
+    ninja
   ];
 
   # for intellij
@@ -398,6 +412,7 @@
       imports = [
         ./home/home.nix
       ];
+      home.stateVersion = config.system.stateVersion;
     };
 
     useUserPackages = true;

@@ -37,6 +37,7 @@ in
         cdtemp  = "cd `mktemp -d`";
         rm      = "rm -Iv";
         df      = "df -h";
+        cat     = "${pkgs.bat}/bin/bat";
         #zreload = "export ZSH_RELOADING_SHELL=1; source $ZDOTDIR/.zshenv; source $ZDOTDIR/.zshrc; unset ZSH_RELOADING_SHELL";
         zreload = "omz reload";
 
@@ -56,6 +57,7 @@ in
       ignoreDups = true;
       share = true;
       extended = true;
+      path = "$ZDOTDIR/.zsh_history";
     };
 
     oh-my-zsh = {
