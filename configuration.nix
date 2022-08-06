@@ -389,6 +389,7 @@
     mumble
     cloudflare-warp # warp-cli
     ninja
+    mediainfo
   ];
 
   # for intellij

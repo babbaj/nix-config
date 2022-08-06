@@ -21,7 +21,7 @@
     #
     # TODO: Confirm my understanding and elaborate on how this relates to the
     # Repl: https://nixos.wiki/wiki/Flakes#Getting_Instant_System_Flakes_Repl
-    nixPath = [ "nixpkgs=${pkgs.path}" ];
+    nixPath = [ "nixpkgs=/etc/nixpkgs-link" ];
 
     registry = {
       # Make sure the flake registry follows nixpkgs-unstable, which we
@@ -33,5 +33,9 @@
     gc = {
       automatic = true;
     };
+  };
+
+  environment.etc = {
+    "nixpkgs-link".source = "${pkgs.path}";
   };
 }
