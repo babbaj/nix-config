@@ -47,10 +47,10 @@
       name = "nixpkgs-patched";
       src = nixpkgs;
       patches = with pkgs; [
-        #(fetchpatch { # discord
-        #  url = "https://github.com/NixOS/nixpkgs/commit/808aad6ceec1647edc14d1a8f901b9cf7a6fda17.patch";
-        #  sha256 = "sha256-F2PC52yOyK8gUT9TR+6sIW+YPBSIyPbL4ZZaWlKzqWw=";
-        #})
+        (fetchpatch { # discord
+          url = "https://github.com/NixOS/nixpkgs/commit/a859d764e9f9905b170152accb46fddc06b52028.patch";
+          sha256 = "sha256-ILeqOXhTI2uARmwbMOvzJCnphco/ICx3VioVZ3Xrg3w=";
+        })
       ];
     };
 

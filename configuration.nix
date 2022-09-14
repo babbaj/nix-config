@@ -45,7 +45,6 @@
   networking.extraHosts = ''
     127.0.0.1 babbaj.proxy.localhost
     127.0.0.1 normieslayer.proxy.localhost
-    23.156.128.112 2b2t.org
   '';
 
   time.timeZone = "America/New_York";
@@ -131,7 +130,12 @@
   # Enable sound.
   profiles.pipewire.enable = true;
 
-  services.vaultwarden.enable = true;
+  services.vaultwarden = {
+    enable = true;
+    config = {
+      ROCKET_ADDRESS = "0.0.0.0";
+    };
+  };
 
   services.ratbagd.enable = true;
 
@@ -280,6 +284,7 @@
     firefox
     element-desktop
     discord
+    discord-canary
     go
     lepton
     binutils
@@ -347,6 +352,7 @@
     file
     qtcreator
     gdb
+    lldb
     backblaze-b2
     nvtop
     valgrind
@@ -390,12 +396,13 @@
     cloudflare-warp # warp-cli
     ninja
     mediainfo
+    bind # nslookup and dig
   ];
 
   # for intellij
   environment.etc = with pkgs; {
-    "jdk8".source = jdk8;
     "jdk".source = jdk;
+    "jdk8".source = jdk8;
     "jdk11".source = jdk11;
     "zulu8".source = zulu8;
   };
