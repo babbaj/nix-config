@@ -1,0 +1,21 @@
+diff --git a/client/src/main.c b/client/src/main.c
+index fb8d8cac..73289e30 100644
+--- a/client/src/main.c
++++ b/client/src/main.c
+@@ -1771,11 +1771,11 @@ int main(int argc, char * argv[])
+   // initialize for DEBUG_* macros
+   debug_init();
+ 
+-  if (getuid() == 0)
+-  {
+-    DEBUG_ERROR("Do not run looking glass as root!");
+-    return -1;
+-  }
++  //if (getuid() == 0)
++  //{
++  //  DEBUG_ERROR("Do not run looking glass as root!");
++  //  return -1;
++  //}
+ 
+   if (getuid() != geteuid())
+   {

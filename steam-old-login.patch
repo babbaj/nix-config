@@ -1,0 +1,13 @@
+diff --git a/pkgs/games/steam/fhsenv.nix b/pkgs/games/steam/fhsenv.nix
+index 78877c8b0d8..43423b80629 100644
+--- a/pkgs/games/steam/fhsenv.nix
++++ b/pkgs/games/steam/fhsenv.nix
+@@ -258,7 +258,7 @@ in buildFHSUserEnv rec {
+ 
+     ${exportLDPath}
+     ${fixBootstrap}
+-    exec steam "$@"
++    exec steam -noreactlogin "$@"
+   '';
+ 
+   inherit (steam) meta;

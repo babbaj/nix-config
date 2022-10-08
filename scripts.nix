@@ -73,9 +73,9 @@
   };
 
   systemd.user.services.skycache-rsync = {
-    #enable = false;
+    enable = false;
     description = "Hourly skycache backup";
-    path = with pkgs; [ rsync openssh ];
+    path = with pkgs; [ rsync openssh gb-backup ];
     startAt = "hourly";
     script = ''
       set -e
@@ -87,6 +87,7 @@
       rsync -rpt n:/opt/slave/skymason/ $tmpdir
       mkdir /home/babbaj/skycache || true
       mv $tmpdir /home/babbaj/skycache/$dirname
+      gb --config-file='/home/babbaj/skycache/.gb.conf' backup /home/babbaj/skycache/$dirname
     '';
   };
 }

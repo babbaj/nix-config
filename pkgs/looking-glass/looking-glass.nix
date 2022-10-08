@@ -63,6 +63,7 @@ in stdenv.mkDerivation rec {
 
   patches = [
     #./0001-Allow-sudo.patch
+    ./allow-sudo.patch
     ./fix-pointer-grab.patch
   ];
 

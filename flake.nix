@@ -47,6 +47,7 @@
       name = "nixpkgs-patched";
       src = nixpkgs;
       patches = with pkgs; [
+        ./steam-old-login.patch
         #(fetchpatch { # discord
         #  url = "https://github.com/NixOS/nixpkgs/commit/a859d764e9f9905b170152accb46fddc06b52028.patch";
         #  sha256 = "sha256-ILeqOXhTI2uARmwbMOvzJCnphco/ICx3VioVZ3Xrg3w=";

@@ -285,7 +285,8 @@
     element-desktop
     discord
     discord-canary
-    go
+    #go
+    go_1_19
     lepton
     binutils
     virt-manager
