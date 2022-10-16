@@ -1,0 +1,16 @@
+diff --git a/pkgs/servers/x11/xorg/overrides.nix b/pkgs/servers/x11/xorg/overrides.nix
+index 75a17a9ef32..36ea65f01ef 100644
+--- a/pkgs/servers/x11/xorg/overrides.nix
++++ b/pkgs/servers/x11/xorg/overrides.nix
+@@ -822,6 +822,11 @@ self: super:
+             url = "https://gitlab.freedesktop.org/xorg/xserver/-/commit/dd8caf39e9e15d8f302e54045dd08d8ebf1025dc.diff";
+             sha256 = "rBiiXQRreMvexW9vOKblcfCYzul+9La01EAhir4FND8=";
+           })
++          (fetchpatch {
++            name = "fix-looking-glass-crash";
++            url = "https://gitlab.freedesktop.org/xorg/xserver/-/merge_requests/841/diffs.patch";
++            sha256 = "sha256-RVkllnh7K17uD5IV+yt6mVNJa4k/g6YMc13alXJ+Qik=";
++          })
+         ];
+         buildInputs = commonBuildInputs ++ [ libdrm mesa ];
+         propagatedBuildInputs = attrs.propagatedBuildInputs or [] ++ [ libpciaccess libepoxy ] ++ commonPropagatedBuildInputs ++ lib.optionals stdenv.isLinux [

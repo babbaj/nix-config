@@ -58,7 +58,8 @@
         jitRender = true;
       };
       egl = {
-        preset = "yay";
+        # egl filters break the nvidia driver
+        #preset = "yay";
         vsync = true; # this seems to consistently add a frame of latency without fully fixing tearing
         #noSwapDamage = true;
         #noBufferAge = true;

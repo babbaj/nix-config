@@ -37,7 +37,7 @@
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  memflow.kvm.enable = true;
+  #memflow.kvm.enable = true;
 
   networking.hostName = "nixos"; # Define your hostname.
   networking.hostId = "d5794eb2"; # ZFS requires this
@@ -89,7 +89,7 @@
     '';*/
     xrandrHeads = [
       {
-        output = "HDMI-0";
+        output = "DP-0";
         primary = true;
       }
     ];
@@ -121,8 +121,6 @@
       '';
     };
   };
-
-  powerManagement.powerUpCommands = ''${config.hardware.nvidia.package.settings}/bin/nvidia-settings --assign CurrentMetaMode="HDMI-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}, DVI-I-1: nvidia-auto-select +3840+1080"'';
 
   # Configure keymap in X11
   services.xserver.layout = "us";
@@ -207,6 +205,8 @@
     #package = pkgs.nix_2_4;
   };
 
+  #programs.nix-ld.enable = true;
+
   nixpkgs = {
     config = {
       allowUnfree = true;
@@ -281,7 +281,6 @@
     polymc
     google-chrome
     ungoogled-chromium
-    firefox
     element-desktop
     discord
     discord-canary
@@ -399,6 +398,13 @@
     mediainfo
     bind # nslookup and dig
   ];
+
+  #security.wrappers.looking-glass-ptrace = {
+  #  owner = "babbaj";
+  #  group = "babbaj";
+  #  capabilities = "CAP_SYS_PTRACE=ep";
+  #  source = "${pkgs.looking-glass-client}/bin/looking-glass-client";
+  #};
 
   # for intellij
   environment.etc = with pkgs; {

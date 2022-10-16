@@ -180,6 +180,6 @@ in
     };
 
     # Dummy package so that we can install Firefox with Homebrew.
-    package = lib.mkIf isDarwin (pkgs.runCommandLocal "" { } "mkdir $out");
+    package = if isDarwin then (pkgs.runCommandLocal "" { } "mkdir $out") else pkgs.firefox-bin;
   };
 }
