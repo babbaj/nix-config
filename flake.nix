@@ -11,7 +11,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     memflow.url = "github:memflow/memflow-nixos";
-    polymc.url = "github:PolyMC/PolyMC";
+    polymc.url = "github:PolyMC/PolyMC?rev=ccf282593dcdbe189c99b81b8bc90cb203aed3ee";
 
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";

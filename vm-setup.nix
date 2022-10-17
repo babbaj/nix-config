@@ -55,7 +55,8 @@
       spice.alwaysShowCursor = true;
       win = {
         fullScreen = true;
-        jitRender = true;
+        # not recommended with x11
+        #jitRender = true;
       };
       egl = {
         # egl filters break the nvidia driver
