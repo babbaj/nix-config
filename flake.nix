@@ -47,7 +47,7 @@
       name = "nixpkgs-patched";
       src = nixpkgs;
       patches = with pkgs; [
-        ./fix-xserver.patch
+        #./fix-xserver.patch
         #(fetchpatch { # discord
         #  url = "https://github.com/NixOS/nixpkgs/commit/a859d764e9f9905b170152accb46fddc06b52028.patch";
         #  sha256 = "sha256-ILeqOXhTI2uARmwbMOvzJCnphco/ICx3VioVZ3Xrg3w=";
@@ -67,9 +67,9 @@
           #bzip2 = final.bzip2_1_1;
           steam = prev.steam.override { extraArgs = "-noreactlogin"; };
           #firefox = pkgsUnpatched.firefox;
-          webkitgtk = pkgsUnpatched.webkitgtk;
-          webkitgtk_5_0 = pkgsUnpatched.webkitgtk_5_0;
-          webkitgtk_4_1 = pkgsUnpatched.webkitgtk_4_1;
+          #webkitgtk = pkgsUnpatched.webkitgtk;
+          #webkitgtk_5_0 = pkgsUnpatched.webkitgtk_5_0;
+          #webkitgtk_4_1 = pkgsUnpatched.webkitgtk_4_1;
 
           #xorg.xorgserver = prev.xorg.xorgserver;
         })
