@@ -26,7 +26,7 @@
       ];
     };
 
-    hetzner = {
+    vultr = {
       privateKeyFile = config.age.secrets.hetznerKey.path;
       ips = [
         "192.168.70.88/24"
@@ -36,8 +36,9 @@
           allowedIPs = [
             "192.168.70.0/24"
           ];
-          publicKey = "vy2XBTSC9leNunwHK69NZeA3GTlyDU0CQMKAFxwmEkk=";
-          endpoint = "babbaj.dev:14031";
+          publicKey = "J3EtsgrqBybYSm8ui4bT14Z8XVehW6xiStsG7q1R+B4=";
+          #endpoint = "babbaj.dev:14031";
+          endpoint = "45.77.103.113:51820";
           persistentKeepalive = 25;
         }
       ];

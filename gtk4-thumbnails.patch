@@ -1,0 +1,41 @@
+diff --git a/pkgs/development/libraries/gtk/4.x.nix b/pkgs/development/libraries/gtk/4.x.nix
+index 7a6c7813224..8a4a25f9fa7 100644
+--- a/pkgs/development/libraries/gtk/4.x.nix
++++ b/pkgs/development/libraries/gtk/4.x.nix
+@@ -2,6 +2,7 @@
+ , stdenv
+ , substituteAll
+ , fetchurl
++, fetchFromGitLab
+ , pkg-config
+ , gettext
+ , graphene
+@@ -73,9 +74,16 @@ stdenv.mkDerivation rec {
+     gtkCleanImmodulesCache
+   ];
+ 
+-  src = fetchurl {
+-    url = "mirror://gnome/sources/gtk/${lib.versions.majorMinor version}/gtk-${version}.tar.xz";
+-    sha256 = "XOjY3piiO9DI7KGmEJThwAm18AncvWC0XpkKjbG3Qv0=";
++  #src = fetchurl {
++  #  url = "mirror://gnome/sources/gtk/${lib.versions.majorMinor version}/gtk-${version}.tar.xz";
++  #  sha256 = "XOjY3piiO9DI7KGmEJThwAm18AncvWC0XpkKjbG3Qv0=";
++  #};
++  src = fetchFromGitLab {
++    domain = "gitlab.gnome.org";
++    owner = "GNOME";
++    repo = "gtk";
++    rev = "d5b2435f6bf194913f9074be4ff00b40350143df";
++    sha256 = "sha256-vC2DpZP4DpsmJaWBLLNiaRtnBNjczztB9WmjULSiGzU=";
+   };
+ 
+   depsBuildBuild = [
+@@ -179,7 +187,7 @@ stdenv.mkDerivation rec {
+ 
+   postPatch = ''
+     files=(
+-      build-aux/meson/post-install.py
++      #build-aux/meson/post-install.py
+       build-aux/meson/gen-demo-header.py
+       demos/gtk-demo/geninclude.py
+       gdk/broadway/gen-c-array.py

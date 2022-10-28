@@ -71,7 +71,11 @@
     #package = pkgs.jdk8;
   };
   programs.gnupg.agent.enable = true;
-  virtualisation.docker.enable = true;
+
+  virtualisation.docker = {
+    enable = true;
+    enableNvidia = true;
+  };
 
   # Enable the X11 windowing system.
   services.xserver = {
@@ -121,6 +125,10 @@
       '';
     };
   };
+
+  fonts.fonts = with pkgs; [
+    cantarell-fonts
+  ];
 
   # Configure keymap in X11
   services.xserver.layout = "us";

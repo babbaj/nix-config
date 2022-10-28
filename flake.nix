@@ -45,6 +45,7 @@
       name = "nixpkgs-patched";
       src = nixpkgs;
       patches = with pkgs; [
+        ./gtk4-thumbnails.patch
         #./fix-xserver.patch
         #(fetchpatch { # discord
         #  url = "https://github.com/NixOS/nixpkgs/commit/a859d764e9f9905b170152accb46fddc06b52028.patch";
@@ -54,6 +55,11 @@
     };
     pkgsUnpatched = (import nixpkgs { inherit system; });
 
+    lowerBuildCores = drv: drv.overrideAttrs(old: {
+      postConfigure = ''
+        export NIX_BUILD_CORES=8
+      '';
+    });
     pkgs = import nixpkgs-patched {
       inherit system;
       config.allowUnfree = true;
@@ -65,10 +71,9 @@
           #bzip2 = final.bzip2_1_1;
           steam = prev.steam.override { extraArgs = "-noreactlogin"; };
           #firefox = pkgsUnpatched.firefox;
-          #webkitgtk = pkgsUnpatched.webkitgtk;
-          #webkitgtk_5_0 = pkgsUnpatched.webkitgtk_5_0;
-          #webkitgtk_4_1 = pkgsUnpatched.webkitgtk_4_1;
-
+          webkitgtk = pkgsUnpatched.webkitgtk;
+          webkitgtk_4_1 = pkgsUnpatched.webkitgtk_4_1;
+          #webkitgtk_5_0 = lowerBuildCores prev.webkitgtk_5_0;
           #xorg.xorgserver = prev.xorg.xorgserver;
         })
         #polymc.overlay
