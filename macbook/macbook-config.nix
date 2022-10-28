@@ -11,10 +11,12 @@
         imports = [
           ../home/home.nix
         ];
+        home.stateVersion = "22.11";
       };
       useUserPackages = true;
       useGlobalPkgs = true;
       verbose = true;
+
   };
 
   programs.zsh = {
@@ -49,8 +51,8 @@
       isHidden = false;
       shell = pkgs.zsh;
     };
-    nix.configureBuildUsers = true;
   };
+  nix.configureBuildUsers = true;
 
   nixpkgs = {
     config = {
@@ -73,6 +75,8 @@
       ripgrep
       jq
       mediainfo
+      cmake
+      jetbrains.idea-community
   ];
 
   # List Homebrew packages that we want to manage. Some Nix packages of MacOS
@@ -114,7 +118,8 @@
       "coconutbattery"
     ];
 
-    cleanup = "zap";
+    onActivation.cleanup = "zap";
+    onActivation.upgrade = true;
   };
 
   # https://github.com/malob/nixpkgs/blob/master/modules/darwin/security/pam.nix

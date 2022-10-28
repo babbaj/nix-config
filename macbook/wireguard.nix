@@ -38,9 +38,9 @@ in
       text = mkLaunchdConfig "nocom";
       target = "activate-nocom-tunnel.plist";
     };
-    hetzner = {
-      text = mkLaunchdConfig "hetzner";
-      target = "activate-hetzner-tunnel.plist";
+    vultr = {
+      text = mkLaunchdConfig "vultr";
+      target = "activate-vultr-tunnel.plist";
     };
   };
 }

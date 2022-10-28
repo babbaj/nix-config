@@ -15,8 +15,6 @@
 
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-    # For using Touch ID for sudo authentication.
-    malob-nixpkgs.url = "github:malob/nixpkgs";
 
     looking-glass-src = {
       url = "ssh://git@github.com/gnif/LookingGlass.git";
@@ -33,7 +31,7 @@
 
   outputs = inputs@{
     self, nixpkgs, nixpkgs-unstable-small, nixpkgs-master, home-manager, agenix, memflow, polymc, looking-glass-src, gb-src,
-    darwin, malob-nixpkgs
+    darwin
    }:
   let
     system = "x86_64-linux";
@@ -109,7 +107,6 @@
         system = "aarch64-darwin";
         modules = [
           home-manager.darwinModules.home-manager
-          malob-nixpkgs.darwinModules.security-pam
           ./macbook/macbook-config.nix
         ];
         specialArgs = { inherit inputs; };
