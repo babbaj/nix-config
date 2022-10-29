@@ -54,7 +54,7 @@
   networking.interfaces.wlp35s0.useDHCP = true;
 
   networking.networkmanager.enable = true;
-  networking.firewall.trustedInterfaces = [ "nocom" "hetzner" ];
+  networking.firewall.trustedInterfaces = [ "nocom" "vultr" ];
   networking.firewall.logRefusedConnections = false; # this has been filling my logs with junk
 
   # Select internationalisation properties.
