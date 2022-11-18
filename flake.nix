@@ -11,7 +11,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     memflow.url = "github:memflow/memflow-nixos";
-    polymc.url = "github:PolyMC/PolyMC?rev=ccf282593dcdbe189c99b81b8bc90cb203aed3ee";
+    prism.url = "github:PrismLauncher/PrismLauncher";
 
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -30,7 +30,7 @@
   };
 
   outputs = inputs@{
-    self, nixpkgs, nixpkgs-unstable-small, nixpkgs-master, home-manager, agenix, memflow, polymc, looking-glass-src, gb-src,
+    self, nixpkgs, nixpkgs-unstable-small, nixpkgs-master, home-manager, agenix, memflow, prism, looking-glass-src, gb-src,
     darwin
    }:
   let
@@ -66,7 +66,7 @@
         (final: prev: {
           looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src; };
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix { src = gb-src; };
-          polymc = polymc.packages.${system}.default.override { extraJDKs = [ pkgs.zulu8 ]; };
+          prismlauncher = prism.packages.${system}.default.override { extraJDKs = [ pkgs.zulu8 ]; };
           #bzip2 = final.bzip2_1_1;
           steam = prev.steam.override { extraArgs = "-noreactlogin"; };
 
@@ -84,7 +84,7 @@
           webkitgtk_5_0 = lowerBuildCores prev.webkitgtk_5_0;
           #xorg.xorgserver = prev.xorg.xorgserver;
         })
-        #polymc.overlay
+        #prism.overlay
       ];
     };
 

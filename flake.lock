@@ -121,11 +121,11 @@
     "gb-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1654118244,
-        "narHash": "sha256-qxnvaXCzRVjF4IMKUOcTxSd1F9l79K4RkV8HluDaHYI=",
+        "lastModified": 1667947235,
+        "narHash": "sha256-jmYYC07enjCIQVTy5AK9t5LP78exaD0FiutyU820E9c=",
         "owner": "leijurv",
         "repo": "gb",
-        "rev": "01161e1530234e719bef27156ef2c5544f74bc71",
+        "rev": "79984a36c03f384a2ef5c48f290034a13ea4905d",
         "type": "github"
       },
       "original": {
@@ -158,13 +158,13 @@
       "locked": {
         "lastModified": 1650031308,
         "narHash": "sha256-TvVOjkUobYJD9itQYueELJX3wmecvEdCbJ0FinW2mL4=",
-        "owner": "PolyMC",
+        "owner": "PrismLauncher",
         "repo": "libnbtplusplus",
         "rev": "2203af7eeb48c45398139b583615134efd8d407f",
         "type": "github"
       },
       "original": {
-        "owner": "PolyMC",
+        "owner": "PrismLauncher",
         "repo": "libnbtplusplus",
         "type": "github"
       }
@@ -172,11 +172,11 @@
     "looking-glass-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1663726640,
-        "narHash": "sha256-FZjwLY2XtPGhwc/GyAAH2jvFOp61lSqXqXjz0UBr7uw=",
+        "lastModified": 1667826039,
+        "narHash": "sha256-ncXrn3XAPxhlLgKcvv5VmorBb1PmW6frMhmHvLEIUbM=",
         "ref": "master",
-        "rev": "5b6095ad05d6651d39ad4355ca480e8f02ae1b02",
-        "revCount": 3027,
+        "rev": "fa6f1abaac71eec4dbce79496622fa22da9bd715",
+        "revCount": 3045,
         "submodules": true,
         "type": "git",
         "url": "ssh://git@github.com/gnif/LookingGlass.git"
@@ -469,11 +469,11 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1658119717,
-        "narHash": "sha256-4upOZIQQ7Bc4CprqnHsKnqYfw+arJeAuU+QcpjYBXW0=",
+        "lastModified": 1666057921,
+        "narHash": "sha256-VpQqtXdj6G7cH//SvoprjR7XT3KS7p+tCVebGK1N6tE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "9eb60f25aff0d2218c848dd4574a0ab5e296cabe",
+        "rev": "88eab1e431cabd0ed621428d8b40d425a07af39f",
         "type": "github"
       },
       "original": {
@@ -483,7 +483,7 @@
         "type": "github"
       }
     },
-    "polymc": {
+    "prism": {
       "inputs": {
         "flake-compat": "flake-compat",
         "libnbtplusplus": "libnbtplusplus",
@@ -491,17 +491,16 @@
         "tomlplusplus": "tomlplusplus"
       },
       "locked": {
-        "lastModified": 1666032907,
-        "narHash": "sha256-IhpYzdIhqs2Qs96orTvCwas+Yu+TTskOY8vPXjGCamQ=",
-        "owner": "PolyMC",
-        "repo": "PolyMC",
-        "rev": "ccf282593dcdbe189c99b81b8bc90cb203aed3ee",
+        "lastModified": 1667509109,
+        "narHash": "sha256-ALDNGNYjRLHG/ugFbTVM8oIzInAxWPqGKhnJ6T74stw=",
+        "owner": "PrismLauncher",
+        "repo": "PrismLauncher",
+        "rev": "2cf4d5f8ecd4afb1179b5a4e3bf694bcd359b628",
         "type": "github"
       },
       "original": {
-        "owner": "PolyMC",
-        "repo": "PolyMC",
-        "rev": "ccf282593dcdbe189c99b81b8bc90cb203aed3ee",
+        "owner": "PrismLauncher",
+        "repo": "PrismLauncher",
         "type": "github"
       }
     },
@@ -532,7 +531,7 @@
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-unstable-small": "nixpkgs-unstable-small",
-        "polymc": "polymc"
+        "prism": "prism"
       }
     },
     "rust-overlay": {
@@ -573,11 +572,11 @@
     "tomlplusplus": {
       "flake": false,
       "locked": {
-        "lastModified": 1664034574,
-        "narHash": "sha256-EFMAl6tsTvkgK0DWC/pZfOIq06b2e5SnxJa1ngGRIQA=",
+        "lastModified": 1666091090,
+        "narHash": "sha256-djpMCFPvkJcfynV8WnsYdtwLq+J7jpV1iM4C6TojiyM=",
         "owner": "marzer",
         "repo": "tomlplusplus",
-        "rev": "8aa5c8b2a4ff2c440d4630addf64fa4f62146170",
+        "rev": "1e4a3833d013aee08f58c5b31c69f709afc69f73",
         "type": "github"
       },
       "original": {

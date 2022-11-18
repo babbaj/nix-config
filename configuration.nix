@@ -277,138 +277,149 @@
 
   # basically equivalent to nix-build '<nixpkgs/nixos>' -A vm --arg configuration ./ethminer-vm.nix
   mining-vm = (import "${modulesPath}/../" { configuration = ./ethminer-vm.nix; inherit (pkgs) system; }).vm;
-  in
-  [
-    coreutils
+  ides = [
     jetbrains.idea-ultimate
     jetbrains.clion
     jetbrains.goland
     jetbrains.rider
-    vlc
-    wireguard-tools
-    qbittorrent
-    obs
-    obs-autostart
-    minecraft
-    polymc
-    google-chrome
-    ungoogled-chromium
-    element-desktop
-    discord
-    discord-canary
-    #go
-    go_1_19
-    lepton
-    binutils
-    virt-manager
-    git
+    vscode
+    qtcreator
+  ];
+  dev-tools = [
     clang_14
     llvm_14
-    gcc11
-    compsize
-    tdesktop
-    sqlite-interactive
-    vscode
-    pciutils
+    gcc12
+    git
+    binutils
     cmake
     gnumake
+    ninja
     pkg-config
-    docker-compose
-    wget
-    openssl
-    pv
-    smartmontools
-    neofetch
-    gnupg
-    flameshot
-    pavucontrol
-    zoom-us
-    qdirstat
-    piper # for the mouse
-    direnv
-    nix-direnv
-    jq
-    openvpn
-    spotify
-    ffmpeg
+    #go
+    go_1_19
     linuxPackages.perf
-    iotop
-    iperf
-    networkmanagerapplet
-    gnome.gnome-tweaks
-    psmisc # future installer requires killall
-    unzip
-    p7zip
-    unrar
-    gparted
-    htop
-    rlwrap
-    wireshark
-    mbuffer
-    wineWowPackages.staging
     #dotnet-sdk_3
     dotnet-sdk
     mono
+    gdb
+    lldb
+    valgrind
+    rustc
+    cargo
+    rustup
+    rust-cbindgen
+  ];
+  shell-tools = [
+    coreutils
+    ripgrep
+    bat
+    wget
+    pv
+    neofetch
+    jq
+    iotop
+    htop
+    rlwrap
+    mbuffer
+    file
+    xclip xsel
+    asciinema
+    tmux
+  ];
+  cli-tools = [
+    fdupes
+    duperemove
+    squashfsTools
+    squashfuse
+    cloudflare-warp # warp-cli
+    bind # nslookup and dig
+    mediainfo
+    lepton # used by gb
+    compsize
+    pciutils
+    sqlite-interactive
+    smartmontools
+    ffmpeg
+    iperf
     youtube-dl
     usbutils
     lm_sensors
     inetutils
     dmidecode
     i2c-tools
-    #libreoffice-qt
+    gnupg
+    backblaze-b2
+    nvtop
+    nmap
+    unzip
+    p7zip
+    unrar
+    psmisc # future installer requires killall
     gb-backup
-    xclip xsel
+    geekbench
+    openssl
+    xmrig-mo
+    wireguard-tools
+    docker-compose
+  ];
+  nix-tools = [
+    nix-diff
+    nix-top
+    nixfmt
+    nix-direnv
+    direnv
+  ];
+  in
+  ides ++
+  dev-tools ++
+  shell-tools ++
+  cli-tools ++
+  nix-tools ++
+  [
+    vlc
+    qbittorrent
+    obs
+    obs-autostart
+    minecraft
+    prismlauncher
+    google-chrome
+    ungoogled-chromium
+    element-desktop
+    discord
+    virt-manager
+    tdesktop
+    flameshot
+    pavucontrol
+    zoom-us
+    qdirstat
+    piper # for the mouse
+    openvpn
+    spotify
+    networkmanagerapplet
+    gnome.gnome-tweaks
+    gparted
+    wireshark
+    wineWowPackages.staging
+    #libreoffice-qt
     handbrake
     ghidra-bin
     #depotdownloader
-    file
-    qtcreator
-    gdb
-    lldb
-    backblaze-b2
-    nvtop
-    valgrind
     mpv
-    asciinema
     bitwarden
-    cargo
-    rustc
-    rustup
-    rust-cbindgen
     droidcam
-    nixfmt
     libsForQt5.kdenlive
     libsForQt5.okular
-    screen
     monero-gui
-    xmrig-mo
-    #ethminer
-    #mining-vm
     nheko
-    nix-top
-    nmap
-    tmux
-    geekbench
     lutris
-    squashfsTools
-    squashfuse
     xsecurelock
-    nix-diff
     gpu-screen-recorder
     gpu-screen-recorder-gtk
     gimp
-    fdupes
-    duperemove
     nixos-artwork.wallpapers.simple-dark-gray # dark gray background
-    bat
     fake-xterm
     gnomeExtensions.gsconnect
-    ripgrep
     mumble
-    cloudflare-warp # warp-cli
-    ninja
-    mediainfo
-    bind # nslookup and dig
   ];
 
   #security.wrappers.looking-glass-ptrace = {
@@ -429,7 +440,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.babbaj = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "libvirtd" "input" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" "libvirtd" "input" "vaultwarden" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.zsh;
   };
   #security.sudo.wheelNeedsPassword = false; # troll face
