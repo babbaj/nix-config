@@ -1,10 +1,9 @@
 pkgs: with pkgs;
 let
   patch = runCommand "obs-notify-patch.patch" {} ''
-    cp ${./obs-patch.patch} $out
+    cp ${./obs-notify-patch.patch} $out
     substituteInPlace $out \
-      --subst-var-by libnotify ${libnotify} \
-      --subst-var-by iconpath ${obs-studio}/share/icons/hicolor/128x128/apps/com.obsproject.Studio.png
+      --subst-var-by libnotify ${libnotify}
   '';
 
   obs-studio-patched = obs-studio.overrideAttrs({patches, ...}: {
