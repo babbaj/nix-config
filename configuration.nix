@@ -23,8 +23,11 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelModules = [ "v4l2loopback" "snd_aloop" "msr" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
+  boot.kernelModules = [ "v4l2loopback" "snd_aloop" "msr" "zenpower" ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    v4l2loopback
+    zenpower
+  ];
   boot.extraModprobeConfig = ''
     options v4l2loopback exclusive_caps=1 video_nr=9 card_label="OBS Virtual Output"
   '';
@@ -143,7 +146,9 @@
     };
   };
 
-  services.ratbagd.enable = true;
+  services.ratbagd.enable = true; # wired mice
+  hardware.logitech.wireless.enable = true; # udev rules for usb receiver
+  hardware.logitech.wireless.enableGraphical = true; # solaar
 
   services.sshd.enable = true;
 
@@ -217,7 +222,7 @@
     #package = pkgs.nix_2_4;
   };
 
-  #programs.nix-ld.enable = true;
+  programs.nix-ld.enable = true;
 
   nixpkgs = {
     config = {
@@ -254,7 +259,13 @@
 
   environment.systemPackages = with pkgs;
   let
-  obs = (wrapOBS {
+  obs = (wrapOBS.override(
+    {
+      obs-studio = obs-studio.overrideAttrs({patches, ...}: {
+        patches = patches ++ [ ./obs-patch.patch ];
+      });
+    }
+  ) {
     plugins = with obs-studio-plugins; [
       looking-glass-obs
       obs-nvfbc
@@ -275,8 +286,6 @@
     ln -s ${pkgs.kitty}/bin/kitty $out/bin/xterm
   '';
 
-  # basically equivalent to nix-build '<nixpkgs/nixos>' -A vm --arg configuration ./ethminer-vm.nix
-  mining-vm = (import "${modulesPath}/../" { configuration = ./ethminer-vm.nix; inherit (pkgs) system; }).vm;
   ides = [
     jetbrains.idea-ultimate
     jetbrains.clion
@@ -298,6 +307,7 @@
     #go
     go_1_19
     linuxPackages.perf
+    perf-tools
     #dotnet-sdk_3
     dotnet-sdk
     mono
@@ -369,12 +379,17 @@
     nix-direnv
     direnv
   ];
+  obs-stuff = import ./obs.nix pkgs;
   in
   ides ++
   dev-tools ++
   shell-tools ++
   cli-tools ++
   nix-tools ++
+  [
+    obs-stuff.patched-obs
+    obs-stuff.obs-autostart
+  ] ++
   [
     vlc
     qbittorrent

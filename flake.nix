@@ -62,11 +62,15 @@
     pkgs = import nixpkgs-patched {
       inherit system;
       config.allowUnfree = true;
+      config.permittedInsecurePackages = [
+        "lepton-unstable-2019-08-20"
+      ];
+
       overlays = [
         (final: prev: {
           looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src; };
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix { src = gb-src; };
-          prismlauncher = prism.packages.${system}.default.override { extraJDKs = [ pkgs.zulu8 ]; };
+          prismlauncher = prism.packages.${system}.default.override { jdks = [ pkgs.jdk pkgs.jdk8 pkgs.zulu8 ]; };
           #bzip2 = final.bzip2_1_1;
           steam = prev.steam.override { extraArgs = "-noreactlogin"; };
 
@@ -84,7 +88,6 @@
           webkitgtk_5_0 = lowerBuildCores prev.webkitgtk_5_0;
           #xorg.xorgserver = prev.xorg.xorgserver;
         })
-        #prism.overlay
       ];
     };
 

@@ -1,0 +1,13 @@
+diff --git a/UI/window-basic-main.cpp b/UI/window-basic-main.cpp
+index 3ba076bec..93a7d75b1 100644
+--- a/UI/window-basic-main.cpp
++++ b/UI/window-basic-main.cpp
+@@ -7482,7 +7482,7 @@ void OBSBasic::ReplayBufferSaved()
+ 	QString msg = QTStr("Basic.StatusBar.ReplayBufferSavedTo").arg(path);
+ 	ShowStatusBarMessage(msg);
+ 	calldata_free(&cd);
+-
++	system(QString("@libnotify@/bin/notify-send -i @iconpath@ -a \"OBS Studio\" \"Replay Buffer saved\" \"%1\"").arg(path).toStdString().c_str());
+ 	if (api)
+ 		api->on_event(OBS_FRONTEND_EVENT_REPLAY_BUFFER_SAVED);
+ 

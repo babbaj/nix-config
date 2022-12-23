@@ -27,6 +27,11 @@ in
         hostname = "192.168.69.89";
         user = "babbaj";
       };
+      bep = {
+        hostname = "ec2-3-137-153-233.us-east-2.compute.amazonaws.com";
+        user = "root";
+        identityFile = "/home/babbaj/.ssh/nixos_key.pem";
+      };
     };
 
     extraConfig = ''
