@@ -77,6 +77,7 @@
       mediainfo
       cmake
       jetbrains.idea-community
+      go
   ];
 
   # List Homebrew packages that we want to manage. Some Nix packages of MacOS

@@ -1,46 +1,25 @@
 { pkgs, ...}:
 
-let
-  mkLaunchdConfig = name: ''
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
-    <dict>
-      <key>KeepAlive</key>
-      <dict>
-        <key>SuccessfulExit</key>
-        <false/>
-      </dict>
-      <key>Label</key>
-      <string>activate-${name}-tunnel</string>
-      <key>ProgramArguments</key>
-      <array>
-        <string>${pkgs.wireguard-tools}/bin/wg-quick</string>
-        <string>up</string>
-        <string>${name}</string>
-      </array>
-      <key>RunAtLoad</key>
-      <true/>
-      <key>StandardErrorPath</key>
-      <string>/var/log/${name}.err</string>
-      <key>EnvironmentVariables</key>
-      <dict>
-        <key>PATH</key>
-        <string>${pkgs.wireguard-go}/bin</string>
-      </dict>
-    </dict>
-    </plist>
-  '';
-in
 {
-  environment.launchDaemons = {
+  imports = [ ./wg-quick.nix ];
+  networking.wg-quick.interfaces = {
     nocom = {
-      text = mkLaunchdConfig "nocom";
-      target = "activate-nocom-tunnel.plist";
+      address = [ "192.168.69.89/32" ];
+      privateKeyFile = "/Users/babbaj/nocom.key";
+      peers = [{
+        publicKey = "r+4gwEuOKEXMJEQvM1YX5jc5WHIpjjZGAKW8SkRVyVQ=";
+        allowedIPs = [ "192.168.69.0/24" ];
+        endpoint = "fiki.dev:14030";
+      }];
     };
     vultr = {
-      text = mkLaunchdConfig "vultr";
-      target = "activate-vultr-tunnel.plist";
+      address = [ "192.168.70.90/32" ];
+      privateKeyFile = "/Users/babbaj/vultr.key";
+      peers = [{
+        publicKey = "J3EtsgrqBybYSm8ui4bT14Z8XVehW6xiStsG7q1R+B4=";
+        allowedIPs = [ "192.168.70.0/24" ];
+        endpoint = "45.77.103.113:51820";
+      }];
     };
   };
 }
