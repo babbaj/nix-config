@@ -1,9 +1,18 @@
 pkgs: with pkgs;
 let
+  notify-script = writeScript "obs-file-notification.sh" ''
+    #!/usr/bin/env bash
+
+    action=$(${libnotify}/bin/notify-send --action="Show in Files" -i com.obsproject.Studio -a "OBS Studio" "Replay Buffer Saved" "$1")
+    if [[ "$action" = "0" ]]; then
+      nautilus --select "$1"
+    fi
+  '';
+
   patch = runCommand "obs-notify-patch.patch" {} ''
     cp ${./obs-notify-patch.patch} $out
     substituteInPlace $out \
-      --subst-var-by libnotify ${libnotify}
+      --subst-var-by notify_command "${notify-script}"
   '';
 
   obs-studio-patched = obs-studio.overrideAttrs({patches, ...}: {

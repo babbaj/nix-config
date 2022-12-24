@@ -259,27 +259,6 @@
 
   environment.systemPackages = with pkgs;
   let
-  obs = (wrapOBS.override(
-    {
-      obs-studio = obs-studio.overrideAttrs({patches, ...}: {
-        patches = patches ++ [ ./obs-patch.patch ];
-      });
-    }
-  ) {
-    plugins = with obs-studio-plugins; [
-      looking-glass-obs
-      obs-nvfbc
-    ];
-  });
-  obs-autostart = (makeAutostartItem {
-    name = "com.obsproject.Studio";
-    package = obs;
-  }).overrideAttrs ({buildCommand, ...}: {
-    buildCommand = buildCommand + "\n" + ''
-      substituteInPlace $out/etc/xdg/autostart/com.obsproject.Studio.desktop \
-        --replace 'Exec=obs' 'Exec=obs --startreplaybuffer'
-    '';
-  });
   #glib is cringe https://github.com/GNOME/glib/blob/bc0d62424579f507f8d7af13bd29b6d86723f65f/gio/gdesktopappinfo.c#L2498-L2523
   fake-xterm = pkgs.runCommand "xterm-imposter" {} ''
     mkdir -p $out/bin
@@ -393,8 +372,6 @@
   [
     vlc
     qbittorrent
-    obs
-    obs-autostart
     minecraft
     prismlauncher
     google-chrome
