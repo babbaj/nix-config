@@ -2,8 +2,7 @@
   inputs = {
     home-manager.url = "github:nix-community/home-manager";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # Updates faster but requires more compiling
-    nixpkgs-unstable-small.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/22.11";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     #inputs.agenix.url = "github:ryantm/agenix";
     agenix = {
@@ -30,14 +29,14 @@
   };
 
   outputs = inputs@{
-    self, nixpkgs, nixpkgs-unstable-small, nixpkgs-master, home-manager, agenix, memflow, prism, looking-glass-src, gb-src,
+    self, nixpkgs, nixpkgs-stable, nixpkgs-master, home-manager, agenix, memflow, prism, looking-glass-src, gb-src,
     darwin
    }:
   let
     system = "x86_64-linux";
 
-    pkgsUnstableSmall = import nixpkgs-unstable-small { inherit system; };
     pkgsMaster = import nixpkgs-master { inherit system; config.allowUnfree = true; };
+    pkgsStable = import nixpkgs-stable { inherit system; config.allowUnfree = true; };
 
     nixpkgs-patched = let
       pkgs = (import nixpkgs { inherit system; });
@@ -45,6 +44,8 @@
       name = "nixpkgs-patched";
       src = nixpkgs;
       patches = with pkgs; [
+        ./fix-looking-glass-obs.patch
+        ./fix-handbrake.patch
         #./fix-xserver.patch
         #(fetchpatch { # discord
         #  url = "https://github.com/NixOS/nixpkgs/commit/a859d764e9f9905b170152accb46fddc06b52028.patch";
@@ -73,19 +74,9 @@
           prismlauncher = prism.packages.${system}.default.override { jdks = [ pkgs.jdk pkgs.jdk8 pkgs.zulu8 ]; };
           #bzip2 = final.bzip2_1_1;
           steam = prev.steam.override { extraArgs = "-noreactlogin"; };
+          helvum = pkgsStable.helvum;
 
-          gtk4 = prev.gtk4.overrideAttrs(old: {
-            src = pkgs.fetchFromGitLab {
-              domain = "gitlab.gnome.org";
-              owner = "GNOME";
-              repo = "gtk";
-              rev = "09a2638a5aea6597449190083677f2f747455d06";
-              sha256 = "sha256-+fZf/lLKiKSaKyhL9S322vb9O28XOlY9yTruzYahduU=";
-            };
-          });
-          webkitgtk = pkgsUnpatched.webkitgtk;
-          webkitgtk_4_1 = pkgsUnpatched.webkitgtk_4_1;
-          webkitgtk_5_0 = lowerBuildCores prev.webkitgtk_5_0;
+
           #xorg.xorgserver = prev.xorg.xorgserver;
         })
       ];

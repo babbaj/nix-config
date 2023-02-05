@@ -4,7 +4,7 @@
 
 buildGoModule {
   pname = "gb-backup";
-  version = "unstable-2021-11-01";
+  version = "unstable";
 
   inherit src;
 
@@ -12,7 +12,12 @@ buildGoModule {
 
   nativeBuildInputs = [ makeWrapper ];
 
-  checkInputs = [ lepton ];
+  #checkInputs = [ lepton ];
+
+  # idk why checkInputs doesn't work
+  preCheck = ''
+    export PATH=$PATH:${lib.makeBinPath [ lepton ]}
+  '';
 
   postFixup = ''
     wrapProgram $out/bin/gb --prefix PATH : ${lib.makeBinPath [ lepton ]}

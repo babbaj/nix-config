@@ -426,6 +426,7 @@
     "jdk".source = jdk;
     "jdk8".source = jdk8;
     "jdk11".source = jdk11;
+    "jdk17".source = jdk17;
     "zulu8".source = zulu8;
   };
 

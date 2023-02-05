@@ -1,0 +1,38 @@
+diff --git a/pkgs/applications/video/handbrake/default.nix b/pkgs/applications/video/handbrake/default.nix
+index 7c06f6ddb85..08a006d69b9 100644
+--- a/pkgs/applications/video/handbrake/default.nix
++++ b/pkgs/applications/video/handbrake/default.nix
+@@ -25,7 +25,7 @@
+ , numactl
+ , writeText
+   # Processing, video codecs, containers
+-, ffmpeg-full
++, ffmpeg_4
+ , nv-codec-headers
+ , libogg
+ , x264
+@@ -97,13 +97,13 @@ let
+   # patches are required for subtitle timing to work correctly. See:
+   # https://github.com/HandBrake/HandBrake/issues/4029
+   ffmpeg-version = "4.4.1";
+-  ffmpeg-hb = ffmpeg-full.overrideAttrs (old: {
++  ffmpeg-hb = ffmpeg_4.overrideAttrs (old: {
+     version = ffmpeg-version;
+     src = fetchurl {
+       url = "https://www.ffmpeg.org/releases/ffmpeg-${ffmpeg-version}.tar.bz2";
+       hash = "sha256-j8nyCsXtlRFanihWR63Q7t1cwamKA5raFMEyRS+YrEI=";
+     };
+-    patches = old.patches or [] ++ [
++    patches = old.patches or [ ] ++ [
+       "${src}/contrib/ffmpeg/A01-qsv-scale-fix-green-stripes.patch"
+       "${src}/contrib/ffmpeg/A02-qsv-interpolation.patch"
+       "${src}/contrib/ffmpeg/A03-qsv-dx11-ffmpeg44.patch"
+@@ -136,6 +136,8 @@ let
+       "${src}/contrib/ffmpeg/A30-ccaption_dec-fix-pts-in-real_time-mode.patch"
+       "${src}/contrib/ffmpeg/A32-qsv-fix-decode-10bit-hdr.patch"
+     ];
++
++    configureFlags = lib.remove "--enable-sdl2" old.configureFlags;
+   });
+
+   versionFile = writeText "version.txt" ''
