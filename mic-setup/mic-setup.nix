@@ -5,7 +5,10 @@ let
 in
 {
   environment.etc = {
-      "wireplumber/main.lua.d/90-load-custom-scrips.lua".source = ./90-load-custom-scrips.lua;
+      "wireplumber/main.lua.d/90-load-custom-scrips.lua".text = ''
+        load_script("link-easyeffects-to-proxy.lua")
+        load_script("reroute-mic-for-cringe-programs.lua")
+      '';
       "wireplumber/scripts/link-easyeffects-to-proxy.lua".source = ./link-easyeffects-to-proxy.lua;
       "wireplumber/scripts/reroute-mic-for-cringe-programs.lua".source = ./reroute-mic-for-cringe-programs.lua;
 
