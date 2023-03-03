@@ -5,7 +5,19 @@ let
 in
 {
   # to remap side buttons to keys used for push to talk
-  services.input-remapper.enable = true;
+  services.input-remapper = {
+    enable = true;
+    enableUdevRules = true;
+  };
+
+  systemd.user.services.autoload-input-remapper = {
+    description = "Load the input-remapper config";
+    wantedBy = [ "default.target" ];
+    path = [ pkgs.input-remapper ];
+    script = ''
+      input-remapper-control --command autoload
+    '';
+  };
 
   environment.etc = {
     "wireplumber/main.lua.d/90-load-custom-scrips.lua".text = ''
