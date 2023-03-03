@@ -5,10 +5,7 @@ let
 in
 {
   # to remap side buttons to keys used for push to talk
-  services.input-remapper = {
-    enable = true;
-    enableUdevRules = true;
-  };
+  services.input-remapper.enable = true;
 
   systemd.user.services.autoload-input-remapper = {
     description = "Load the input-remapper config";

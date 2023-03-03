@@ -15,6 +15,7 @@
       ./openrgb.nix
       #./wifi.nix
       ./nix.nix
+      ./mic-setup/mic-setup.nix
     ];
 
 
@@ -270,6 +271,7 @@
     jetbrains.clion
     jetbrains.goland
     jetbrains.rider
+    jetbrains.pycharm-professional
     vscode
     qtcreator
   ];
@@ -328,9 +330,9 @@
     pciutils
     sqlite-interactive
     smartmontools
-    ffmpeg
+    ffmpeg_5-full
     iperf
-    youtube-dl
+    yt-dlp
     usbutils
     lm_sensors
     inetutils
@@ -350,6 +352,7 @@
     xmrig-mo
     wireguard-tools
     docker-compose
+    alsa-utils
   ];
   nix-tools = [
     nix-diff
@@ -412,6 +415,7 @@
     fake-xterm
     gnomeExtensions.gsconnect
     mumble
+    audacity
   ];
 
   #security.wrappers.looking-glass-ptrace = {

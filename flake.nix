@@ -45,7 +45,6 @@
       src = nixpkgs;
       patches = with pkgs; [
         ./fix-looking-glass-obs.patch
-        ./fix-handbrake.patch
         #./fix-xserver.patch
         #(fetchpatch { # discord
         #  url = "https://github.com/NixOS/nixpkgs/commit/a859d764e9f9905b170152accb46fddc06b52028.patch";
@@ -75,7 +74,6 @@
           #bzip2 = final.bzip2_1_1;
           steam = prev.steam.override { extraArgs = "-noreactlogin"; };
           helvum = pkgsStable.helvum;
-
 
           #xorg.xorgserver = prev.xorg.xorgserver;
         })
