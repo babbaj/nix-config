@@ -18,6 +18,7 @@
     ./easyeffects.nix
     ./htop.nix
     ./firefox.nix
+    ./mpv.nix
   ];
 
   home.enableNixpkgsReleaseCheck = false;
