@@ -1,5 +1,5 @@
 diff --git a/client/src/app.c b/client/src/app.c
-index f57f0d11..352de8c9 100644
+index f57f0d11..e5a483ee 100644
 --- a/client/src/app.c
 +++ b/client/src/app.c
 @@ -351,7 +351,8 @@ void app_handleKeyPress(int sc, int charcode)
@@ -7,7 +7,7 @@ index f57f0d11..352de8c9 100644
    if (!g_state.keyDown[sc])
    {
 -    uint32_t ps2 = linux_to_ps2[sc];
-+    int new_sc = sc == KEY_PAUSE ? KEY_Q : sc;
++    int new_sc = (sc == KEY_PAUSE || sc == KEY_KPENTER) ? KEY_Q : sc;
 +    uint32_t ps2 = linux_to_ps2[new_sc];
      if (!ps2)
        return;

@@ -65,7 +65,7 @@ in stdenv.mkDerivation rec {
     #./0001-Allow-sudo.patch
     ./allow-sudo.patch
     ./fix-pointer-grab.patch
-    ./remap-pause.patch
+    ./remap-keys.patch
   ];
 
   postUnpack = ''

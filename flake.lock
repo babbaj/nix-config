@@ -195,11 +195,11 @@
     "looking-glass-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1677587924,
-        "narHash": "sha256-MuDRVl80tkZd8PM8Bdna0r8bJzJSyRDj2Fo1KqqhyMQ=",
+        "lastModified": 1677994967,
+        "narHash": "sha256-YsEpBErYHfUQczJ9uRg+86Js9jC5oEAxU/Qss3MCn2w=",
         "ref": "master",
-        "rev": "2f48798db98059aafe2202775542db28c557b265",
-        "revCount": 3056,
+        "rev": "894b8b0c2237f2cd7d08aaa241e16d4dbfcf321c",
+        "revCount": 3058,
         "submodules": true,
         "type": "git",
         "url": "ssh://git@github.com/gnif/LookingGlass.git"

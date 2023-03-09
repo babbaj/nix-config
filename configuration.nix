@@ -276,8 +276,8 @@
     qtcreator
   ];
   dev-tools = [
-    clang_14
-    llvm_14
+    clang_15
+    llvm_15
     gcc12
     git
     binutils
@@ -399,7 +399,6 @@
     handbrake
     ghidra-bin
     #depotdownloader
-    mpv
     bitwarden
     droidcam
     libsForQt5.kdenlive
