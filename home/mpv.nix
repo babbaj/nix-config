@@ -5,6 +5,7 @@ let
     url = "https://raw.githubusercontent.com/maoiscat/mpv-osc-modern/e232eb99bbc3bd57e5ee9100535011d6051bd2d2/modern.lua";
     sha256 = "sha256-Pnn/KZpIT2I79u4coveBlAY0c+NNcq/x1RpQ1xSNq/c=";
   };
+  # TODO: use --osd-fonts-dir in the next mpv update https://github.com/mpv-player/mpv/pull/9856
   mpv-osc-modern = pkgs.runCommand "mpv-osc-modern" {
     passthru.scriptName = "modern.lua";
   } ''

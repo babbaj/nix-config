@@ -11,6 +11,7 @@
     };
     memflow.url = "github:memflow/memflow-nixos";
     prism.url = "github:PrismLauncher/PrismLauncher";
+    prism.inputs.nixpkgs.follows = "nixpkgs";
 
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -70,7 +71,8 @@
         (final: prev: {
           looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src; };
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix { src = gb-src; };
-          prismlauncher = prism.packages.${system}.default.override { jdks = [ pkgs.jdk pkgs.jdk8 pkgs.zulu8 ]; };
+          prismlauncher = prism.packages.${system}.default.override { jdks = [ pkgs.jdk17 pkgs.jdk8 pkgs.zulu8 ]; };
+          #prismlauncher = prism.packages.${system}.default;
           #bzip2 = final.bzip2_1_1;
           steam = prev.steam.override { extraArgs = "-noreactlogin"; };
           helvum = pkgsStable.helvum;

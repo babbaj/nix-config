@@ -145,7 +145,9 @@
     config = {
       ROCKET_ADDRESS = "0.0.0.0";
     };
+    backupDir = "/var/lib/bitwarden_rs/backup";
   };
+  systemd.services.vaultwarden.serviceConfig.StateDirectoryMode = lib.mkForce "0755";
 
   services.ratbagd.enable = true; # wired mice
   hardware.logitech.wireless.enable = true; # udev rules for usb receiver

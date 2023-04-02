@@ -42,7 +42,7 @@ in
     script = ''
       pw_push_to_talk --release-delay 300 \
         --node EasyEffectsProxySource Pause \
-        --node-toggle LiveSynthSource Alt_R
+        --node-toggle LiveSynthSource Menu
     '';
   };
 }

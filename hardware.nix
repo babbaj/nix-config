@@ -75,6 +75,12 @@ in
       options = [ "nofail" "compress-force=zstd:3" ];
     };
 
+  fileSystems."/mnt/n" =
+    { device = "/dev/disk/by-id/ata-SPCC_Solid_State_Disk_AA230214S302KG02348";
+      fsType = "btrfs";
+      options = [ "nofail" "noatime" "compress-force=zstd:3" ];
+    };
+
 
   swapDevices = [ { device = "/dev/disk/by-id/nvme-ADATA_SX8200PNP_2K22292H74YA-part3"; } ];
 }
