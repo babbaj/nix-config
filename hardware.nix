@@ -38,6 +38,9 @@ in
   #hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
   #hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.open = true;
+  boot.extraModprobeConfig = ''
+    options nvidia-drm modeset=1
+  '';
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/7be7dc7e-97f2-43d4-ab33-134dd5f64a71";
