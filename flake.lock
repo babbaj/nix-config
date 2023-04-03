@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1677969766,
-        "narHash": "sha256-AIp/ZYZMNLDZR/H7iiAlaGpu4lcXsVt9JQpBlf43HRY=",
+        "lastModified": 1680281360,
+        "narHash": "sha256-XdLTgAzjJNDhAG2V+++0bHpSzfvArvr2pW6omiFfEJk=",
         "owner": "ryantm",
         "repo": "agenix",
-        "rev": "03b51fe8e459a946c4b88dcfb6446e45efb2c24e",
+        "rev": "e64961977f60388dd0b49572bb0fc453b871f896",
         "type": "github"
       },
       "original": {
@@ -82,11 +82,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1673295039,
-        "narHash": "sha256-AsdYgE8/GPwcelGgrntlijMg4t3hLFJFCRF3tL5WVjA=",
+        "lastModified": 1680266963,
+        "narHash": "sha256-IW/lzbUCOcldLHWHjNSg1YoViDnZOmz0ZJL7EH9OkV8=",
         "owner": "lnl7",
         "repo": "nix-darwin",
-        "rev": "87b9d090ad39b25b2400029c64825fc2a8868943",
+        "rev": "99d4187d11be86b49baa3a1aec0530004072374f",
         "type": "github"
       },
       "original": {
@@ -216,11 +216,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1679067095,
-        "narHash": "sha256-G2dJQURL/CCi+8RP6jNJG8VqgtzEMCA+6mNodd3VR6E=",
+        "lastModified": 1680389554,
+        "narHash": "sha256-+8FUmS4GbDMynQErZGXKg+wU76rq6mI5fprxFXFWKSM=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "3239e0b40f242f47bf6c0c37b2fd35ab3e76e370",
+        "rev": "ddd8866c0306c48f465e7f48432e6f1ecd1da7f8",
         "type": "github"
       },
       "original": {
@@ -248,11 +248,11 @@
     "looking-glass-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1678314001,
-        "narHash": "sha256-NMrVuJzVowDCGQgeVU3PJesV43BILgq+165wP/jvY04=",
+        "lastModified": 1680430456,
+        "narHash": "sha256-ALRG0J24YNJqkAL59pNGR5GjsUuN9saSAU9fqbroZbs=",
         "ref": "master",
-        "rev": "b4b4a37b2b905b44a8c9691004ec767efb443056",
-        "revCount": 3060,
+        "rev": "b7b302334caf8931262efba864ab5780a98b11ee",
+        "revCount": 3065,
         "submodules": true,
         "type": "git",
         "url": "ssh://git@github.com/gnif/LookingGlass.git"
@@ -465,11 +465,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1679176999,
-        "narHash": "sha256-82jEsFarMxBpC3GqnMg9rAXh4Nk82nbPhRyO/ph0IL0=",
+        "lastModified": 1680458928,
+        "narHash": "sha256-i7ncY2pnZigcQ5oF0hXXZ89E0rHWya+FeslzJR8h7gI=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "7574e25ef38fd7b4daca2dc60cebc2e171e0274e",
+        "rev": "143b829e58f25437e61d1f766fc9644fd9139ea0",
         "type": "github"
       },
       "original": {
@@ -545,11 +545,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1678898370,
-        "narHash": "sha256-xTICr1j+uat5hk9FyuPOFGxpWHdJRibwZC+ATi0RbtE=",
+        "lastModified": 1680213900,
+        "narHash": "sha256-cIDr5WZIj3EkKyCgj/6j3HBH4Jj1W296z7HTcWj1aMA=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ac718d02867a84b42522a0ece52d841188208f2c",
+        "rev": "e3652e0735fbec227f342712f180f4f21f0594f2",
         "type": "github"
       },
       "original": {
@@ -598,11 +598,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1678798431,
-        "narHash": "sha256-+BzvPioU0vwFQny+bdTRcbljA2nt90Mt3wN6hm7rvlU=",
+        "lastModified": 1680450919,
+        "narHash": "sha256-mq0pWzXEmAAPNKjI+pOXw3RtUfT7fUs1hNoGBhFtris=",
         "owner": "PrismLauncher",
         "repo": "PrismLauncher",
-        "rev": "45b0367d14f38d40af5cc8603f7daab05d83af5f",
+        "rev": "0a9081cb878044ec70f40f46082a23c5e821b101",
         "type": "github"
       },
       "original": {

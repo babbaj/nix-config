@@ -19,7 +19,7 @@
     ];
 
 
-  boot.kernelPackages = pkgs.linuxPackages_5_15;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -442,6 +442,7 @@
     shell = pkgs.zsh;
   };
   #security.sudo.wheelNeedsPassword = false; # troll face
+  programs.zsh.enable = true;
 
   home-manager = {
     users.babbaj = {
