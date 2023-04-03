@@ -5,8 +5,13 @@
     ./looking-glass-module.nix
   ];
 
-  boot.kernelModules = [ "kvm-amd"];
-  boot.initrd.kernelModules = [ "vfio-pci" ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ kvmfr ];
+  boot.initrd.kernelModules = [ "vfio-pci" "kvmfr" ];
+  boot.kernelModules = [ "kvm-amd" "kvmfr" ];
+  boot.extraModprobeConfig = ''
+    options kvmfr static_size_mb=128
+  '';
+
   boot.kernelParams =
   let
     gpuIds = "10de:1e89,10de:10f8,10de:1ad8,10de:1ad9";
@@ -48,6 +53,7 @@
     enable = true;
 
     settings = {
+      app.shmFile = "/dev/kvmfr0";
       input = {
         grabKeyboardOnFocus = true;
         rawMouse = true;
@@ -77,5 +83,8 @@
     ATTR{wwid}=="eui.0025385b01421a07", SUBSYSTEM=="block", OWNER="babbaj"
     KERNEL=="sd*",  SUBSYSTEM=="block", OWNER="babbaj"
     SUBSYSTEM=="vfio", OWNER="babbaj"
+
+    # take ownership of /dev/kvmfr0
+    SUBSYSTEM=="kvmfr", OWNER="babbaj", GROUP="kvm", MODE="0660"
   '';
 }
