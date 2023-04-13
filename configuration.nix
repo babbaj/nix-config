@@ -181,9 +181,9 @@
   };
 
   # warp-svc
-  systemd.packages = with pkgs; [
-    cloudflare-warp
-  ];
+  #systemd.packages = with pkgs; [
+  #  cloudflare-warp
+  #];
 
   services.mullvad-vpn.enable = true;
 
@@ -324,7 +324,7 @@
     duperemove
     squashfsTools
     squashfuse
-    cloudflare-warp # warp-cli
+    #cloudflare-warp # warp-cli
     bind # nslookup and dig
     mediainfo
     lepton # used by gb
@@ -349,7 +349,7 @@
     unrar
     psmisc # future installer requires killall
     gb-backup
-    geekbench
+    #geekbench
     openssl
     xmrig-mo
     wireguard-tools
