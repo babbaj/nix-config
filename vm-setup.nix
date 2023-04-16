@@ -12,6 +12,13 @@
     options kvmfr static_size_mb=128
   '';
 
+  boot.kernelPatches = [
+    {
+      name = "fix-vfio-framebuffer-troll";
+      patch = ./fix-vfio-troll.patch;
+    }
+  ];
+
   boot.kernelParams =
   let
     # 2060
@@ -21,7 +28,7 @@
     ssdId = "144d:a808";
   in [
     "amd_iommu=on" "iommu=1" "kvm.ignore_msrs=1" "kvm.report_ignored_msrs=0" "kvm_amd.npt=1" "kvm_amd.avic=1"
-    #"vfio-pci.ids=${gpuIds}"
+    "vfio-pci.ids=${gpuIds}"
     #"pcie_acs_override=downstream,multifunction"
     "default_hugepagesz=1G"
   ];
@@ -36,32 +43,6 @@
       };
     }
   ];*/
-
-  boot.initrd.preDeviceCommands = ''
-    DEVS="0000:27:00.0 0000:27:00.1 0000:27:00.2 0000:27:00.3"
-    for DEV in $DEVS; do
-      echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
-    done
-    modprobe -i vfio-pci
-  '';
-
-  # Bind the driver late in the boot process
-  systemd.services.bind-vfio = {
-    description = "Bind the vfio-pci driver to the 2070";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "display-manager.service" ];
-
-    script = ''
-      DEVS="0000:27:00.0 0000:27:00.1 0000:27:00.2 0000:27:00.3"
-      for DEV in $DEVS; do
-        if [[ ! -d "/sys/bus/pci/devices/$DEV/driver" ]]; then
-          vendor=$(cat /sys/bus/pci/devices/$DEV/vendor)
-          device=$(cat /sys/bus/pci/devices/$DEV/device)
-          echo $vendor $device > /sys/bus/pci/drivers/vfio-pci/new_id
-        fi
-      done
-    '';
-  };
 
   security.pam.loginLimits = [
     { domain = "*"; item = "memlock"; type = "-"; value = "unlimited"; }

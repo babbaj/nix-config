@@ -55,7 +55,7 @@
 
   networking.useDHCP = false;
   networking.interfaces.enp34s0.useDHCP = true;
-  networking.interfaces.wlp35s0.useDHCP = true;
+  #networking.interfaces.wlp35s0.useDHCP = true;
 
   networking.networkmanager.enable = true;
   networking.firewall.trustedInterfaces = [ "nocom" "vultr" ];
