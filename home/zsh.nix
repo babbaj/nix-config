@@ -37,7 +37,7 @@ in
         cdtemp  = "cd `mktemp -d`";
         rm      = "rm -Iv";
         df      = "df -h";
-        cat     = "${pkgs.bat}/bin/bat";
+        #cat     = "${pkgs.bat}/bin/bat";
         #zreload = "export ZSH_RELOADING_SHELL=1; source $ZDOTDIR/.zshenv; source $ZDOTDIR/.zshrc; unset ZSH_RELOADING_SHELL";
         zreload = "omz reload";
 

@@ -15,6 +15,7 @@ in
 
     extraConfig = {
       #submodule.recurse = true;
+      fetch.recurseSubmodules = true;
     };
 
     aliases = {

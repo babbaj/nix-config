@@ -37,6 +37,7 @@ in
   #});
   #hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
   #hardware.nvidia.modesetting.enable = true;
+
   hardware.nvidia.open = true;
   boot.extraModprobeConfig = ''
     options nvidia-drm modeset=1
