@@ -9,7 +9,7 @@
   ];
 
   networking.wireguard.interfaces = {
-    nocom = {
+    kittens = {
       privateKeyFile = config.age.secrets.nocomKey.path;
       ips = [
         "192.168.69.88/24"
@@ -19,8 +19,8 @@
           allowedIPs = [
             "192.168.69.0/24"
           ];
-          publicKey = "r+4gwEuOKEXMJEQvM1YX5jc5WHIpjjZGAKW8SkRVyVQ=";
-          endpoint = "fiki.dev:14030";
+          publicKey = "tQFBf1YlSZO/jzkvkqpYsbp5we9j87TSox0DY/oozzI=";
+          endpoint = "sneed:14030";
           persistentKeepalive = 25;
         }
       ];

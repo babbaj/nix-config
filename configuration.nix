@@ -36,6 +36,10 @@
   boot.kernelParams = [ "noibrs" "noibpb" "nopti" "nospectre_v2" "nospectre_v1" "l1tf=off" "nospec_store_bypass_disable" "no_stf_barrier" "mds=off" "tsx=on" "tsx_async_abort=off" "mitigations=off" ]; # make-linux-fast-again.com
   #boot.supportedFilesystems = [ "zfs" ];
 
+  boot.kernel.sysctl = {
+    "vm.max_map_count" = 2147483642;
+  };
+
   boot.tmpOnTmpfs = true;
   boot.cleanTmpDir = true;
 
@@ -51,6 +55,16 @@
     127.0.0.1 normieslayer.proxy.localhost
   '';
 
+  system.activationScripts.appendHosts = {
+    deps = [ "etc" ];
+    text = ''
+      hostsSrc=$(realpath /etc/hosts)
+      rm /etc/hosts
+      cat $hostsSrc > /etc/hosts
+      cat /home/babbaj/hosts >> /etc/hosts
+    '';
+  };
+
   time.timeZone = "America/New_York";
 
   networking.useDHCP = false;
@@ -58,7 +72,7 @@
   #networking.interfaces.wlp35s0.useDHCP = true;
 
   networking.networkmanager.enable = true;
-  networking.firewall.trustedInterfaces = [ "nocom" "vultr" ];
+  networking.firewall.trustedInterfaces = [ "kittens" "vultr" ];
   networking.firewall.logRefusedConnections = false; # this has been filling my logs with junk
 
   # Select internationalisation properties.

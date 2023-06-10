@@ -32,6 +32,10 @@ in
         user = "root";
         identityFile = "/home/babbaj/.ssh/nixos_key.pem";
       };
+      b = {
+        hostname = "sneed";
+        user = "ubuntu";
+      };
     };
 
     extraConfig = ''

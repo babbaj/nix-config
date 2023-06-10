@@ -598,11 +598,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1680984866,
-        "narHash": "sha256-op8cJP+L42Hx2UcVu1cb4DD2rVIv2Uyp/1F3BaJCXj0=",
+        "lastModified": 1683997607,
+        "narHash": "sha256-SsXenaRQ7Ru0gxjlWgLJIsfmRea1uyapiWrtlnLBxgE=",
         "owner": "PrismLauncher",
         "repo": "PrismLauncher",
-        "rev": "95842ee25f3f495915f3956296bbcb90686e1658",
+        "rev": "d5c6a1b4d1e6d052e42366d19ffa0047168e030d",
         "type": "github"
       },
       "original": {
