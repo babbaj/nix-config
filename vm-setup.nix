@@ -90,7 +90,8 @@
 
   services.udev.extraRules = ''
     # Unprivileged nvme access
-    ATTR{wwid}=="eui.0025385b01421a07", SUBSYSTEM=="block", OWNER="babbaj"
+    # cat /sys/block/nvme0n1/wwid
+    ATTR{wwid}=="nvme.1cc1-324b32323239324837345941-414441544120535838323030504e50-00000001", SUBSYSTEM=="block", OWNER="babbaj"
     KERNEL=="sd*",  SUBSYSTEM=="block", OWNER="babbaj"
     SUBSYSTEM=="vfio", OWNER="babbaj"
 

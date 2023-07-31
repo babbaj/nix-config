@@ -28,7 +28,8 @@ in
         alsa.enable = true;
         alsa.support32Bit = true;
         pulse.enable = true;
-        jack.enable = true;
+        # TODO: fix collisionn with sessionVariables.LD_LIBRARY_PATH
+        #jack.enable = true;
 
         #config.pipewire = {
         #  "context.properties" = {

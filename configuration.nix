@@ -163,10 +163,6 @@
   };
   systemd.services.vaultwarden.serviceConfig.StateDirectoryMode = lib.mkForce "0755";
 
-  services.ratbagd.enable = true; # wired mice
-  hardware.logitech.wireless.enable = true; # udev rules for usb receiver
-  hardware.logitech.wireless.enableGraphical = true; # solaar
-
   services.sshd.enable = true;
 
   services.gnome.gnome-keyring.enable = true;
@@ -292,6 +288,7 @@
     qtcreator
   ];
   dev-tools = [
+    zig_0_9
     clang_15
     llvm_15
     gcc12
@@ -369,6 +366,7 @@
     wireguard-tools
     docker-compose
     alsa-utils
+    libnotify
   ];
   nix-tools = [
     nix-diff
@@ -423,8 +421,8 @@
     nheko
     lutris
     xsecurelock
-    gpu-screen-recorder
-    gpu-screen-recorder-gtk
+    #gpu-screen-recorder
+    #gpu-screen-recorder-gtk
     gimp
     nixos-artwork.wallpapers.simple-dark-gray # dark gray background
     fake-xterm
@@ -448,6 +446,8 @@
     "jdk17".source = jdk17;
     "zulu8".source = zulu8;
   };
+  # TODO: better solution
+  environment.sessionVariables.LD_LIBRARY_PATH = "${with pkgs.xorg; lib.makeLibraryPath [ libXxf86vm ]}";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.babbaj = {

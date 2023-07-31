@@ -27,6 +27,11 @@ in
 
   hardware.i2c.enable = true;
 
+  hardware.openrazer = {
+    enable = true;
+    users = [ "babbaj" ];
+  };
+
   #hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
   # 495.46 and above crashes xorg when looking-glass is launched
   #hardware.nvidia.package = patchDriver (nvidia_generic {
@@ -50,7 +55,7 @@ in
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-id/nvme-ADATA_SX8200PNP_2K22292H74YA-part2";
+    { device = "/dev/disk/by-uuid/9188-860B";
       fsType = "vfat";
     };
 
@@ -76,7 +81,7 @@ in
   fileSystems."/mnt/d" =
     { device = "/dev/disk/by-id/ata-ST2000DM006-2DM164_Z4Z8WDL5-part2";
       fsType = "btrfs";
-      options = [ "nofail" "compress-force=zstd:3" ];
+      options = [ "nofail" "compress-force=zstd:3" "ro" ];
     };
 
   fileSystems."/mnt/n" =
@@ -86,5 +91,5 @@ in
     };
 
 
-  swapDevices = [ { device = "/dev/disk/by-id/nvme-ADATA_SX8200PNP_2K22292H74YA-part3"; } ];
+  swapDevices = [ { device = "/dev/disk/by-uuid/69384c4f-67cd-42d7-ba0b-a54b806f1bc8"; } ];
 }
