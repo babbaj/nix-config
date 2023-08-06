@@ -78,12 +78,6 @@ in
       options = [ "nofail" ];
     };
 
-  fileSystems."/mnt/d" =
-    { device = "/dev/disk/by-id/ata-ST2000DM006-2DM164_Z4Z8WDL5-part2";
-      fsType = "btrfs";
-      options = [ "nofail" "compress-force=zstd:3" "ro" ];
-    };
-
   fileSystems."/mnt/n" =
     { device = "/dev/disk/by-id/ata-SPCC_Solid_State_Disk_AA230214S302KG02348";
       fsType = "btrfs";
