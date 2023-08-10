@@ -5,7 +5,7 @@
     ./looking-glass-module.nix
   ];
 
-  boot.extraModulePackages = with config.boot.kernelPackages; [ kvmfr ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ (kvmfr.overrideAttrs(old: { patches = []; })) ];
   boot.initrd.kernelModules = [ "vfio-pci" "kvmfr" ];
   boot.kernelModules = [ "kvm-amd" "kvmfr" ];
   boot.extraModprobeConfig = ''

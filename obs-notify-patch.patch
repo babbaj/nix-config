@@ -1,13 +1,14 @@
 diff --git a/UI/window-basic-main.cpp b/UI/window-basic-main.cpp
-index 3ba076bec..8e5f1831e 100644
+index 3ba076bec..422d8f9e6 100644
 --- a/UI/window-basic-main.cpp
 +++ b/UI/window-basic-main.cpp
-@@ -7482,7 +7482,7 @@ void OBSBasic::ReplayBufferSaved()
+@@ -7482,7 +7482,8 @@ void OBSBasic::ReplayBufferSaved()
  	QString msg = QTStr("Basic.StatusBar.ReplayBufferSavedTo").arg(path);
  	ShowStatusBarMessage(msg);
  	calldata_free(&cd);
 -
-+	system((std::string{"@notify_command@ \""} + path + "\" &").c_str());
++	auto meow = system((std::string{"@notify_command@ \""} + path + "\" &").c_str());
++	(void) meow;
  	if (api)
  		api->on_event(OBS_FRONTEND_EVENT_REPLAY_BUFFER_SAVED);
  

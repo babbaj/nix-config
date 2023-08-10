@@ -24,7 +24,7 @@
       flake = false;
     };
     gb-src = {
-      url = "github:leijurv/gb";
+      url = "github:babbaj/gb/gitignore";
       flake = false;
     };
   };
@@ -45,7 +45,6 @@
       name = "nixpkgs-patched";
       src = nixpkgs;
       patches = with pkgs; [
-        ./fix-looking-glass-obs.patch
         #./fix-xserver.patch
         #(fetchpatch { # discord
         #  url = "https://github.com/NixOS/nixpkgs/commit/a859d764e9f9905b170152accb46fddc06b52028.patch";
@@ -69,7 +68,7 @@
 
       overlays = [
         (final: prev: {
-          looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src; };
+          looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src // { name = "source"; }; };
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix { src = gb-src; };
           prismlauncher = prism.packages.${system}.default.override { jdks = [ pkgs.jdk17 pkgs.jdk8 pkgs.zulu8 ]; };
           #prismlauncher = prism.packages.${system}.default;
