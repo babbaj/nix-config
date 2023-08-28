@@ -67,8 +67,8 @@ in
 
   # This can't exist when it's using the vfio driver
   fileSystems."/mnt/c" =
-    { device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_500GB_S5H7NS0NB47461B-part4";
-      fsType = "ntfs-3g";
+    { device = "/dev/disk/by-id/nvme-ADATA_SX8200PNP_2K22292H74YA_1-part4";
+      fsType = "ntfs3";
       options = [ "nofail" ];
     };
 

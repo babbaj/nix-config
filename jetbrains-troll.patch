@@ -1,0 +1,13 @@
+diff --git a/pkgs/applications/editors/jetbrains/linux.nix b/pkgs/applications/editors/jetbrains/linux.nix
+index efc939d0324f..85c2471c754a 100644
+--- a/pkgs/applications/editors/jetbrains/linux.nix
++++ b/pkgs/applications/editors/jetbrains/linux.nix
+@@ -107,7 +107,7 @@ with stdenv; lib.makeOverridable mkDerivation (rec {
+       --prefix PATH : "$out/libexec/${pname}:${lib.makeBinPath [ jdk coreutils gnugrep which git python3 ]}" \
+       --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath ([
+         # Some internals want libstdc++.so.6
+-        stdenv.cc.cc.lib libsecret e2fsprogs
++        libsecret e2fsprogs
+         libnotify
+       ] ++ extraLdPath)}" \
+       ${lib.concatStringsSep " " extraWrapperArgs} \

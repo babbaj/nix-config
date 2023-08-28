@@ -196,6 +196,7 @@
   #];
 
   services.mullvad-vpn.enable = true;
+  services.mullvad-vpn.package = pkgs.mullvad-vpn;
 
   # cuckpak
   services.flatpak.enable = true;
@@ -289,9 +290,9 @@
   ];
   dev-tools = [
     zig_0_9
-    clang_15
-    llvm_15
-    gcc12
+    clang_16
+    llvm_16
+    gcc13
     git
     binutils
     cmake

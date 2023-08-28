@@ -1,0 +1,23 @@
+diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+index a5ab416cf476..e56283c324aa 100644
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -10,7 +10,6 @@
+ 
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+-#include <linux/aperture.h>
+ #include <linux/device.h>
+ #include <linux/eventfd.h>
+ #include <linux/file.h>
+@@ -2063,10 +2062,6 @@ static int vfio_pci_vga_init(struct vfio_pci_core_device *vdev)
+ 	if (!vfio_pci_is_vga(pdev))
+ 		return 0;
+ 
+-	ret = aperture_remove_conflicting_pci_devices(pdev, vdev->vdev.ops->name);
+-	if (ret)
+-		return ret;
+-
+ 	ret = vga_client_register(pdev, vfio_pci_set_decode);
+ 	if (ret)
+ 		return ret;

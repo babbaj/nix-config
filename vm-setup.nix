@@ -12,6 +12,13 @@
     options kvmfr static_size_mb=128
   '';
 
+  boot.kernelPatches = [
+    {
+      name = "fix-vfio-framebuffer-troll";
+      patch = ./fix-vfio-troll.patch;
+    }
+  ];
+
   boot.kernelParams =
   let
     # 2070
