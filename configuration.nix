@@ -447,8 +447,8 @@
     "jdk17".source = jdk17;
     "zulu8".source = zulu8;
   };
-  # TODO: better solution
-  environment.sessionVariables.LD_LIBRARY_PATH = "${with pkgs.xorg; lib.makeLibraryPath [ libXxf86vm ]}";
+  # for mc dev
+  environment.sessionVariables.LD_LIBRARY_PATH = ["${with pkgs.xorg; lib.makeLibraryPath [ libXxf86vm ]}"] ;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.babbaj = {
