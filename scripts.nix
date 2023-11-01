@@ -68,7 +68,7 @@
     startAt = "daily";
     script = ''
       mkdir /home/babbaj/headless-backup || true
-      rsync -v --progress b:/headless/headless.db /home/babbaj/headless-backup/headless-$(date +"%m-%d-%Y").db
+      rsync -v --progress b:/headless-1.20.1/headless.db /home/babbaj/headless-backup/headless-$(date +"%m-%d-%Y").db
     '';
   };
 

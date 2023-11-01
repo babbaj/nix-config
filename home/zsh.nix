@@ -27,7 +27,7 @@ in
     shellAliases = lib.mkMerge [
       rec {
         oscfg = lib.mkIf isDarwin "cd ~/nix-config; darwin-rebuild switch --flake '.#soybook'; cd $OLDPWD";
-        ls      = "${pkgs.exa}/bin/exa --color=auto --group-directories-first --classify";
+        ls      = "${pkgs.eza}/bin/eza --color=auto --group-directories-first --classify";
         lst     = "${ls} --tree";
         la      = "${ls} --all";
         ll      = "${ls} --all --long --git --header --group";

@@ -16,6 +16,7 @@
       #./wifi.nix
       ./nix.nix
       ./mic-setup/mic-setup.nix
+      ./ups.nix
     ];
 
 
@@ -53,6 +54,7 @@
   networking.extraHosts = ''
     127.0.0.1 babbaj.proxy.localhost
     127.0.0.1 normieslayer.proxy.localhost
+    192.168.69.69 100010.proxy.local
   '';
 
   system.activationScripts.appendHosts = {
@@ -74,6 +76,12 @@
   networking.networkmanager.enable = true;
   networking.firewall.trustedInterfaces = [ "kittens" "vultr" ];
   networking.firewall.logRefusedConnections = false; # this has been filling my logs with junk
+  networking.firewall.allowedTCPPorts = [
+    51680
+  ];
+  networking.firewall.allowedUDPPorts = [
+    51680
+  ];
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -163,7 +171,11 @@
   };
   systemd.services.vaultwarden.serviceConfig.StateDirectoryMode = lib.mkForce "0755";
 
-  services.sshd.enable = true;
+  services.openssh = {
+    enable = true;
+    openFirewall = false;
+    settings.PasswordAuthentication = false;
+  };
 
   services.gnome.gnome-keyring.enable = true;
 
@@ -202,19 +214,10 @@
   services.flatpak.enable = true;
   xdg.portal.enable = true;
 
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  hardware.openrazer = {
+    enable = true;
+    users = [ "babbaj" ];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -238,38 +241,7 @@
 
   programs.nix-ld.enable = true;
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
 
-    overlays = [
-      (self: super:
-        {
-          steam = super.steam.override {
-            extraProfile = ''
-              unset VK_ICD_FILENAMES
-              #export VK_ICD_FILENAMES=${config.hardware.nvidia.package.lib32}/share/vulkan/icd.d/nvidia_icd32.json:${config.hardware.nvidia.package}/share/vulkan/icd.d/nvidia_icd.json
-              #export VK_ICD_FILENAMES=$(echo /run/opengl-driver{,-32}/share/vulkan/icd.d/* | tr ' ' ':'):/usr/share/vulkan/icd.d/intel_icd.x86_64.json:/usr/share/vulkan/icd.d/intel_icd.i686.json:/usr/share/vulkan/icd.d/lvp_icd.x86_64.json:/usr/share/vulkan/icd.d/lvp_icd.i686.json:/usr/share/vulkan/icd.d/nvidia_icd.json:/usr/share/vulkan/icd.d/nvidia_icd32.json:/usr/share/vulkan/icd.d/radeon_icd.x86_64.json:/usr/share/vulkan/icd.d/radeon_icd.i686.json
-
-              export VK_ICD_FILENAMES=/run/opengl-driver/share/vulkan/icd.d/intel_icd.x86_64.json:/run/opengl-driver-32/share/vulkan/icd.d/intel_icd.i686.json:\
-              /run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json:/run/opengl-driver-32/share/vulkan/icd.d/radeon_icd.i686.json:\
-              /run/opengl-driver/share/vulkan/icd.d/amd_icd64.json:/run/opengl-driver-32/share/vulkan/icd.d/amd_icd32.json:\
-              /run/opengl-driver/share/vulkan/icd.d/nvidia_icd.json:/run/opengl-driver-32/share/vulkan/icd.d/nvidia_icd.json:\
-              /run/opengl-driver/share/vulkan/icd.d/lvp_icd.x86_64.json:/run/opengl-driver-32/share/vulkan/icd.d/lvp_icd.i686.json
-            '';
-          };
-
-          openvpn = super.openvpn_24; # openvpn 2.5 is broken with pia
-
-          #looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix {};
-
-          #gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix {};
-
-          #bzip2 = super.bzip2_1_1;
-        })
-    ];
-  };
 
   environment.systemPackages = with pkgs;
   let
@@ -388,6 +360,7 @@
     obs-stuff.obs-autostart
   ] ++
   [
+    texlive.combined.scheme-full
     vlc
     qbittorrent
     minecraft
@@ -448,7 +421,7 @@
     "zulu8".source = zulu8;
   };
   # for mc dev
-  environment.sessionVariables.LD_LIBRARY_PATH = ["${with pkgs.xorg; lib.makeLibraryPath [ libXxf86vm ]}"] ;
+  environment.sessionVariables.LD_LIBRARY_PATH = [ "${pkgs.xorg.libXxf86vm}" ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.babbaj = {
