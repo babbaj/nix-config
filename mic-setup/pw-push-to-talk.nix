@@ -1,27 +1,26 @@
-{ lib, stdenv
+{ lib
+, stdenv
 , fetchFromGitHub
 , rustPlatform
 , pkg-config
 , clang
 , pipewire
-, libX11
-, libXi
-, libXtst
 , libclang
+, libinput
 }:
 
 rustPlatform.buildRustPackage rec {
   pname = "pw-push-to-talk";
-  version = "1.0.0";
+  version = "unstable-2023-11-21";
 
   src = fetchFromGitHub {
     owner = "babbaj";
     repo = pname;
-    rev = "f060ece75bf80c300e0cfa0d4893ee74be57c32f";
-    sha256 = "sha256-U9FbK3OOnFDO+yWwaVTTP9JI/WK+vipQki7NTIrIUu4=";
+    rev = "e736ca7b2a41b8fbfe713b0a1fa64eb75bb0b523";
+    sha256 = "sha256-1Ndg3djt3DAaa5zdD58cdAUpncxBsrPoE0Uej/1hu78=";
   };
 
-  cargoSha256 = "sha256-8nhXdCp77sw9S66yAIdHBylVTEBCxVBtEfMzrR2pnvY=";
+  cargoSha256 = "sha256-pdavyP/MkHxaudcwrfUn2ROiqdTzlSoTDRTIsodFt4o=";
 
   LIBCLANG_PATH = "${libclang.lib}/lib/libclang.so";
   nativeBuildInputs = [
@@ -31,8 +30,6 @@ rustPlatform.buildRustPackage rec {
 
   buildInputs = [
     pipewire
-    libX11
-    libXi
-    libXtst
+    libinput
   ];
 }

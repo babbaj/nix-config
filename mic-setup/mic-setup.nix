@@ -41,8 +41,8 @@ in
     path = [ pw-push-to-talk ];
     script = ''
       pw_push_to_talk --release-delay 300 \
-        --node EasyEffectsProxySource Pause \
-        --node-toggle LiveSynthSource Menu
+        --node EasyEffectsProxySource KEY_PAUSE \
+        --node-toggle LiveSynthSource KEY_MENU
     '';
   };
 }

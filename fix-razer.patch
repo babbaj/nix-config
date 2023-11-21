@@ -1,0 +1,20 @@
+diff --git a/pkgs/development/python-modules/openrazer/daemon.nix b/pkgs/development/python-modules/openrazer/daemon.nix
+index 622917e8a3e7..ea90e089ec34 100644
+--- a/pkgs/development/python-modules/openrazer/daemon.nix
++++ b/pkgs/development/python-modules/openrazer/daemon.nix
+@@ -11,6 +11,7 @@
+ , pyudev
+ , setproctitle
+ , wrapGAppsHook
++, notify2
+ }:
+ 
+ let
+@@ -39,6 +40,7 @@ buildPythonPackage (common // {
+     pygobject3
+     pyudev
+     setproctitle
++    notify2
+   ];
+ 
+   postInstall = ''
