@@ -241,8 +241,6 @@
 
   programs.nix-ld.enable = true;
 
-
-
   environment.systemPackages = with pkgs;
   let
   #glib is cringe https://github.com/GNOME/glib/blob/bc0d62424579f507f8d7af13bd29b6d86723f65f/gio/gdesktopappinfo.c#L2498-L2523
@@ -285,6 +283,7 @@
     cargo
     rustup
     rust-cbindgen
+    astyle
   ];
   shell-tools = [
     coreutils
@@ -302,6 +301,7 @@
     xclip xsel
     asciinema
     tmux
+    xxd
   ];
   cli-tools = [
     fdupes
@@ -403,6 +403,7 @@
     gnomeExtensions.gsconnect
     mumble
     audacity
+    mangohud
   ];
 
   #security.wrappers.looking-glass-ptrace = {

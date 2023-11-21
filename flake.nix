@@ -76,6 +76,13 @@
           #bzip2 = final.bzip2_1_1;
           steam = prev.steam.override { extraArgs = "-noreactlogin"; };
           helvum = pkgsStable.helvum;
+          astyle = prev.astyle.overrideAttrs(old: {
+            src = pkgs.fetchurl {
+              url = "https://gigenet.dl.sourceforge.net/project/astyle/astyle/astyle%203.4/astyle-3.4.10.tar.bz2";
+              sha256 = "sha256-b2fshytDe9PFHg914RLk2/2ybV+3vZz4pIDxCvVVcGM=";
+            };
+          });
+
 
           #xorg.xorgserver = prev.xorg.xorgserver;
         })
