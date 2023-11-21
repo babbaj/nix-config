@@ -41,8 +41,10 @@
     "vm.max_map_count" = 2147483642;
   };
 
-  boot.tmpOnTmpfs = true;
-  boot.cleanTmpDir = true;
+  boot.tmp = {
+    useTmpfs = true;
+    cleanOnBoot = true;
+  };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
@@ -152,7 +154,7 @@
     };
   };
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     cantarell-fonts
   ];
 
@@ -217,6 +219,7 @@
   hardware.openrazer = {
     enable = true;
     users = [ "babbaj" ];
+    mouseBatteryNotifier = false;
   };
 
   # This value determines the NixOS release from which the default

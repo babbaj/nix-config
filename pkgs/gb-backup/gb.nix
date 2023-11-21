@@ -8,8 +8,7 @@ buildGoModule {
 
   inherit src;
 
-  #vendorSha256 = "sha256-S0/P1s4eUusq0kgn6HvtsxULlIrkTvpEtvUyFPCCxo0=";
-  vendorSha256 = "sha256-vfE5GjJNcE5mE7eEM7QMgXQCCE1T+t6mVy3ideyJJMk=";
+  vendorHash = "sha256-vfE5GjJNcE5mE7eEM7QMgXQCCE1T+t6mVy3ideyJJMk=";
 
   nativeBuildInputs = [ makeWrapper ];
 
