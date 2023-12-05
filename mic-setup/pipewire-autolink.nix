@@ -10,16 +10,16 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "pipewire-autolink";
-  version = "1.0.0";
+  version = "unstable-2023-12-5";
 
   src = fetchFromGitHub {
     owner = "babbaj";
     repo = pname;
-    rev = "fd771a14161e4830e8494866d52b78ccf11ce270";
-    sha256 = "sha256-pRwkdhgxZuD0jGsVIXSOQjsEuxYa5Zv4OQwSgfgQnUU=";
+    rev = "75744d67b76e2bea89873c04a12426a111a689a0";
+    sha256 = "sha256-su0hXQxjXJ8fohwWPzEGaxTvSAfun3crlh7nDZd/F4k=";
   };
 
-  cargoSha256 = "sha256-hNOyjMzkzcweRdF7Abb+IcOn1veScvyleZy0yLO8gV8=";
+  cargoSha256 = "sha256-BOj9SUlN2HGKpGvHkT5XXZPu2r0d0bCT9HmY0rJ43Mk=";
 
   LIBCLANG_PATH = "${libclang.lib}/lib/libclang.so";
   nativeBuildInputs = [

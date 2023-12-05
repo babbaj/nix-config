@@ -43,8 +43,7 @@ in
     script = ''
       pw_push_to_talk --release-delay 300 \
         --node EasyEffectsProxySource KEY_PAUSE \
-        --node-toggle LiveSynthSource KEY_MENU \
-        --node SteamProxySource KEY_X
+        --node-toggle LiveSynthSource KEY_MENU
     '';
   };
 
@@ -57,8 +56,10 @@ in
     path = [ pipewire-autolink ];
     script = ''
       pipewire-autolink \
-        --connect easyeffects_source steam \
         --delete-in steam \
+        --connect LiveSynthSource steam \
+        --connect SteamProxySource steam \
+        --connect easyeffects_source SteamProxySink \
         --connect easyeffects_source EasyEffectsProxySink
     '';
   };
