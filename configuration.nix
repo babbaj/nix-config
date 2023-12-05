@@ -222,6 +222,9 @@
     mouseBatteryNotifier = false;
   };
 
+  services.plex.enable = true;
+  services.plex.openFirewall = true;
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -343,6 +346,7 @@
     docker-compose
     alsa-utils
     libnotify
+    exfatprogs
   ];
   nix-tools = [
     nix-diff

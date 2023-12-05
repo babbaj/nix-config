@@ -69,7 +69,7 @@ in
   fileSystems."/mnt/c" =
     { device = "/dev/disk/by-id/nvme-ADATA_SX8200PNP_2K22292H74YA_1-part4";
       fsType = "ntfs3";
-      options = [ "nofail" ];
+      options = [ "nofail" "noauto" ];
     };
 
   fileSystems."/mnt/g" =
