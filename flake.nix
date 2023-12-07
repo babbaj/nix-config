@@ -45,7 +45,6 @@
       name = "nixpkgs-patched";
       src = nixpkgs;
       patches = with pkgs; [
-        #./jetbrains-troll.patch
         #./fix-xserver.patch
         #(fetchpatch { # discord
         #  url = "https://github.com/NixOS/nixpkgs/commit/a859d764e9f9905b170152accb46fddc06b52028.patch";
