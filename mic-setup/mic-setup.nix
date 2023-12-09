@@ -8,6 +8,9 @@ in
   # to remap side buttons to keys used for push to talk
   services.input-remapper.enable = true;
 
+  # TODO: inline this file
+  environment.etc."pipewire/pipewire.conf.d/pw-loopback-nodes.conf".source = ./pw-loopback-nodes.conf;
+
   programs.looking-glass.settings.pipewire.recDevice = "MicProxySource";
 
   systemd.user.services.autoload-input-remapper = {
@@ -28,8 +31,7 @@ in
     path = [ pw-push-to-talk ];
     script = ''
       pw_push_to_talk --release-delay 300 \
-        --node EasyEffectsProxySource KEY_PAUSE \
-        --node-toggle LiveSynthSource KEY_MENU
+        --node EasyEffectsProxySource KEY_PAUSE
     '';
   };
 
