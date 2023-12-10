@@ -43,7 +43,11 @@ in
 
     path = [ pipewire-autolink ];
     script = ''
+      # for some reason cs:s sometimes creates "hl2_linux" nodes that connect to the proper default?
       pipewire-autolink \
+        --delete-in hl2_linux \
+        --connect LiveSynthSource hl2_linux \
+        --connect SteamProxySource hl2_linux \
         --delete-in steam \
         --connect LiveSynthSource steam \
         --connect SteamProxySource steam \
