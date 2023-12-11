@@ -48,11 +48,14 @@ in
         --delete-in hl2_linux \
         --connect LiveSynthSource hl2_linux \
         --connect SteamProxySource hl2_linux \
+        --connect soundux_sink hl2_linux \
         --delete-in steam \
         --connect LiveSynthSource steam \
         --connect SteamProxySource steam \
+        --connect soundux_sink steam \
         --connect easyeffects_source SteamProxySink \
-        --connect easyeffects_source EasyEffectsProxySink
+        --connect easyeffects_source EasyEffectsProxySink \
+        --connect soundux_sink MicProxySink
     '';
   };
 }
