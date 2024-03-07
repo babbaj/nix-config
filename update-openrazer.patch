@@ -1,13 +1,8 @@
 diff --git a/pkgs/development/python-modules/openrazer/common.nix b/pkgs/development/python-modules/openrazer/common.nix
-index 5b7a0bc0f8f2..7dd6c34f71c9 100644
+index 3e801b582797..7dd6c34f71c9 100644
 --- a/pkgs/development/python-modules/openrazer/common.nix
 +++ b/pkgs/development/python-modules/openrazer/common.nix
-@@ -1,14 +1,14 @@
- { lib
- , fetchFromGitHub
- }: rec {
--  version = "3.6.1";
-+  version = "3.7.0";
+@@ -5,10 +5,10 @@
    format = "setuptools";
  
    src = fetchFromGitHub {
@@ -15,7 +10,7 @@ index 5b7a0bc0f8f2..7dd6c34f71c9 100644
 +    owner = "babbaj";
      repo = "openrazer";
 -    rev = "v${version}";
--    hash = "sha256-bboTRZqJq5tKeBQuiEQAXxTHYvoldDQlwbfehjDA8EE=";
+-    hash = "sha256-tjVWvJxcZ2maR99VRwMGCa+IK+1CjCc7jxAj4XkDUEw=";
 +    rev = "0408854d413d0c587b4fc07ab73a4707b75cf2f7";
 +    hash = "sha256-Et3ctyqfYW5pKAm0JUFFOZ1Kgkb9guBUzL2iz3Rx35M=";
    };

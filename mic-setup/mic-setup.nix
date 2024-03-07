@@ -9,7 +9,7 @@ in
   services.input-remapper.enable = true;
 
   # TODO: inline this file
-  environment.etc."pipewire/pipewire.conf.d/pw-loopback-nodes.conf".source = ./pw-loopback-nodes.conf;
+  services.pipewire.configPackages = [ (pkgs.writeTextDir "share/pipewire/pipewire.conf.d/pw-loopback-nodes.conf" (builtins.readFile ./pw-loopback-nodes.conf)) ];
 
   programs.looking-glass.settings.pipewire.recDevice = "MicProxySource";
 

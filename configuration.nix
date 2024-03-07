@@ -133,8 +133,8 @@
       wayland = false; # gdm keeps using wayland when xorg is selected
     };
     displayManager.lightdm.enable = true;
-    desktopManager.gnome.enable = true;
-    #desktopManager.plasma5.enable = true;
+    #desktopManager.gnome.enable = true;
+    desktopManager.plasma5.enable = true;
 
     logFile = "/var/log/X.0.log"; # lightdm sets the log file to here but gdm does not
 
@@ -159,7 +159,7 @@
   ];
 
   # Configure keymap in X11
-  services.xserver.layout = "us";
+  services.xserver.xkb.layout = "us";
 
   # Enable sound.
   profiles.pipewire.enable = true;
@@ -225,6 +225,10 @@
   services.plex.enable = true;
   services.plex.openFirewall = true;
 
+  services.udev.extraRules = ''
+    KERNEL=="hidraw*", TAG+="uaccess"
+  '';
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -275,11 +279,9 @@
     gnumake
     ninja
     pkg-config
-    #go
-    go_1_19
+    go
     linuxPackages.perf
     perf-tools
-    #dotnet-sdk_3
     dotnet-sdk
     mono
     gdb
@@ -341,7 +343,6 @@
     gb-backup
     #geekbench
     openssl
-    xmrig-mo
     wireguard-tools
     docker-compose
     alsa-utils
@@ -370,7 +371,6 @@
     texlive.combined.scheme-full
     vlc
     qbittorrent
-    minecraft
     prismlauncher
     google-chrome
     ungoogled-chromium
@@ -411,6 +411,11 @@
     mumble
     audacity
     mangohud
+    #soundux
+    r2modman
+    gnome.gnome-calculator
+    clonehero
+    gnome.gnome-system-monitor
   ];
 
   #security.wrappers.looking-glass-ptrace = {
@@ -430,6 +435,7 @@
   };
   # for mc dev
   environment.sessionVariables.LD_LIBRARY_PATH = [ "${pkgs.xorg.libXxf86vm}" ];
+  #environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.babbaj = {

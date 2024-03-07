@@ -83,7 +83,6 @@
             };
           });
 
-
           #xorg.xorgserver = prev.xorg.xorgserver;
         })
       ];
