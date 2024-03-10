@@ -416,6 +416,7 @@
     gnome.gnome-calculator
     clonehero
     gnome.gnome-system-monitor
+    python3
   ];
 
   #security.wrappers.looking-glass-ptrace = {
