@@ -11,7 +11,7 @@
     };
     memflow.url = "github:memflow/memflow-nixos";
     prism.url = "github:PrismLauncher/PrismLauncher";
-    prism.inputs.nixpkgs.follows = "nixpkgs";
+    #prism.inputs.nixpkgs.follows = "nixpkgs";
 
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -46,11 +46,6 @@
       src = nixpkgs;
       patches = with pkgs; [
         ./update-openrazer.patch
-        #./fix-xserver.patch
-        #(fetchpatch { # discord
-        #  url = "https://github.com/NixOS/nixpkgs/commit/a859d764e9f9905b170152accb46fddc06b52028.patch";
-        #  sha256 = "sha256-ILeqOXhTI2uARmwbMOvzJCnphco/ICx3VioVZ3Xrg3w=";
-        #})
       ];
     };
     pkgsUnpatched = (import nixpkgs { inherit system; });

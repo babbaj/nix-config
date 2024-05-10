@@ -112,19 +112,12 @@
 
     excludePackages = [ pkgs.xterm ];
 
-    /*screenSection = ''
-      Option         "metamodes" "HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
-    '';
-
-    displayManager.setupCommands = '' # the code above usually doesn't work for some reason
-      ${config.hardware.nvidia.package.settings}/bin/nvidia-settings --assign CurrentMetaMode="HDMI-0: nvidia-auto-select +2560+0, DP-0: nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
-    '';*/
-    xrandrHeads = [
-      {
-        output = "DP-0";
-        primary = true;
-      }
-    ];
+    #xrandrHeads = [
+    #  {
+    #    output = "DP-0";
+    #    primary = true;
+    #  }
+    #];
 
     libinput.mouse.middleEmulation = false; # worst troll ever
 
@@ -209,8 +202,10 @@
   #  cloudflare-warp
   #];
 
-  services.mullvad-vpn.enable = true;
+  services.mullvad-vpn.enable = builtins.traceVerbose true true;
   services.mullvad-vpn.package = pkgs.mullvad-vpn;
+
+  services.tailscale.enable = true;
 
   # cuckpak
   services.flatpak.enable = true;
@@ -225,9 +220,13 @@
   services.plex.enable = true;
   services.plex.openFirewall = true;
 
+  programs.ns-usbloader.enable = true;
+
   services.udev.extraRules = ''
     KERNEL=="hidraw*", TAG+="uaccess"
   '';
+
+  hardware.bluetooth.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -270,8 +269,8 @@
   ];
   dev-tools = [
     zig_0_9
-    clang_16
-    llvm_16
+    clang_18
+    llvm_18
     gcc13
     git
     binutils
@@ -310,6 +309,7 @@
     asciinema
     tmux
     xxd
+    appimage-run
   ];
   cli-tools = [
     fdupes
@@ -417,6 +417,7 @@
     clonehero
     gnome.gnome-system-monitor
     python3
+    polychromatic
   ];
 
   #security.wrappers.looking-glass-ptrace = {

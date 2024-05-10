@@ -2,6 +2,8 @@
 
 {
   nix = {
+    #package = pkgs.nixVersions.nix_2_21;
+
     # This specifies the Nix package nix-darwin references. Without this, Nix
     # will downgrade to Nix stable, which lacks flake support.
     # https://github.com/LnL7/nix-darwin/search?q=nix.package

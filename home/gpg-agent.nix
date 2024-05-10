@@ -5,6 +5,5 @@ in
 {
   services.gpg-agent = lib.mkIf isLinux {
     enable = true;
-    pinentryFlavor = "gnome3";
   };
 }

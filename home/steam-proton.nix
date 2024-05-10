@@ -3,7 +3,7 @@
 let
     mkProtonGE = { version, sha256 }:
     let
-     unpacked = fetchTarball {
+     unpacked = pkgs.fetchzip {
         url = "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${version}/${version}.tar.gz";
         inherit sha256;
       };
@@ -22,5 +22,6 @@ in
     (mkProtonGE { version = "GE-Proton8-13"; sha256 = "sha256:0nj7m55hag0cvjs40lfsj3627gqlrknps5xdg8f2m1rmdhfgky65"; })
     (mkProtonGE { version = "GE-Proton8-16"; sha256 = "sha256:0r11sf7pljw5rqlgbnkl6lkw2cpqyvd16vjp8f64hqjx4ma3947g"; })
     (mkProtonGE { version = "GE-Proton9-1"; sha256 = "sha256:1zc1c1scqnpxsfxj6micpgvn317k7gd48aya8m3c5v6nbi377nm1"; })
+    (mkProtonGE { version = "GE-Proton9-4"; sha256 = "sha256-OR4SUqm5Xsycv/KVBW2Ug/lz4Xr6IQBp8gXacorRe3U="; })
   ]);
 }
