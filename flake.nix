@@ -118,6 +118,17 @@
           ./macbook/macbook-config.nix
         ];
         specialArgs = { inherit inputs; };
+        pkgs = import nixpkgs {
+          system = "aarch64-darwin";
+          config.allowUnfree = true;
+          overlays = [
+            (final: prev: {
+              #prismlauncher = prism.packages.${system}.default.override { extraJDKs = [ final.zulu8 ]; };
+              prismlauncher = prism.packages."aarch64-darwin".default;
+            })
+            #prism.overlay
+          ];
+        };
       };
   };
 }

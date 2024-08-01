@@ -13,7 +13,6 @@
     #package = pkgs.nixFlakes;
 
     extraOptions = ''
-      sandbox = true
       experimental-features = nix-command flakes recursive-nix
     '';
 

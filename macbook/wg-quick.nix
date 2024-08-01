@@ -199,7 +199,7 @@ let
     };
 in {
   options = {
-    networking.wg-quick = {
+    networking.wg-quick-based = {
       interfaces = mkOption {
         type = types.attrsOf (types.submodule interfaceOpts);
         default = { };

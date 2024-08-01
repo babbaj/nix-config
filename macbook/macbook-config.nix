@@ -54,19 +54,6 @@
   };
   nix.configureBuildUsers = true;
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
-
-    overlays = [
-      (self: super:
-        {
-
-        })
-    ];
-  };
-
   environment.systemPackages = with pkgs; [
       pv
       wget
@@ -78,6 +65,8 @@
       cmake
       jetbrains.idea-community
       go
+      git
+      #prismlauncher
   ];
 
   # List Homebrew packages that we want to manage. Some Nix packages of MacOS
@@ -109,6 +98,7 @@
       "telegram"
       # java
       "zulu8"
+      "zulu15"
       "zulu17"
       "manymc"
       "rectangle" # window snapping
@@ -117,6 +107,8 @@
       "mpv"
       "vlc"
       "coconutbattery"
+      "prismlauncher"
+      "qbittorrent"
     ];
 
     onActivation.cleanup = "zap";
