@@ -11,12 +11,12 @@
       ./vm-setup.nix
       ./scripts.nix
       ./pipewire.nix
-      #./metrics.nix
+      ./metrics.nix
+      #./ups.nix
       ./openrgb.nix
       #./wifi.nix
       ./nix.nix
       ./mic-setup/mic-setup.nix
-      ./ups.nix
     ];
 
 
@@ -100,10 +100,8 @@
   };
   programs.gnupg.agent.enable = true;
 
-  virtualisation.docker = {
-    enable = true;
-    enableNvidia = true;
-  };
+  virtualisation.docker.enable = true;
+  hardware.nvidia-container-toolkit.enable = true;
 
   # Enable the X11 windowing system.
   services.xserver = {
@@ -127,7 +125,8 @@
     };
     displayManager.lightdm.enable = true;
     #desktopManager.gnome.enable = true;
-    desktopManager.plasma5.enable = true;
+    #desktopManager.plasma5.enable = true;
+    desktopManager.plasma6.enable = true;
 
     logFile = "/var/log/X.0.log"; # lightdm sets the log file to here but gdm does not
 
@@ -162,7 +161,7 @@
     config = {
       ROCKET_ADDRESS = "0.0.0.0";
     };
-    backupDir = "/var/lib/bitwarden_rs/backup";
+    backupDir = "/var/backup/vaultwarden";
   };
   systemd.services.vaultwarden.serviceConfig.StateDirectoryMode = lib.mkForce "0755";
 
@@ -202,7 +201,7 @@
   #  cloudflare-warp
   #];
 
-  services.mullvad-vpn.enable = builtins.traceVerbose true true;
+  services.mullvad-vpn.enable = true;
   services.mullvad-vpn.package = pkgs.mullvad-vpn;
 
   services.tailscale.enable = true;
@@ -264,6 +263,7 @@
     jetbrains.goland
     jetbrains.rider
     jetbrains.pycharm-professional
+    jetbrains.rust-rover
     vscode
     qtcreator
   ];
@@ -324,7 +324,7 @@
     pciutils
     sqlite-interactive
     smartmontools
-    ffmpeg_5-full
+    ffmpeg-full
     iperf
     yt-dlp
     usbutils
@@ -348,10 +348,11 @@
     alsa-utils
     libnotify
     exfatprogs
+    graphviz
   ];
   nix-tools = [
     nix-diff
-    nix-top
+    #nix-top
     nixfmt
     nix-direnv
     direnv
@@ -418,6 +419,8 @@
     gnome.gnome-system-monitor
     python3
     polychromatic
+    parted
+    neo4j
   ];
 
   #security.wrappers.looking-glass-ptrace = {
@@ -437,7 +440,7 @@
   };
   # for mc dev
   environment.sessionVariables.LD_LIBRARY_PATH = [ "${pkgs.xorg.libXxf86vm}" ];
-  #environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.babbaj = {

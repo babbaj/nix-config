@@ -168,6 +168,9 @@ let
     "findbar.modalHighlight" = true;
     # Enable "Highlight All" in find UI by default
     "findbar.highlightAll" = true;
+
+    # https://www.reddit.com/r/firefox/comments/p8g5zd/why_does_disabling_accessibility_services_improve/
+    "accessibility.force_disabled" = true;
   };
 in
 {
@@ -176,6 +179,7 @@ in
 
     profiles.default = {
       inherit settings;
+      #settings = {};
       id = 0;
     };
 

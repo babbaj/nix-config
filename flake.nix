@@ -11,7 +11,7 @@
     };
     memflow.url = "github:memflow/memflow-nixos";
     prism.url = "github:PrismLauncher/PrismLauncher";
-    #prism.inputs.nixpkgs.follows = "nixpkgs";
+    prism.inputs.nixpkgs.follows = "nixpkgs";
 
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
