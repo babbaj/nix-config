@@ -196,6 +196,15 @@
     };
   };
 
+  systemd.services.stop-2070-fan = {
+    description = "Set the fan speed to 0";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "display-manager.service" ];
+    script = ''
+      /run/current-system/sw/bin/run-gpu-idle-vm
+    '';
+  };
+
   # warp-svc
   #systemd.packages = with pkgs; [
   #  cloudflare-warp
@@ -368,7 +377,10 @@
     obs-stuff.patched-obs
     obs-stuff.obs-autostart
   ] ++
-  [
+  (let
+    gpu-vm = (import "${modulesPath}/../" { configuration = ./gpu-idle-vm.nix; inherit (pkgs) system; }).vm;
+  in [
+    gpu-vm
     texlive.combined.scheme-full
     vlc
     qbittorrent
@@ -421,7 +433,7 @@
     polychromatic
     parted
     neo4j
-  ];
+  ]);
 
   #security.wrappers.looking-glass-ptrace = {
   #  owner = "babbaj";
