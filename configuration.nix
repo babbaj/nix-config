@@ -17,6 +17,7 @@
       #./wifi.nix
       ./nix.nix
       ./mic-setup/mic-setup.nix
+      ./smb.nix
     ];
 
 
@@ -110,15 +111,6 @@
 
     excludePackages = [ pkgs.xterm ];
 
-    #xrandrHeads = [
-    #  {
-    #    output = "DP-0";
-    #    primary = true;
-    #  }
-    #];
-
-    libinput.mouse.middleEmulation = false; # worst troll ever
-
     displayManager.gdm = {
       #enable = true;
       wayland = false; # gdm keeps using wayland when xorg is selected
@@ -126,7 +118,6 @@
     displayManager.lightdm.enable = true;
     #desktopManager.gnome.enable = true;
     #desktopManager.plasma5.enable = true;
-    desktopManager.plasma6.enable = true;
 
     logFile = "/var/log/X.0.log"; # lightdm sets the log file to here but gdm does not
 
@@ -145,6 +136,8 @@
       '';
     };
   };
+  services.libinput.mouse.middleEmulation = false; # worst troll ever
+  services.desktopManager.plasma6.enable = true;
 
   fonts.packages = with pkgs; [
     cantarell-fonts
@@ -222,7 +215,6 @@
   hardware.openrazer = {
     enable = true;
     users = [ "babbaj" ];
-    mouseBatteryNotifier = false;
   };
 
   services.plex.enable = true;
@@ -343,7 +335,7 @@
     i2c-tools
     gnupg
     backblaze-b2
-    nvtop
+    nvtopPackages.full
     nmap
     unzip
     p7zip
@@ -362,7 +354,7 @@
   nix-tools = [
     nix-diff
     #nix-top
-    nixfmt
+    nixfmt-rfc-style
     nix-direnv
     direnv
   ];
@@ -399,7 +391,7 @@
     openvpn
     spotify
     networkmanagerapplet
-    gnome.gnome-tweaks
+    gnome-tweaks
     gparted
     wireshark
     wineWowPackages.staging
@@ -426,9 +418,9 @@
     mangohud
     #soundux
     r2modman
-    gnome.gnome-calculator
+    gnome-calculator
     clonehero
-    gnome.gnome-system-monitor
+    gnome-system-monitor
     python3
     polychromatic
     parted

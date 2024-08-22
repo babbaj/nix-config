@@ -116,11 +116,11 @@ EndSection
   ];
 
   services.openssh.enable = true;
-  services.openssh.permitRootLogin = "yes";
+  services.openssh.settings.PermitRootLogin = "yes";
 
   environment.systemPackages = with pkgs;
     [
-      nvtop
+      nvtopPackages.full
       pciutils
       htop
       gwe
