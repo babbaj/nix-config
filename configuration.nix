@@ -77,7 +77,7 @@
   #networking.interfaces.wlp35s0.useDHCP = true;
 
   networking.networkmanager.enable = true;
-  networking.firewall.trustedInterfaces = [ "kittens" "vultr" ];
+  networking.firewall.trustedInterfaces = [ "kittens" "vultr" "tailscale0" ];
   networking.firewall.logRefusedConnections = false; # this has been filling my logs with junk
   networking.firewall.allowedTCPPorts = [
     51680

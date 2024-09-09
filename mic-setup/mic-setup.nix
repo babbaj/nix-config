@@ -42,17 +42,19 @@ in
     wantedBy = [ "graphical-session.target" ];
 
     path = [ pipewire-autolink ];
-    script = ''
+    script = let
+    redirects = app: ''
+        --delete-in ${app} \
+        --connect LiveSynthSource ${app} \
+        --connect SteamProxySource ${app} \
+        --connect soundux_sink ${app}
+    '';
+     in ''
       # for some reason cs:s sometimes creates "hl2_linux" nodes that connect to the proper default?
       pipewire-autolink \
-        --delete-in hl2_linux \
-        --connect LiveSynthSource hl2_linux \
-        --connect SteamProxySource hl2_linux \
-        --connect soundux_sink hl2_linux \
-        --delete-in steam \
-        --connect LiveSynthSource steam \
-        --connect SteamProxySource steam \
-        --connect soundux_sink steam \
+        ${redirects "hl2_linux"} \
+        ${redirects "steam"} \
+        ${redirects "tf_linux64"} \
         --connect easyeffects_source SteamProxySink \
         --connect easyeffects_source EasyEffectsProxySink \
         --connect soundux_sink MicProxySink

@@ -16,8 +16,8 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "babbaj";
     repo = pname;
-    rev = "e736ca7b2a41b8fbfe713b0a1fa64eb75bb0b523";
-    sha256 = "sha256-1Ndg3djt3DAaa5zdD58cdAUpncxBsrPoE0Uej/1hu78=";
+    rev = "50276827a51b6621ee1e2c5f44c7b6bba032a87e";
+    sha256 = "sha256-TwtqiKWcL8UhVDsqjq8i/yzfyRXA6JkxDiRs/NSeTtc=";
   };
 
   cargoHash = "sha256-pdavyP/MkHxaudcwrfUn2ROiqdTzlSoTDRTIsodFt4o=";
