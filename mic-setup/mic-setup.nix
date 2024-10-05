@@ -47,8 +47,7 @@ in
         --delete-in ${app} \
         --connect LiveSynthSource ${app} \
         --connect SteamProxySource ${app} \
-        --connect soundux_sink ${app}
-    '';
+        --connect soundux_sink ${app}'';
      in ''
       # for some reason cs:s sometimes creates "hl2_linux" nodes that connect to the proper default?
       pipewire-autolink \
