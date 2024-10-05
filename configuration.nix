@@ -441,6 +441,8 @@
     "jdk11".source = jdk11;
     "jdk17".source = jdk17;
     "zulu8".source = zulu8;
+    "jetbrains_jdk".source = jetbrains.jdk;
+    "jetbrains_jdk17".source = jetbrains.jdk-no-jcef-17;
   };
   # for mc dev
   environment.sessionVariables.LD_LIBRARY_PATH = [ "${pkgs.xorg.libXxf86vm}" ];

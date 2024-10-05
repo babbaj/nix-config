@@ -66,6 +66,8 @@ with lib;
     '';
   };
 
+  hardware.nvidia.open = true;
+
   services.xserver =
   let
     x11cfg = ''

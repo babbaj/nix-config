@@ -59,7 +59,10 @@ in stdenv.mkDerivation rec {
 
   NIX_CFLAGS_COMPILE = "-march=native";
 
-  #cmakeFlags = [ "-DOPTIMIZE_FOR_NATIVE=OFF" ];
+  cmakeFlags = [
+    #"-DOPTIMIZE_FOR_NATIVE=OFF"
+    "-DENABLE_WAYLAND=OFF"
+  ];
 
   patches = [
     #./0001-Allow-sudo.patch

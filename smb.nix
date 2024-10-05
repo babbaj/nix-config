@@ -4,11 +4,11 @@
   services.samba = {
     enable = true;
     securityType = "user";
-    extraConfig = ''
-      hosts allow = 100.64.0.0/255.64.0.0 192.168.70. 127.0.0.1 localhost
-      hosts deny = 0.0.0.0/0
-      map to guest = Bad User
-    '';
+    settings.global = {
+      "hosts allow" = "100.64.0.0/255.64.0.0 192.168.70. 127.0.0.1 localhost";
+      "hosts deny" = "0.0.0.0/0";
+      "map to guest" = "Bad User";
+    };
 
     shares = {
       test = {
