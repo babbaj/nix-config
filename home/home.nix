@@ -19,6 +19,7 @@
     ./htop.nix
     ./firefox.nix
     ./mpv.nix
+    ./nnn.nix
   ];
 
   home.enableNixpkgsReleaseCheck = false;

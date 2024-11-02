@@ -10,6 +10,8 @@ in
       background_opacity = "0.8";
       #scrollback_lines = "-1";
       scrollback_lines = "1000000"; # infinite scrollback was a mistake
+      listen_on = "unix:@kitty";
+      allow_remote_control = "yes";
     };
     keybindings = {
       # Pause key (push to talk)
