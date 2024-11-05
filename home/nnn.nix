@@ -19,6 +19,7 @@
   };
 
   programs.zsh.initExtra = ''
+    # https://github.com/jarun/nnn/wiki/Basic-use-cases#configure-cd-on-quit
     nnn () {
       # Block nesting of nnn in subshells
       [ "''${NNNLVL:-0}" -eq 0 ] || {
@@ -26,10 +27,9 @@
           return
       }
 
-      export NNN_TMPFILE="''${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
-
       command nnn "$@"
 
+      NNN_TMPFILE="''${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
       [ ! -f "$NNN_TMPFILE" ] || {
           . "$NNN_TMPFILE"
           rm -f -- "$NNN_TMPFILE" > /dev/null
