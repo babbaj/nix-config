@@ -64,7 +64,6 @@ in
       enable = true;
       plugins = [
         "per-directory-history" # ctrl+g to switch between global and local
-        "ripgrep" # adds completion for ripgrep
         "safe-paste"
         "sudo" # press escape twice
         "copybuffer" # ctrl+o

@@ -5,7 +5,7 @@
     enable = true;
     plugins = {
       mappings = {
-        f = "finder";
+        #f = "finder";
         o = "fzopen";
         p = "preview-tui";
         d = "dragdrop";
@@ -13,6 +13,7 @@
       };
     };
     extraPackages = with pkgs; [ xdragon ];
+    package = (pkgs.nnn.override({ withNerdIcons = true; })).overrideAttrs({...}: { patches = [ ../nnn-patch.diff ]; });
   };
 
   programs.zsh.shellAliases = {

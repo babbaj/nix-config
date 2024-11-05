@@ -152,7 +152,8 @@
   services.vaultwarden = {
     enable = true;
     config = {
-      ROCKET_ADDRESS = "0.0.0.0";
+      #ROCKET_ADDRESS = "0.0.0.0";
+      ROCKET_ADDRESS = "::";
     };
     backupDir = "/var/backup/vaultwarden";
   };
