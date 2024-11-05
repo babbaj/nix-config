@@ -1,5 +1,6 @@
 {
   inputs = {
+    nix-alien.url = "https://flakehub.com/f/thiagokokada/nix-alien/0.1.381.tar.gz";
     home-manager.url = "github:nix-community/home-manager";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/22.11";
@@ -31,7 +32,7 @@
 
   outputs = inputs@{
     self, nixpkgs, nixpkgs-stable, nixpkgs-master, home-manager, agenix, memflow, prism, looking-glass-src, gb-src,
-    darwin
+    darwin, nix-alien
    }:
   let
     system = "x86_64-linux";
@@ -79,7 +80,7 @@
             };
           });
 
-          #xorg.xorgserver = prev.xorg.xorgserver;
+          nix-alien = nix-alien.packages.${system}.default;
         })
       ];
     };

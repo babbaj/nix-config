@@ -358,6 +358,8 @@
     nixfmt-rfc-style
     nix-direnv
     direnv
+    fh
+    nix-alien
   ];
   obs-stuff = import ./obs.nix pkgs;
   in
