@@ -47,7 +47,7 @@ in
         --delete-in ${app} \
         --connect LiveSynthSource ${app} \
         --connect SteamProxySource ${app} \
-        --connect soundux_sink ${app}'';
+        --connect alsa_playback.amplitude_soundboard ${app}'';
      in ''
       # for some reason cs:s sometimes creates "hl2_linux" nodes that connect to the proper default?
       pipewire-autolink \
@@ -56,7 +56,7 @@ in
         ${redirects "tf_linux64"} \
         --connect easyeffects_source SteamProxySink \
         --connect easyeffects_source EasyEffectsProxySink \
-        --connect soundux_sink MicProxySink
+        --connect alsa_playback.amplitude_soundboard MicProxySink
     '';
   };
 }

@@ -8,11 +8,12 @@
       export NNN_PLUG="f:finder;o:fzopen;p:preview-tui;d:dragdrop;z:fzplug"
       ${patched}/bin/nnn -a -e -P p "$@"
     '';
-    unwrapped = pkgs.writeShellScriptBin "nnn-unwrapped" ''
-      ${patched}/bin/nnn "$@"
+    unwrapped = pkgs.runCommand "nnn-unwrapped" {} ''
+      mkdir -p $out/bin
+      ln -s ${patched}/bin/nnn $out/bin/nnn-unwrapped
     '';
-  in
-  [ wrapped unwrapped ];
+    in
+    [ wrapped unwrapped ];
 
   programs.zsh.shellAliases = {
     n = "nnn";

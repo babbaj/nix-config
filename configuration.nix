@@ -283,7 +283,7 @@
     go
     linuxPackages.perf
     perf-tools
-    dotnet-sdk
+    dotnet-sdk_8
     mono
     gdb
     lldb
