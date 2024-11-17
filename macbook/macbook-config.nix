@@ -100,6 +100,7 @@
       "zulu8"
       "zulu15"
       "zulu17"
+      "zulu21"
       "manymc"
       "rectangle" # window snapping
       "fig" # terminal ide style auto completion, extremely soy and bloated
