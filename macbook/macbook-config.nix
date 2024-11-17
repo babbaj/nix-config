@@ -26,9 +26,11 @@
       enableSyntaxHighlighting = true;
   };
 
-  networking.computerName = "soybook";
-  networking.hostName = "soybook";
-  networking.localHostName = "soybook";
+  system.stateVersion = 5;
+
+  networking.computerName = "m1";
+  networking.hostName = "m1";
+  networking.localHostName = "m1";
 
   # The gnupg agent configuration that comes with home-manager doesn't work on
   # macOS.
@@ -74,13 +76,6 @@
   homebrew = {
     enable = true;
 
-    taps = [
-      # defaults
-      "homebrew/cask"
-      "homebrew/cask-versions"
-      "homebrew/core"
-    ];
-
     brews = [
       "pinentry-mac"
       "wireguard-tools"
@@ -97,13 +92,13 @@
       "spotify"
       "telegram"
       # java
-      "zulu8"
-      "zulu15"
-      "zulu17"
-      "zulu21"
+      "zulu"
+      #"zulu8"
+      #"zulu15"
+      #"zulu17"
+      #"zulu21"
       "manymc"
       "rectangle" # window snapping
-      "fig" # terminal ide style auto completion, extremely soy and bloated
       "hot" # temp monitoring
       "mpv"
       "vlc"
@@ -129,11 +124,10 @@
     ${pkgs.dockutil}/bin/dockutil --add /Applications/Visual\ Studio\ Code.app --no-restart
     ${pkgs.dockutil}/bin/dockutil --add /Applications/kitty.app --no-restart
     ${pkgs.dockutil}/bin/dockutil --add /System/Applications/Notes.app --no-restart
-    ${pkgs.dockutil}/bin/dockutil --add /System/Applications/System\ Preferences.app --no-restart
     ${pkgs.dockutil}/bin/dockutil --add ~/Downloads --section others --view fan --display folder --sort dateadded
 
     # By default, this directory has unsafe permissions.
     # TODO: Capture this with a Nix expression.
-    chmod 700 ~/.gnupg
+    #chmod 700 ~/.gnupg
   '';
   }

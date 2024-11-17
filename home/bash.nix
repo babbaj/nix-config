@@ -20,10 +20,7 @@ in
 {
   programs.bash = {
     enable = true;
-    bashrcExtra = lib.optionalString isDarwin ''
-      export PATH=$PATH:~/.local/bin:~/.fig/bin
-      . "$HOME/.fig/shell/bashrc.pre.bash"
-    '' + ''
+    bashrcExtra = ''
       # https://stackoverflow.com/questions/9457233/unlimited-bash-history
       export HISTTIMEFORMAT="[%F %T] "
       export HISTFILE=~/.bash_eternal_history
@@ -33,18 +30,8 @@ in
       #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${lib.makeLibraryPath [ pkgs.xorg.libXxf86vm ]}
     '';
 
-    initExtra = lib.optionalString isDarwin ''
-      . "$HOME/.fig/shell/bashrc.post.bash"
-    '';
-
     profileExtra = lib.optionalString isDarwin ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
-
-      # Fig pre block. Keep at the top of this file.
-      . "$HOME/.fig/shell/profile.pre.bash"
-
-      # Fig post block. Keep at the bottom of this file.
-      . "$HOME/.fig/shell/profile.post.bash"
     '';
 
     historyFileSize = -1;
