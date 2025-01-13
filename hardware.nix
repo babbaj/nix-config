@@ -79,7 +79,7 @@ in
   fileSystems."/mnt/g" =
     { device = "/dev/disk/by-id/ata-Samsung_SSD_860_EVO_1TB_S3Z8NB0M554645B-part2";
       fsType = "ntfs3";
-      options = [ "nofail" ];
+      options = [ "nofail" "force" ];
     };
 
   fileSystems."/mnt/n" =

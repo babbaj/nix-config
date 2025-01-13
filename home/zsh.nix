@@ -79,6 +79,8 @@ in
       EDITOR = "nano";
     };
 
+    syntaxHighlighting.enable = true;
+
     profileExtra = ''
       # History
       # If this is set, zsh sessions will append their history list to the

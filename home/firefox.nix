@@ -178,7 +178,7 @@ in
     enable = true;
 
     profiles.default = {
-      inherit settings;
+      #inherit settings;
       #settings = {};
       id = 0;
     };

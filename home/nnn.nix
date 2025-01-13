@@ -11,6 +11,7 @@
     unwrapped = pkgs.runCommand "nnn-unwrapped" {} ''
       mkdir -p $out/bin
       ln -s ${patched}/bin/nnn $out/bin/nnn-unwrapped
+      ln -s ${patched}/share $out/share
     '';
     in
     [ wrapped unwrapped ];

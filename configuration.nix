@@ -312,6 +312,7 @@
     tmux
     xxd
     appimage-run
+    eza
   ];
   cli-tools = [
     fdupes
