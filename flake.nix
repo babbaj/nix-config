@@ -66,7 +66,7 @@
 
       overlays = [
         (final: prev: {
-          looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src // { name = "source"; }; terminal = false; };
+          #looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src // { name = "source"; }; terminal = false; };
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix { src = gb-src; };
           prismlauncher = prism.packages.${system}.default.override { jdks = [ pkgs.jdk17 pkgs.jdk8 pkgs.zulu8 ]; };
           #prismlauncher = prism.packages.${system}.default;

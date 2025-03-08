@@ -117,7 +117,6 @@
     };
     displayManager.lightdm.enable = true;
     #desktopManager.gnome.enable = true;
-    #desktopManager.plasma5.enable = true;
 
     logFile = "/var/log/X.0.log"; # lightdm sets the log file to here but gdm does not
 
@@ -270,7 +269,7 @@
     qtcreator
   ];
   dev-tools = [
-    zig_0_9
+    zig
     clang_18
     llvm_18
     gcc13
@@ -313,6 +312,7 @@
     xxd
     appimage-run
     eza
+    hyperfine
   ];
   cli-tools = [
     fdupes

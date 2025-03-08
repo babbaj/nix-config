@@ -56,7 +56,8 @@ in
         ${redirects "tf_linux64"} \
         --connect easyeffects_source SteamProxySink \
         --connect easyeffects_source EasyEffectsProxySink \
-        --connect alsa_playback.amplitude_soundboard MicProxySink
+        --connect alsa_playback.amplitude_soundboard MicProxySink \
+        --connect alsa_playback..spotify-wrapped MusicProxySink
     '';
   };
 }

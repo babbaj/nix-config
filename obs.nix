@@ -16,12 +16,12 @@ let
   '';
 
   obs-studio-patched = obs-studio.overrideAttrs({patches, ...}: {
-    patches = patches ++ [ patch ];
+    #patches = patches ++ [ patch ];
   });
   obs = wrapOBS.override({obs-studio = obs-studio-patched;}) {
     plugins = with obs-studio-plugins; [
       looking-glass-obs
-      obs-nvfbc
+      #obs-nvfbc
     ];
   };
 
