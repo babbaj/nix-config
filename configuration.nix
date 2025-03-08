@@ -115,8 +115,7 @@
       #enable = true;
       wayland = false; # gdm keeps using wayland when xorg is selected
     };
-    displayManager.lightdm.enable = true;
-    #desktopManager.gnome.enable = true;
+    #displayManager.lightdm.enable = true;
 
     logFile = "/var/log/X.0.log"; # lightdm sets the log file to here but gdm does not
 
@@ -137,6 +136,9 @@
   };
   services.libinput.mouse.middleEmulation = false; # worst troll ever
   services.desktopManager.plasma6.enable = true;
+
+  services.desktopManager.cosmic.enable = true;
+  services.displayManager.cosmic-greeter.enable = true;
 
   fonts.packages = with pkgs; [
     cantarell-fonts

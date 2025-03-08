@@ -1,8 +1,11 @@
 {
   inputs = {
+    nixpkgs.follows = "nixos-cosmic/nixpkgs";
+    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+
     nix-alien.url = "https://flakehub.com/f/thiagokokada/nix-alien/0.1.381.tar.gz";
     home-manager.url = "github:nix-community/home-manager";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    #nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/22.11";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
     #inputs.agenix.url = "github:ryantm/agenix";
@@ -32,7 +35,7 @@
 
   outputs = inputs@{
     self, nixpkgs, nixpkgs-stable, nixpkgs-master, home-manager, agenix, memflow, prism, looking-glass-src, gb-src,
-    darwin, nix-alien
+    darwin, nix-alien, nixos-cosmic
    }:
   let
     system = "x86_64-linux";
@@ -100,6 +103,15 @@
         (import "${home-manager-patched}/nixos")
         memflow.nixosModule
         agenix.nixosModules.age
+
+        {
+            nix.settings = {
+              substituters = [ "https://cosmic.cachix.org/" ];
+              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+            };
+          }
+          nixos-cosmic.nixosModules.default
+
         ./configuration.nix
       ];
       inherit pkgs;

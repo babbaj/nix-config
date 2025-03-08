@@ -16,11 +16,11 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "babbaj";
     repo = pname;
-    rev = "50276827a51b6621ee1e2c5f44c7b6bba032a87e";
-    sha256 = "sha256-TwtqiKWcL8UhVDsqjq8i/yzfyRXA6JkxDiRs/NSeTtc=";
+    rev = "83eda75653f2562f56a669078f4763822055385a";
+    sha256 = "sha256-+jl5IsDpxYzDxywyvBiUCw6Zn2Oi+It4A1PGXSUaRNw=";
   };
 
-  cargoHash = "sha256-5yGnRImj0Ba0ayLuRKk7C5N0FkslMK9kUGQ7uZflkww=";
+  cargoHash = "sha256-Od080fXpGg3+/hqGnU5aM0Zvm4wk3Aas0fUS4ZDdWmA=";
 
   LIBCLANG_PATH = "${libclang.lib}/lib/libclang.so";
   nativeBuildInputs = [
