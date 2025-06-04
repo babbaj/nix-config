@@ -136,6 +136,9 @@
   };
   services.libinput.mouse.middleEmulation = false; # worst troll ever
   services.desktopManager.plasma6.enable = true;
+  environment.plasma6.excludePackages = [
+    pkgs.kdePackages.xwaylandvideobridge
+  ];
 
   services.desktopManager.cosmic.enable = true;
   services.displayManager.cosmic-greeter.enable = true;
@@ -354,6 +357,7 @@
     libnotify
     exfatprogs
     graphviz
+    gamescope
   ];
   nix-tools = [
     nix-diff
@@ -389,9 +393,8 @@
     discord
     virt-manager
     tdesktop
-    flameshot
+    (flameshot.override {enableWlrSupport = true;})
     pavucontrol
-    zoom-us
     qdirstat
     piper # for the mouse
     openvpn
@@ -452,6 +455,7 @@
   };
   # for mc dev
   environment.sessionVariables.LD_LIBRARY_PATH = [ "${pkgs.xorg.libXxf86vm}" ];
+  environment.sessionVariables.__GL_THREADED_OPTIMIZATIONS = "0";
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

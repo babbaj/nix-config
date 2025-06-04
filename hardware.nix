@@ -45,6 +45,7 @@ in
 
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
   hardware.nvidia.open = true;
+  #hardware.nvidia.gsp.enable = false;
   boot.extraModprobeConfig = ''
     options nvidia-drm modeset=1
   '';

@@ -49,7 +49,8 @@
       name = "nixpkgs-patched";
       src = nixpkgs;
       patches = with pkgs; [
-        ./update-openrazer.patch
+        #./update-openrazer.patch
+        ./openrazer_3_10_3.patch
       ];
     };
     pkgsUnpatched = (import nixpkgs { inherit system; });

@@ -20,7 +20,7 @@ rustPlatform.buildRustPackage rec {
     sha256 = "sha256-+jl5IsDpxYzDxywyvBiUCw6Zn2Oi+It4A1PGXSUaRNw=";
   };
 
-  cargoHash = "sha256-Od080fXpGg3+/hqGnU5aM0Zvm4wk3Aas0fUS4ZDdWmA=";
+  cargoHash = "sha256-sDJf858Ge+3KB4JQ5pyhqsa6UHSNgXp/wZv3ScEu4/s=";
 
   LIBCLANG_PATH = "${libclang.lib}/lib/libclang.so";
   nativeBuildInputs = [

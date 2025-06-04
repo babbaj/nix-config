@@ -11,7 +11,8 @@ in
   # TODO: inline this file
   services.pipewire.configPackages = [ (pkgs.writeTextDir "share/pipewire/pipewire.conf.d/pw-loopback-nodes.conf" (builtins.readFile ./pw-loopback-nodes.conf)) ];
 
-  programs.looking-glass.settings.pipewire.recDevice = "MicProxySource";
+  # don't want to require push to talk to allow vm to capture mic
+  programs.looking-glass.settings.pipewire.recDevice = "easyeffects_source";
 
   systemd.user.services.autoload-input-remapper = {
     description = "Load the input-remapper config";

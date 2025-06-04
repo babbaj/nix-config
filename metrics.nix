@@ -23,6 +23,16 @@
           ];
         }];
       }
+      {
+        job_name = "cave";
+        static_configs = [{
+          targets = [
+            "192.168.69.1:9400"
+          ];
+
+        }];
+        scrape_interval = "5s";
+      }
     ];
   };
 

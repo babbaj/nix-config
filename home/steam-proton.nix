@@ -24,5 +24,6 @@ in
     (mkProtonGE { version = "GE-Proton9-1"; sha256 = "sha256:1zc1c1scqnpxsfxj6micpgvn317k7gd48aya8m3c5v6nbi377nm1"; })
     (mkProtonGE { version = "GE-Proton9-4"; sha256 = "sha256-OR4SUqm5Xsycv/KVBW2Ug/lz4Xr6IQBp8gXacorRe3U="; })
     (mkProtonGE { version = "GE-Proton9-21"; sha256 = "sha256-WNOl0pu3xcEObxSK054u4e3hTWtA/51mH25uQih0+a0="; })
+    (mkProtonGE { version = "GE-Proton9-26"; sha256 = "sha256-HwwQw888rfej5ZsMQdFOojk5RY1AKNGvVpAnRVW3qUg="; })
   ]);
 }
