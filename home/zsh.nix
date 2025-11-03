@@ -44,8 +44,8 @@ in
         b2 = "${pkgs.backblaze-b2}/bin/backblaze-b2";
       }
       (lib.mkIf isLinux {
-        pbcopy = "xclip -selection clipboard";
-        pbpaste = "xclip -selection clipboard -o";
+        pbcopy = "wl-copy";
+        pbpaste = "wl-paste";
         cp = "cp --reflink=auto";
       })
       (genCdAliases 100)

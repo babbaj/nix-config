@@ -55,10 +55,12 @@ in
         ${redirects "hl2_linux"} \
         ${redirects "steam"} \
         ${redirects "tf_linux64"} \
+        ${redirects "\"Garry's Mod\""} # i don't think this does anything but there is a garry's mod input \
         --connect easyeffects_source SteamProxySink \
         --connect easyeffects_source EasyEffectsProxySink \
         --connect alsa_playback.amplitude_soundboard MicProxySink \
-        --connect alsa_playback..spotify-wrapped MusicProxySink
+        --connect spotify MusicProxySink \
+        --connect MusicProxySource SteamProxySink
     '';
   };
 }

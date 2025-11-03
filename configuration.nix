@@ -42,6 +42,15 @@
     "vm.max_map_count" = 2147483642;
   };
 
+  security.pam.loginLimits = [
+    {
+      item = "nofile";
+      domain = "*";
+      type = "soft";
+      value = "4096";
+    }
+  ];
+
   boot.tmp = {
     useTmpfs = true;
     cleanOnBoot = true;
@@ -142,6 +151,7 @@
 
   services.desktopManager.cosmic.enable = true;
   services.displayManager.cosmic-greeter.enable = true;
+  environment.sessionVariables.COSMIC_DATA_CONTROL_ENABLED = 1; # enable clipboard manager
 
   fonts.packages = with pkgs; [
     cantarell-fonts
@@ -358,6 +368,7 @@
     exfatprogs
     graphviz
     gamescope
+    wl-clipboard
   ];
   nix-tools = [
     nix-diff
@@ -367,6 +378,13 @@
     direnv
     fh
     nix-alien
+  ];
+  cosmic-stuff = [
+    /*cosmic-ext-applet-caffeine
+    #cosmic-ext-applet-clipboard-manager
+    cosmic-ext-applet-emoji-selector
+    cosmic-ext-applet-external-monitor-brightness
+    cosmic-ext-ctl*/
   ];
   obs-stuff = import ./obs.nix pkgs;
   in
@@ -379,6 +397,7 @@
     obs-stuff.patched-obs
     obs-stuff.obs-autostart
   ] ++
+  cosmic-stuff ++
   (let
     gpu-vm = (import "${modulesPath}/../" { configuration = ./gpu-idle-vm.nix; inherit (pkgs) system; }).vm;
   in [
@@ -434,6 +453,9 @@
     polychromatic
     parted
     neo4j
+    blender
+    brave
+    firefox
   ]);
 
   #security.wrappers.looking-glass-ptrace = {
@@ -479,4 +501,37 @@
     useGlobalPkgs = true;
     verbose = true;
   };
+
+  services.nginx = {
+    enable = true;
+    package = pkgs.openresty;
+    virtualHosts = {
+      "default" = {
+        default = true;
+        serverName = "_";
+
+        locations."/is_disabled" = {
+          extraConfig = ''
+            content_by_lua_file ${./is_disabled.lua};
+          '';
+        };
+        locations."/disable" = {
+          extraConfig = ''
+            content_by_lua_block {
+              ngx.header.content_type = "application/text"
+              local param = ngx.var.arg_id -- ?id=value
+              if not param then
+                ngx.status = 400
+                ngx.say('missing id parameter')
+                return
+              end
+              io.open(string.format("/var/www/%s", param), "a")
+              ngx.status = 200
+            }
+          '';
+        };
+      };
+    };
+  };
+  systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/var/www" ];
 }

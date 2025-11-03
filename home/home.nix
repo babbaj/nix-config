@@ -17,7 +17,6 @@
     ./fzf.nix
     ./easyeffects.nix
     ./htop.nix
-    ./firefox.nix
     ./mpv.nix
     ./nnn.nix
   ];

@@ -20,6 +20,7 @@ in
     ];
     config = {
       osc = "no";
+      gpu-context = "wayland";
     };
     profiles.Idle = {
       profile-cond= ''p["idle-active"]'';

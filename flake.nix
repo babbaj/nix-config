@@ -49,8 +49,7 @@
       name = "nixpkgs-patched";
       src = nixpkgs;
       patches = with pkgs; [
-        #./update-openrazer.patch
-        ./openrazer_3_10_3.patch
+        ./openrazer.patch
       ];
     };
     pkgsUnpatched = (import nixpkgs { inherit system; });
@@ -111,7 +110,7 @@
               trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
             };
           }
-          nixos-cosmic.nixosModules.default
+          /* nixos-cosmic.nixosModules.default */
 
         ./configuration.nix
       ];
