@@ -36,13 +36,13 @@
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
-      ovmf.enable = true;
       runAsRoot = false;
       package = pkgs.qemu_kvm; # host cpu only
     };
     onBoot = "ignore";
     onShutdown = "shutdown";
   };
+  users.users.qemu-libvirtd.extraGroups = [ "kvm" ];
 
   programs.looking-glass = {
     enable = true;
@@ -76,11 +76,12 @@
   services.udev.extraRules = ''
     # Unprivileged nvme access
     # cat /sys/block/nvme0n1/wwid
-    ATTR{wwid}=="nvme.1cc1-324b32323239324837345941-414441544120535838323030504e50-00000001", SUBSYSTEM=="block", OWNER="babbaj"
-    KERNEL=="sd*",  SUBSYSTEM=="block", OWNER="babbaj"
-    SUBSYSTEM=="vfio", OWNER="babbaj"
+    #ATTR{wwid}=="nvme.1cc1-324b32323239324837345941-414441544120535838323030504e50-00000001", SUBSYSTEM=="block", OWNER="babbaj"
+    ATTR{wwid}=="nvme.1cc1-324b32323239324837345941-414441544120535838323030504e50-00000001", SUBSYSTEM=="block", MODE="0666"
+    #KERNEL=="sd*",  SUBSYSTEM=="block", OWNER="babbaj"
+    SUBSYSTEM=="vfio", MODE="0666"
 
     # take ownership of /dev/kvmfr0
-    SUBSYSTEM=="kvmfr", OWNER="babbaj", GROUP="kvm", MODE="0660"
+    SUBSYSTEM=="kvmfr", MODE="0666"
   '';
 }
