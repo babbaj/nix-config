@@ -145,11 +145,11 @@
     "gb-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1678953518,
-        "narHash": "sha256-KvCuVx05vPzPNc57D6AAErFClDEq8ZykNk6LmVFMGH4=",
+        "lastModified": 1766819491,
+        "narHash": "sha256-oKv0g/JaEQgGfTNPW8RIcHiDvEPHJH1EbvkGoYBGLgM=",
         "owner": "babbaj",
         "repo": "gb",
-        "rev": "3d2d9c1e561db34921d6b8f689373ac2e99bd848",
+        "rev": "e2a0808476bdbc9fb313533057303819a509229b",
         "type": "github"
       },
       "original": {
