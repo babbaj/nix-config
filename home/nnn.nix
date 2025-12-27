@@ -1,5 +1,18 @@
 { pkgs, ... }:
 
+let
+  desktopItem = let
+    kitty-nnn = pkgs.writeShellScript "kitty-nnn" ''
+      kitty zsh -c 'export SHLVL=$((SHLVL-1)); export NNN_RUNNING_AS_APPLICATION=1; exec zsh -ic "n"'
+    '';
+  in pkgs.makeDesktopItem {
+    name = "nnn-kitty";
+    desktopName = "nnn";
+    type = "Application";
+    exec = "${kitty-nnn}";
+    icon = "nnn";
+  };
+in
 {
   home.packages = let
     patched = (pkgs.nnn.override({ withNerdIcons = true; }))
@@ -14,7 +27,7 @@
       ln -s ${patched}/share $out/share
     '';
     in
-    [ wrapped unwrapped ];
+    [ wrapped unwrapped desktopItem ];
 
   programs.zsh.shellAliases = {
     n = "nnn";
@@ -35,6 +48,9 @@
       [ ! -f "$NNN_TMPFILE" ] || {
           . "$NNN_TMPFILE"
           rm -f -- "$NNN_TMPFILE" > /dev/null
+          [ -n "$NNN_RUNNING_AS_APPLICATION" ] && {
+            exec zsh -i
+          }
       }
     }
   '';
