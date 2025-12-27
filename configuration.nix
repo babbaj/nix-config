@@ -13,7 +13,7 @@
       ./pipewire.nix
       ./metrics.nix
       #./ups.nix
-      ./openrgb.nix
+      #./openrgb.nix
       #./wifi.nix
       ./nix.nix
       ./mic-setup/mic-setup.nix
@@ -127,31 +127,14 @@
     #displayManager.lightdm.enable = true;
 
     logFile = "/var/log/X.0.log"; # lightdm sets the log file to here but gdm does not
-
-    windowManager.i3 = {
-      enable = true;
-      package = pkgs.i3-gaps;
-      extraPackages = with pkgs; [
-        rofi
-        dmenu
-        i3status
-        i3lock
-      ];
-      extraSessionCommands = ''
-        ${pkgs.picom}/bin/picom &
-        ${pkgs.hsetroot}/bin/hsetroot -solid '#000000'
-      '';
-    };
   };
   services.libinput.mouse.middleEmulation = false; # worst troll ever
-  services.desktopManager.plasma6.enable = true;
-  environment.plasma6.excludePackages = [
-    pkgs.kdePackages.xwaylandvideobridge
-  ];
 
   services.desktopManager.cosmic.enable = true;
   services.displayManager.cosmic-greeter.enable = true;
   environment.sessionVariables.COSMIC_DATA_CONTROL_ENABLED = 1; # enable clipboard manager
+
+  services.desktopManager.gnome.enable = true;
 
   fonts.packages = with pkgs; [
     cantarell-fonts
@@ -192,16 +175,22 @@
   };
 
   services.postgresql = {
-    enable = false;
-    package = pkgs.postgresql_12;
+    enable = true;
+    package = pkgs.postgresql;
     enableTCPIP = false;
-    dataDir = "/opt/postgres/base/data";
-    settings = {
-      restore_command = "${pkgs.gzip}/bin/gzip -d < /mnt/h/postgreswal/%f.gz > %p";
-      hot_standby = "on";
-      max_standby_archive_delay = "-1";
-      max_standby_streaming_delay = "-1";
-    };
+    ensureUsers = [
+      {
+        name = "babbaj";  # Replace with your actual username
+      }
+    ];
+    ensureDatabases = [ "ocr" ];
+
+    initialScript = pkgs.writeText "backend-initScript" ''
+      GRANT ALL PRIVILEGES ON DATABASE "ocr" TO "babbaj";
+      GRANT ALL PRIVILEGES ON SCHEMA public TO babbaj;
+      GRANT USAGE ON SCHEMA public TO babbaj;
+      GRANT CREATE ON SCHEMA public TO babbaj;
+    '';
   };
 
   systemd.services.stop-2070-fan = {
@@ -235,7 +224,8 @@
   services.plex.enable = true;
   services.plex.openFirewall = true;
 
-  programs.ns-usbloader.enable = true;
+  # broken until https://github.com/NixOS/nixpkgs/pull/461918 is merged into unstable
+  #programs.ns-usbloader.enable = true;
 
   services.udev.extraRules = ''
     KERNEL=="hidraw*", TAG+="uaccess"
@@ -337,7 +327,6 @@
     #cloudflare-warp # warp-cli
     bind # nslookup and dig
     mediainfo
-    lepton # used by gb
     compsize
     pciutils
     sqlite-interactive
@@ -369,6 +358,7 @@
     graphviz
     gamescope
     wl-clipboard
+    television
   ];
   nix-tools = [
     nix-diff
@@ -411,7 +401,7 @@
     element-desktop
     discord
     virt-manager
-    tdesktop
+    telegram-desktop
     (flameshot.override {enableWlrSupport = true;})
     pavucontrol
     qdirstat
@@ -427,10 +417,10 @@
     handbrake
     ghidra-bin
     #depotdownloader
-    bitwarden
+    bitwarden-desktop
     droidcam
-    libsForQt5.kdenlive
-    libsForQt5.okular
+    kdePackages.kdenlive
+    kdePackages.okular
     monero-gui
     nheko
     lutris

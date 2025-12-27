@@ -1,8 +1,5 @@
 {
   inputs = {
-    nixpkgs.follows = "nixos-cosmic/nixpkgs";
-    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
-
     nix-alien.url = "https://flakehub.com/f/thiagokokada/nix-alien/0.1.381.tar.gz";
     home-manager.url = "github:nix-community/home-manager";
     #nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -35,7 +32,7 @@
 
   outputs = inputs@{
     self, nixpkgs, nixpkgs-stable, nixpkgs-master, home-manager, agenix, memflow, prism, looking-glass-src, gb-src,
-    darwin, nix-alien, nixos-cosmic
+    darwin, nix-alien
    }:
   let
     system = "x86_64-linux";
@@ -110,7 +107,6 @@
               trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
             };
           }
-          /* nixos-cosmic.nixosModules.default */
 
         ./configuration.nix
       ];

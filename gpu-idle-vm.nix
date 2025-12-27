@@ -95,7 +95,7 @@ EndSection
   {
     enable = true;
     videoDrivers = lib.mkOverride 9 [ "nvidia" ];
-    desktopManager.plasma5.enable = true;
+    desktopManager.plasma6.enable = true;
 
     serverLayoutSection = ''
       Screen "Screen0"

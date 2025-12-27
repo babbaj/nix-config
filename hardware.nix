@@ -24,6 +24,7 @@ in
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  boot.blacklistedKernelModules = [ "nova_core" ];
 
   hardware.i2c.enable = true;
 

@@ -11,8 +11,9 @@ in
         user = "root";
       };
       h = {
-        hostname = "babbaj.dev";
-        user = "root";
+        hostname = "halt";
+        user = "fedora";
+        identityFile = "/home/babbaj/.ssh/halt.pem";
       };
       f = {
         hostname = "fiki.dev";

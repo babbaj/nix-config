@@ -1,5 +1,5 @@
 diff --git a/pkgs/development/python-modules/openrazer/common.nix b/pkgs/development/python-modules/openrazer/common.nix
-index d9dd55c2c528..344c5dee92cd 100644
+index c202ca374613..ec21ae37357e 100644
 --- a/pkgs/development/python-modules/openrazer/common.nix
 +++ b/pkgs/development/python-modules/openrazer/common.nix
 @@ -4,10 +4,10 @@ rec {
@@ -10,7 +10,7 @@ index d9dd55c2c528..344c5dee92cd 100644
 +    owner = "babbaj";
      repo = "openrazer";
 -    tag = "v${version}";
--    hash = "sha256-M5g3Rn9WuyudhWQfDooopjexEgGVB0rzfJsPg+dqwn4=";
+-    hash = "sha256-pk3nghd16jhdf7zokwMzBGwGtBU7ta4nSHsOoGxjD4w=";
 +    rev = "b46503e064605546ca40b6f8ad159e8ee2686794";
 +    hash = "sha256-NMGEoLLJJhMroyZXV3sD/VIFxnWCre0JEJ7yQ6q8Tl8=";
    };
