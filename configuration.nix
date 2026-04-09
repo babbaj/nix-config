@@ -219,6 +219,9 @@
   hardware.openrazer = {
     enable = true;
     users = [ "babbaj" ];
+    batteryNotifier = {
+      percentage = 15;
+    };
   };
 
   services.plex.enable = true;
@@ -264,7 +267,7 @@
   '';
 
   ides = [
-    jetbrains.idea-ultimate
+    jetbrains.idea
     jetbrains.clion
     jetbrains.goland
     jetbrains.rider
@@ -446,14 +449,11 @@
     blender
     brave
     firefox
+    kdePackages.dolphin
+    kdePackages.ark
+    kdePackages.ffmpegthumbs
+    claude-code
   ]);
-
-  #security.wrappers.looking-glass-ptrace = {
-  #  owner = "babbaj";
-  #  group = "babbaj";
-  #  capabilities = "CAP_SYS_PTRACE=ep";
-  #  source = "${pkgs.looking-glass-client}/bin/looking-glass-client";
-  #};
 
   # for intellij
   environment.etc = with pkgs; {

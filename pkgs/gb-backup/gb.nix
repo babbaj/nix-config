@@ -8,7 +8,7 @@ buildGoModule {
 
   inherit src;
 
-  vendorHash = "sha256-dPyMxp8NGcsUQbfVTHNCR7Ng1JPecuOhAZBgbQMNAhM=";
+  vendorHash = "sha256-fjOIp2LUBaAPAPMxU2T+qbIQZgmVa0vNPYzW2hOsBr8=";
 
   meta = with lib; {
     description = "Gamer Backup, a super opinionated cloud backup system";

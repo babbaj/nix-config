@@ -90,4 +90,31 @@
       gb --config-file='/home/babbaj/skycache/.gb.conf' backup /home/babbaj/skycache/$dirname
     '';
   };
+
+  systemd.user.services.update-logs = rec {
+    description = "update chat logs";
+    startAt = "hourly";
+    path = with pkgs; [ bash rsync openssh nix ];
+
+    script = ''
+      /home/babbaj/HaltOpsec/HeadlessLogParser/update.sh
+    '';
+  };
+
+  systemd.user.services.discord-mc-logs = {
+    description = "discord chat log bot";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "default.target" ];
+    path = with pkgs; [ bash openssh nix ];
+
+    serviceConfig = {
+      Restart = "always";
+      RestartSec = 5;
+    };
+
+    script = ''
+      /home/babbaj/HaltOpsec/HeadlessLogParser/discord.sh
+    '';
+  };
 }

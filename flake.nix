@@ -25,7 +25,7 @@
       flake = false;
     };
     gb-src = {
-      url = "github:babbaj/gb/gitignore";
+      url = "github:leijurv/gb";
       flake = false;
     };
   };

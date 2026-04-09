@@ -3,7 +3,7 @@
 let
   desktopItem = let
     kitty-nnn = pkgs.writeShellScript "kitty-nnn" ''
-      kitty zsh -c 'export SHLVL=$((SHLVL-1)); export NNN_RUNNING_AS_APPLICATION=1; exec zsh -ic "n"'
+      kitty --app-id=nnn-kitty zsh -c 'export SHLVL=$((SHLVL-1)); export NNN_RUNNING_AS_APPLICATION=1; exec zsh -ic "n"'
     '';
   in pkgs.makeDesktopItem {
     name = "nnn-kitty";

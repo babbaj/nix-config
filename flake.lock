@@ -145,16 +145,15 @@
     "gb-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1766819491,
-        "narHash": "sha256-oKv0g/JaEQgGfTNPW8RIcHiDvEPHJH1EbvkGoYBGLgM=",
-        "owner": "babbaj",
+        "lastModified": 1768895930,
+        "narHash": "sha256-0rFL1vWdacAuu9HQxec4B6hZwOrlGnfybJdv1Bpc0fE=",
+        "owner": "leijurv",
         "repo": "gb",
-        "rev": "e2a0808476bdbc9fb313533057303819a509229b",
+        "rev": "330384c63c686b61504a36bb418ef4c1fed8773a",
         "type": "github"
       },
       "original": {
-        "owner": "babbaj",
-        "ref": "gitignore",
+        "owner": "leijurv",
         "repo": "gb",
         "type": "github"
       }
@@ -574,11 +573,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766527832,
-        "narHash": "sha256-f2v229wDzw2hCfmmM2FniNsQUNfoVLYHy0/c0NHwEUE=",
+        "lastModified": 1768691866,
+        "narHash": "sha256-MvnxwwfyO4fwozHlMWC4vW8l5GVNuv2ojwWtFOk/fUg=",
         "owner": "PrismLauncher",
         "repo": "PrismLauncher",
-        "rev": "76d1cd1b4e2bc62c827a6dda243cb7a3e715caf6",
+        "rev": "e8b5d491545f181599aaba610e53196e658a8bf2",
         "type": "github"
       },
       "original": {
