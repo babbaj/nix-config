@@ -26,5 +26,6 @@ in
     (mkProtonGE { version = "GE-Proton9-21"; sha256 = "sha256-WNOl0pu3xcEObxSK054u4e3hTWtA/51mH25uQih0+a0="; })
     (mkProtonGE { version = "GE-Proton9-26"; sha256 = "sha256-HwwQw888rfej5ZsMQdFOojk5RY1AKNGvVpAnRVW3qUg="; })
     (mkProtonGE { version = "GE-Proton10-32"; sha256 = "sha256-NxZ4OJUYQdRNQTb62jRET6Ef14LEhynOASIMPvwWeNA="; })
+    (mkProtonGE { version = "GE-Proton10-34"; sha256 = "sha256-lzPsYYcrp5NoT3B0WFj3o10Z7tXx7xva1wEP3edeuqM="; })
   ]);
 }

@@ -37,7 +37,7 @@
   };
 
   services.grafana = {
-    enable = true;
+    #enable = true;
     settings = {};
   };
 }

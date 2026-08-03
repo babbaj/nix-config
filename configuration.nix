@@ -93,7 +93,38 @@
   ];
   networking.firewall.allowedUDPPorts = [
     51680
+    53 67 68
   ];
+
+  networking.vlans = {
+    "enp34s0.10" = {
+      id = 10;
+      interface = "enp34s0";
+    };
+  };
+  networking.interfaces."enp34s0.10" = {
+    ipv4.addresses = [{
+      address = "192.168.50.1";
+      prefixLength = 24;
+    }];
+  };
+
+  services.dnsmasq = {
+    enable = true;
+    settings = {
+      interface = "enp34s0.10";
+      bind-interfaces = true;
+
+      # DHCP range and lease time
+      dhcp-range = "192.168.50.10,192.168.50.50,24h";
+
+      # Default gateway and DNS
+      dhcp-option = [
+        "option:router,192.168.50.1"
+        "option:dns-server,1.1.1.1,8.8.8.8"
+      ];
+    };
+  };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -120,21 +151,25 @@
 
     excludePackages = [ pkgs.xterm ];
 
-    displayManager.gdm = {
-      #enable = true;
-      wayland = false; # gdm keeps using wayland when xorg is selected
-    };
     #displayManager.lightdm.enable = true;
 
     logFile = "/var/log/X.0.log"; # lightdm sets the log file to here but gdm does not
   };
   services.libinput.mouse.middleEmulation = false; # worst troll ever
 
+
   services.desktopManager.cosmic.enable = true;
-  services.displayManager.cosmic-greeter.enable = true;
+  #services.displayManager.cosmic-greeter.enable = true;
   environment.sessionVariables.COSMIC_DATA_CONTROL_ENABLED = 1; # enable clipboard manager
 
   services.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+
+  qt = {
+    enable = true;
+    platformTheme = "gnome";
+    style = "adwaita-dark";
+  };
 
   fonts.packages = with pkgs; [
     cantarell-fonts
@@ -208,7 +243,7 @@
   #];
 
   services.mullvad-vpn.enable = true;
-  services.mullvad-vpn.package = pkgs.mullvad-vpn;
+  services.mullvad-vpn.gui.enable = true;
 
   services.tailscale.enable = true;
 
@@ -235,6 +270,8 @@
   '';
 
   hardware.bluetooth.enable = true;
+
+  services.ratbagd.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -271,7 +308,7 @@
     jetbrains.clion
     jetbrains.goland
     jetbrains.rider
-    jetbrains.pycharm-professional
+    jetbrains.pycharm
     jetbrains.rust-rover
     vscode
     qtcreator
@@ -307,7 +344,7 @@
     bat
     wget
     pv
-    neofetch
+    fastfetch
     jq
     iotop
     htop
@@ -426,7 +463,7 @@
     kdePackages.okular
     monero-gui
     nheko
-    lutris
+    #lutris # https://github.com/NixOS/nixpkgs/issues/513245
     xsecurelock
     #gpu-screen-recorder
     #gpu-screen-recorder-gtk
@@ -453,6 +490,9 @@
     kdePackages.ark
     kdePackages.ffmpegthumbs
     claude-code
+    #bottles # see lutris
+    freecad
+    slack
   ]);
 
   # for intellij
@@ -461,9 +501,10 @@
     "jdk8".source = jdk8;
     "jdk11".source = jdk11;
     "jdk17".source = jdk17;
+    "jdk25".source = jdk25;
     "zulu8".source = zulu8;
     "jetbrains_jdk".source = jetbrains.jdk;
-    "jetbrains_jdk17".source = jetbrains.jdk-no-jcef-17;
+    #"jetbrains_jdk17".source = jetbrains.jdk-no-jcef-17;
   };
   # for mc dev
   environment.sessionVariables.LD_LIBRARY_PATH = [ "${pkgs.xorg.libXxf86vm}" ];
@@ -477,6 +518,9 @@
     shell = pkgs.zsh;
   };
   #security.sudo.wheelNeedsPassword = false; # troll face
+  security.sudo.extraConfig = ''
+    Defaults env_keep += "SSH_AUTH_SOCK"
+  '';
   programs.zsh.enable = true;
 
   home-manager = {
@@ -492,36 +536,4 @@
     verbose = true;
   };
 
-  services.nginx = {
-    enable = true;
-    package = pkgs.openresty;
-    virtualHosts = {
-      "default" = {
-        default = true;
-        serverName = "_";
-
-        locations."/is_disabled" = {
-          extraConfig = ''
-            content_by_lua_file ${./is_disabled.lua};
-          '';
-        };
-        locations."/disable" = {
-          extraConfig = ''
-            content_by_lua_block {
-              ngx.header.content_type = "application/text"
-              local param = ngx.var.arg_id -- ?id=value
-              if not param then
-                ngx.status = 400
-                ngx.say('missing id parameter')
-                return
-              end
-              io.open(string.format("/var/www/%s", param), "a")
-              ngx.status = 200
-            }
-          '';
-        };
-      };
-    };
-  };
-  systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/var/www" ];
 }

@@ -12,7 +12,7 @@
     };
     memflow.url = "github:memflow/memflow-nixos";
     prism.url = "github:PrismLauncher/PrismLauncher";
-    prism.inputs.nixpkgs.follows = "nixpkgs";
+    #prism.inputs.nixpkgs.follows = "nixpkgs";
 
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -28,6 +28,8 @@
       url = "github:leijurv/gb";
       flake = false;
     };
+
+#    digital-signage-pc.url = "git+ssh://git@gitlab.com/otakuthon/digital-signage-pc?ref=2026-changes";
   };
 
   outputs = inputs@{
@@ -46,7 +48,7 @@
       name = "nixpkgs-patched";
       src = nixpkgs;
       patches = with pkgs; [
-        ./openrazer.patch
+        #./openrazer.patch
       ];
     };
     pkgsUnpatched = (import nixpkgs { inherit system; });
@@ -74,6 +76,15 @@
           steam = prev.steam.override { extraArgs = "-noreactlogin"; };
           helvum = pkgsStable.helvum;
           nix-alien = nix-alien.packages.${system}.default;
+          looking-glass-client = (prev.looking-glass-client.overrideAttrs(_: {
+            src = pkgs.fetchFromGitHub {
+              owner = "gnif";
+              repo = "LookingGlass";
+              rev = "7f31ecf5e572ecdfa64306be76e49ee537f5fdbf";
+              hash = "sha256-l4TtW1g1bxCCEmgxBDikysV2c3NoXSBGV7FiWMz3ojg=";
+              fetchSubmodules = true;
+            };
+          }));
         })
       ];
     };
@@ -100,13 +111,22 @@
         (import "${home-manager-patched}/nixos")
         memflow.nixosModule
         agenix.nixosModules.age
-
+        #digital-signage-pc.nixosModules.pxeserver
+        #{
+        #  otakuthon.services.pxeserver = {
+        #    enable = true;
+        #    interface = "enp34s0";        # your LAN interface name
+        #    serverIpv4 = "192.168.0.180";  # your PC's IP on that interface
+        #    ipv4Subnet = "192.168.0.0";  # your LAN subnet
+        #    ipv4SubnetMask = "255.255.255.0";
+        #};
+        #}
         {
-            nix.settings = {
-              substituters = [ "https://cosmic.cachix.org/" ];
-              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-            };
-          }
+          nix.settings = {
+            substituters = [ "https://cosmic.cachix.org/" ];
+            trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+          };
+        }
 
         ./configuration.nix
       ];

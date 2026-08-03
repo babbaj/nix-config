@@ -44,7 +44,7 @@ in
   #hardware.nvidia.package = patchDriver config.boot.kernelPackages.nvidiaPackages.stable;
   #hardware.nvidia.modesetting.enable = true;
 
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.bleeding_edge;
   hardware.nvidia.open = true;
   #hardware.nvidia.gsp.enable = false;
   boot.extraModprobeConfig = ''

@@ -1,4 +1,4 @@
-{ lib, makeWrapper, buildGoModule, fetchFromGitHub, lepton
+{ lib, makeWrapper, buildGoModule, fetchFromGitHub
 , src # flake input
 }:
 
