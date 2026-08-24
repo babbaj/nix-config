@@ -1,4 +1,5 @@
-{ lib, stdenv, fetchFromGitHub, cmake, libbfd, SDL2, obs-studio
+{ lib, stdenv, fetchFromGitHub, cmake, pkg-config, libbfd, SDL2, obs-studio
+, libunwind, elfutils
 , looking-glass-client }:
 
 stdenv.mkDerivation {
@@ -9,8 +10,8 @@ stdenv.mkDerivation {
 
   sourceRoot = "source/obs";
 
-  nativeBuildInputs = [ cmake ];
-  buildInputs = [ obs-studio libbfd SDL2 ];
+  nativeBuildInputs = [ cmake pkg-config ];
+  buildInputs = [ obs-studio libbfd SDL2 libunwind elfutils ];
 
   NIX_CFLAGS_COMPILE = "-mavx";
 

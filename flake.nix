@@ -68,7 +68,7 @@
 
       overlays = [
         (final: prev: {
-          #looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { src = looking-glass-src // { name = "source"; }; terminal = false; };
+          looking-glass-client = pkgs.callPackage ./pkgs/looking-glass/looking-glass.nix { source = looking-glass-src // { name = "source"; }; };
           gb-backup = pkgs.callPackage ./pkgs/gb-backup/gb.nix { src = gb-src; };
           prismlauncher = prism.packages.${system}.default.override { jdks = [ pkgs.jdk17 pkgs.jdk8 pkgs.zulu8 ]; };
           #prismlauncher = prism.packages.${system}.default;
@@ -76,15 +76,23 @@
           steam = prev.steam.override { extraArgs = "-noreactlogin"; };
           helvum = pkgsStable.helvum;
           nix-alien = nix-alien.packages.${system}.default;
-          looking-glass-client = (prev.looking-glass-client.overrideAttrs(_: {
-            src = pkgs.fetchFromGitHub {
-              owner = "gnif";
-              repo = "LookingGlass";
-              rev = "7f31ecf5e572ecdfa64306be76e49ee537f5fdbf";
-              hash = "sha256-l4TtW1g1bxCCEmgxBDikysV2c3NoXSBGV7FiWMz3ojg=";
-              fetchSubmodules = true;
-            };
-          }));
+          obs-studio-plugins = prev.obs-studio-plugins // {
+            looking-glass-obs = prev.obs-studio-plugins.looking-glass-obs.overrideAttrs (old: {
+              nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.pkg-config ];
+              buildInputs = old.buildInputs ++ [ pkgs.libunwind pkgs.elfutils ];
+            });
+          };
+          #looking-glass-client = (prev.looking-glass-client.overrideAttrs(_: {
+          #  src = pkgs.fetchFromGitHub {
+          #    owner = "gnif";
+          #    repo = "LookingGlass";
+          #    rev = "7476e56ded94b7cadebdb12529636a30a66cb3fa";
+          #    hash = "sha256-i2RBzMoV7djdXnwMK1yDBJDfOE6+qs8NdbMSbV8Rutk=";
+          #    fetchSubmodules = true;
+          #  };
+          #
+          #  patches = [];
+          #}));
         })
       ];
     };
