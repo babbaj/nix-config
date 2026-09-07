@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../nix.nix
+    ../modules/nix.nix
     ./wireguard.nix
   ];
 

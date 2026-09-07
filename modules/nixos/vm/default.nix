@@ -1,8 +1,10 @@
-{ config, pkgs, lib, ... }:
+# VFIO GPU passthrough: bind the 2070 to vfio-pci, run the guest under libvirtd
+# and render it on the host through Looking Glass over /dev/kvmfr0.
+{ config, pkgs, ... }:
 
 {
   imports = [
-    ./looking-glass-module.nix
+    ./looking-glass.nix
   ];
 
   boot.extraModulePackages = with config.boot.kernelPackages; [ kvmfr ];
@@ -20,14 +22,20 @@
   ];
 
   boot.kernelParams =
-  let
-    # 2070
-    gpuIds = "10de:1f02,10de:10f9,10de:1ada,10de:1adb";
-  in [
-    "amd_iommu=on" "iommu=1" "kvm.ignore_msrs=1" "kvm.report_ignored_msrs=0" "kvm_amd.npt=1" "kvm_amd.avic=1"
-    "vfio-pci.ids=${gpuIds}"
-    "default_hugepagesz=1G"
-  ];
+    let
+      # 2070
+      gpuIds = "10de:1f02,10de:10f9,10de:1ada,10de:1adb";
+    in
+    [
+      "amd_iommu=on"
+      "iommu=1"
+      "kvm.ignore_msrs=1"
+      "kvm.report_ignored_msrs=0"
+      "kvm_amd.npt=1"
+      "kvm_amd.avic=1"
+      "vfio-pci.ids=${gpuIds}"
+      "default_hugepagesz=1G"
+    ];
 
   security.pam.loginLimits = [
     { domain = "*"; item = "memlock"; type = "-"; value = "unlimited"; }
@@ -59,13 +67,10 @@
         # not recommended with x11
         #jitRender = true;
       };
-      egl = {
-        # egl filters break the nvidia driver
-        #preset = "yay";
-        #vsync = true; # this seems to consistently add a frame of latency without fully fixing tearing
-        #noSwapDamage = true;
-        #noBufferAge = true;
-      };
+      # NOTE: keep this section, even empty — the ini generator emits an [egl]
+      # header for it, so deleting it changes looking-glass-client.ini.
+      # egl filters break the nvidia driver, so nothing is set here.
+      egl = { };
       audio = {
         micDefault = "allow";
         micShowIndicator = false;
@@ -73,6 +78,8 @@
     };
   };
 
+  # NOTE: the commented lines below are part of the generated udev rules file,
+  # not Nix comments — removing them changes the derivation.
   services.udev.extraRules = ''
     # Unprivileged nvme access
     # cat /sys/block/nvme0n1/wwid

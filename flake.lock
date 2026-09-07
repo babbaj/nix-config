@@ -471,22 +471,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-master": {
-      "locked": {
-        "lastModified": 1785565044,
-        "narHash": "sha256-VcrQdvJZKp+wPJOAJLZDvJCSElgbIjlBNhOFOaG+WFs=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "789741fc4ca766061255b4f0c11073a056327db6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "master",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1669833724,
@@ -622,7 +606,6 @@
         "memflow": "memflow",
         "nix-alien": "nix-alien",
         "nixpkgs": "nixpkgs_5",
-        "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-stable": "nixpkgs-stable",
         "prism": "prism"
       }
