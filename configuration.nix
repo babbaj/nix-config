@@ -111,9 +111,24 @@
 
   services.dnsmasq = {
     enable = true;
+    # don't pull in the resolvconf-generated /etc/dnsmasq-conf.conf; NetworkManager
+    # writes a link-local upstream with a bogus scope id in there which makes dnsmasq
+    # refuse to start ("bad interface name"). Upstreams are set explicitly below.
+    resolveLocalQueries = false;
     settings = {
+      # bind-dynamic instead of bind-interfaces so a listen interface that is down
+      # (enp34s0.10 has no carrier most of the time) doesn't kill the service
       interface = "enp34s0.10";
-      bind-interfaces = true;
+      bind-dynamic = true;
+      listen-address = "127.0.0.1";
+
+      # wildcard entries for things /etc/hosts can't express
+      address = [
+        "/proxy.blahajwg/192.168.69.1"
+      ];
+
+      no-resolv = true;
+      server = [ "1.1.1.1" "8.8.8.8" ];
 
       # DHCP range and lease time
       dhcp-range = "192.168.50.10,192.168.50.50,24h";
@@ -125,6 +140,11 @@
       ];
     };
   };
+
+  # send *.proxy.blahajwg to the local dnsmasq, everything else keeps using the
+  # per-link DNS servers NetworkManager/tailscale configure
+  networking.nameservers = [ "127.0.0.1" ];
+  services.resolved.domains = [ "~proxy.blahajwg" ];
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -337,6 +357,8 @@
     rustup
     rust-cbindgen
     astyle
+    opencode
+    opencode-desktop
   ];
   shell-tools = [
     coreutils
