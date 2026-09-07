@@ -15,8 +15,7 @@ let
 in
 {
   home.packages = let
-    patched = (pkgs.nnn.override({ withNerdIcons = true; }))
-      .overrideAttrs({...}: { patches = [ ../nnn-patch.diff ]; });
+    patched = (pkgs.nnn.override({ withNerdIcons = true; }));
     wrapped = pkgs.writeShellScriptBin "nnn" ''
       export NNN_PLUG="f:finder;o:fzopen;p:preview-tui;d:dragdrop;z:fzplug"
       ${patched}/bin/nnn -a -e -P p "$@"

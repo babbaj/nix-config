@@ -75,7 +75,7 @@ in
 
     sessionVariables = {
       COLORTERM = "truecolor";
-      TERM = "xterm-256color";
+      TERM = "xterm-256color"; # i don't remember what this is for. probably not necessary.
       EDITOR = "nano";
     };
 
