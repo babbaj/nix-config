@@ -20,7 +20,7 @@ in
         easyeffects
       ];
       # https://nixos.wiki/wiki/PipeWire
-      hardware.pulseaudio.enable = false;
+      services.pulseaudio.enable = false; # this line is probably not necessary anymore
       security.rtkit.enable = true;
       services.pipewire = {
         enable = true;

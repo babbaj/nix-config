@@ -33,7 +33,7 @@ in
     n = "nnn";
   };
 
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     # https://github.com/jarun/nnn/wiki/Basic-use-cases#configure-cd-on-quit
     nnn () {
       # Block nesting of nnn in subshells

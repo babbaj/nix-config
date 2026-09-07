@@ -22,7 +22,7 @@ in
     enable = true;
     autosuggestion.enable = true;
 
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
 
     shellAliases = lib.mkMerge [
       rec {
@@ -112,7 +112,7 @@ in
       eval "$(/opt/homebrew/bin/brew shellenv)"
     '';
 
-    initExtra = ''
+    initContent = ''
       ## Keybindings section
       # Navigate words with ctrl+arrow keys
       bindkey '^[Oc' forward-word               #

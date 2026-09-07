@@ -112,7 +112,7 @@
   # send *.proxy.blahajwg to the local dnsmasq, everything else keeps using the
   # per-link DNS servers NetworkManager/tailscale configure
   networking.nameservers = [ "127.0.0.1" ];
-  services.resolved.domains = [ "~proxy.blahajwg" ];
+  services.resolved.settings.Resolve.Domains = [ "~proxy.blahajwg" ];
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -313,7 +313,7 @@
     ninja
     pkg-config
     go
-    linuxPackages.perf
+    perf
     perf-tools
     dotnet-sdk_8
     mono
@@ -393,7 +393,7 @@
   nix-tools = [
     nix-diff
     #nix-top
-    nixfmt-rfc-style
+    nixfmt
     nix-direnv
     direnv
     fh
@@ -442,7 +442,7 @@
     gnome-tweaks
     gparted
     wireshark
-    wineWowPackages.staging
+    wineWow64Packages.staging
     #libreoffice-qt
     handbrake
     ghidra-bin
@@ -497,7 +497,7 @@
     #"jetbrains_jdk17".source = jetbrains.jdk-no-jcef-17;
   };
   # for mc dev
-  environment.sessionVariables.LD_LIBRARY_PATH = [ "${pkgs.xorg.libXxf86vm}" ];
+  environment.sessionVariables.LD_LIBRARY_PATH = [ "${pkgs.libXxf86vm}" ];
   environment.sessionVariables.__GL_THREADED_OPTIMIZATIONS = "0";
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 

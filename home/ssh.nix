@@ -5,7 +5,7 @@ in
 {
   programs.ssh = {
     enable = true;
-    matchBlocks = {
+    settings = {
       n = {
         hostname = "192.168.69.2";
         user = "root";
@@ -37,7 +37,22 @@ in
         hostname = "sneed";
         user = "ubuntu";
       };
+
+      # Using the default settings is now deprecated so they have to be copy/pasted in to fix the warning
+      "*" = {
+        ForwardAgent = false;
+        AddKeysToAgent = "no";
+        Compression = false;
+        ServerAliveInterval = 0;
+        ServerAliveCountMax = 3;
+        HashKnownHosts = false;
+        UserKnownHostsFile = "~/.ssh/known_hosts";
+        ControlMaster = "no";
+        ControlPath = "~/.ssh/master-%r@%n:%p";
+        ControlPersist = "no";
+      };
     };
+    enableDefaultConfig = false;
 
     extraConfig = ''
       SetEnv TERM=xterm-256color

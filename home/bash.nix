@@ -27,7 +27,7 @@ in
       PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
       export PATH=$PATH:~/bin:~/.cargo/bin
-      #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${lib.makeLibraryPath [ pkgs.xorg.libXxf86vm ]}
+      #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${lib.makeLibraryPath [ pkgs.libXxf86vm ]}
     '';
 
     profileExtra = lib.optionalString isDarwin ''

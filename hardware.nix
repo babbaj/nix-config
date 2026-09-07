@@ -52,7 +52,6 @@ in
   '';
 
   hardware.graphics.enable32Bit = true;
-  hardware.pulseaudio.support32Bit = true;
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/7be7dc7e-97f2-43d4-ab33-134dd5f64a71";

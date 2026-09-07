@@ -68,6 +68,8 @@ with lib;
 
   hardware.nvidia.open = true;
 
+  services.desktopManager.plasma6.enable = true;
+
   services.xserver =
   let
     x11cfg = ''
@@ -95,7 +97,6 @@ EndSection
   {
     enable = true;
     videoDrivers = lib.mkOverride 9 [ "nvidia" ];
-    desktopManager.plasma6.enable = true;
 
     serverLayoutSection = ''
       Screen "Screen0"

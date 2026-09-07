@@ -3,14 +3,13 @@
 {
   services.samba = {
     enable = true;
-    securityType = "user";
     settings.global = {
       "hosts allow" = "100.64.0.0/255.64.0.0 192.168.70. 127.0.0.1 localhost  fd7a:115c:a1e0::/48";
       "hosts deny" = "0.0.0.0/0";
       "map to guest" = "Bad User";
     };
 
-    shares = {
+    settings = {
       test = {
         path = "/home/babbaj/samba";
         "read only" = "no";
@@ -27,6 +26,7 @@
         "directory mask" = "0755";
         "valid users" = "babbaj";
       };
+      global.security = "user";
     };
   };
 }

@@ -10,8 +10,7 @@
   ];
   services.samba = {
     enable = false;
-    securityType = "user";
-    shares = {
+    settings = {
       public = {
         path = "/mnt/n/share";
         available = "yes";
@@ -26,6 +25,7 @@
         createMask = "0777";
         directoryMask = "0777";
       };
+      global.security = "user";
     };
     extraConfig = ''
       [global]
