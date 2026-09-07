@@ -81,34 +81,13 @@
 
   time.timeZone = "America/New_York";
 
-  networking.useDHCP = false;
-  networking.interfaces.enp34s0.useDHCP = true;
-  #networking.interfaces.wlp35s0.useDHCP = true;
-
   networking.networkmanager.enable = true;
   networking.firewall.trustedInterfaces = [ "kittens" "vultr" "tailscale0" ];
   networking.firewall.logRefusedConnections = false; # this has been filling my logs with junk
-  networking.firewall.allowedTCPPorts = [
-    51680
-  ];
-  networking.firewall.allowedUDPPorts = [
-    51680
-    53 67 68
-  ];
+  networking.firewall.allowedTCPPorts = [ ];
+  networking.firewall.allowedUDPPorts = [ ];
 
-  networking.vlans = {
-    "enp34s0.10" = {
-      id = 10;
-      interface = "enp34s0";
-    };
-  };
-  networking.interfaces."enp34s0.10" = {
-    ipv4.addresses = [{
-      address = "192.168.50.1";
-      prefixLength = 24;
-    }];
-  };
-
+  # loopback-only resolver, purely for wildcard entries /etc/hosts can't express
   services.dnsmasq = {
     enable = true;
     # don't pull in the resolvconf-generated /etc/dnsmasq-conf.conf; NetworkManager
@@ -116,28 +95,17 @@
     # refuse to start ("bad interface name"). Upstreams are set explicitly below.
     resolveLocalQueries = false;
     settings = {
-      # bind-dynamic instead of bind-interfaces so a listen interface that is down
-      # (enp34s0.10 has no carrier most of the time) doesn't kill the service
-      interface = "enp34s0.10";
-      bind-dynamic = true;
+      # keep a bind option: without one dnsmasq binds the wildcard address and would
+      # answer on the trusted wireguard/tailscale interfaces
+      bind-interfaces = true;
       listen-address = "127.0.0.1";
 
-      # wildcard entries for things /etc/hosts can't express
       address = [
         "/proxy.blahajwg/192.168.69.1"
       ];
 
       no-resolv = true;
       server = [ "1.1.1.1" "8.8.8.8" ];
-
-      # DHCP range and lease time
-      dhcp-range = "192.168.50.10,192.168.50.50,24h";
-
-      # Default gateway and DNS
-      dhcp-option = [
-        "option:router,192.168.50.1"
-        "option:dns-server,1.1.1.1,8.8.8.8"
-      ];
     };
   };
 
