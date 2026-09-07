@@ -18,6 +18,7 @@ with lib;
   };
 
   system.name = "gpu-idle";
+  system.stateVersion = config.system.nixos.release; # this vm is stateless so i don't care
 
   virtualisation = {
     cores = 2;

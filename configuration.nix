@@ -419,10 +419,10 @@
   ] ++
   cosmic-stuff ++
   (let
-    gpu-vm = (import "${modulesPath}/../" { configuration = ./gpu-idle-vm.nix; inherit (pkgs) system; }).vm;
+    gpu-vm = (import "${modulesPath}/../" { configuration = ./gpu-idle-vm.nix; system = pkgs.stdenv.hostPlatform.system; }).vm;
   in [
     gpu-vm
-    texlive.combined.scheme-full
+    texliveFull
     vlc
     qbittorrent
     prismlauncher
