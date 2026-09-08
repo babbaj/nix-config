@@ -63,7 +63,6 @@
         inherit system;
         config.allowUnfree = true;
         config.permittedInsecurePackages = [
-          "lepton-unstable-2019-08-20"
           "olm-3.2.16"
         ];
 
