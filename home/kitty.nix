@@ -12,7 +12,7 @@ in
       scrollback_lines = "1000000"; # infinite scrollback was a mistake
       #listen_on = "unix:@kitty";
       listen_on = "unix:/tmp/.kitty";
-      allow_remote_control = "yes";
+      allow_remote_control = "socket-only";
     };
     keybindings = {
       # Pause key (push to talk)

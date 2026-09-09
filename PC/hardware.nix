@@ -17,7 +17,7 @@
   # so it is kept as-is. Remove it when you're happy to rebuild.
   hardware.openrazer = {
     enable = true;
-    users = [ "babbaj" "babbaj" ];
+    users = [ "babbaj" ];
     batteryNotifier = {
       percentage = 15;
     };
