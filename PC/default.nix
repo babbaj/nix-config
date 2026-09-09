@@ -11,20 +11,20 @@
     # matters for order-sensitive options like environment.systemPackages,
     # boot.extraModprobeConfig and services.udev.extraRules.
     ./packages.nix
-    ../../modules/nixos/boot.nix
-    ../../modules/nixos/networking.nix
-    ../../modules/nixos/desktop.nix
-    ../../modules/nixos/services.nix
+    ./boot.nix
+    ./networking.nix
+    ./desktop.nix
+    ./services.nix
 
     ./hardware.nix
-    ../../modules/nixos/wireguard.nix
-    ../../modules/nixos/vm
-    ../../modules/nixos/user-services.nix
-    ../../modules/nixos/audio.nix
-    ../../modules/nixos/metrics.nix
-    ../../modules/nix.nix
-    ../../modules/nixos/mic
-    ../../modules/nixos/samba.nix
+    ./wireguard.nix
+    ./vm
+    ./user-services.nix
+    ./audio.nix
+    ./metrics.nix
+    ./nix.nix
+    ./mic
+    ./samba.nix
   ];
 
   networking.hostName = "nixos";
@@ -56,7 +56,7 @@
 
   home-manager = {
     users.babbaj = {
-      imports = [ ../../home/home.nix ];
+      imports = [ ../home/home.nix ];
       home.stateVersion = config.system.stateVersion;
     };
 

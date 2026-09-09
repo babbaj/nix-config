@@ -1,8 +1,8 @@
 { config, ... }:
 
 {
-  age.secrets.nocomKey.file = ../../secrets/nocom-wireguard-key.age;
-  age.secrets.hetznerKey.file = ../../secrets/hetzner-wireguard-key.age;
+  age.secrets.nocomKey.file = ../secrets/nocom-wireguard-key.age;
+  age.secrets.hetznerKey.file = ../secrets/hetzner-wireguard-key.age;
 
   age.identityPaths = [
     "/home/babbaj/.ssh/id_rsa"

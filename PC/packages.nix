@@ -15,12 +15,12 @@ let
     ln -s ${pkgs.kitty}/bin/kitty $out/bin/xterm
   '';
 
-  obs-stuff = import ../../pkgs/obs.nix pkgs;
+  obs-stuff = import ../pkgs/obs.nix pkgs;
 
   # A throwaway VM that holds the second GPU so its fans idle at zero.
   # Installed as `run-gpu-idle-vm`; started by systemd.services.stop-2070-fan.
   gpu-vm = (import "${modulesPath}/../" {
-    configuration = ../../modules/nixos/vm/gpu-idle-vm.nix;
+    configuration = ./vm/gpu-idle-vm.nix;
     system = pkgs.stdenv.hostPlatform.system;
   }).vm;
 
