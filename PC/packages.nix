@@ -165,7 +165,6 @@ let
     kdePackages.kdenlive
     kdePackages.okular
     monero-gui
-    nheko
     #lutris # https://github.com/NixOS/nixpkgs/issues/513245
     xsecurelock
     gimp

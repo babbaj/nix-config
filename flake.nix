@@ -62,9 +62,6 @@
       pkgs = import nixpkgs-patched {
         inherit system;
         config.allowUnfree = true;
-        config.permittedInsecurePackages = [
-          "olm-3.2.16"
-        ];
 
         overlays = [
           (final: prev: {

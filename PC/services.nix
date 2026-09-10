@@ -5,7 +5,7 @@
   hardware.nvidia-container-toolkit.enable = true;
 
   services.vaultwarden = {
-    enable = true;
+    enable = false;
     config = {
       ROCKET_ADDRESS = "::";
     };
@@ -90,7 +90,7 @@
 
   services.tailscale.enable = true;
 
-  services.plex.enable = true;
+  services.plex.enable = false;
   services.plex.openFirewall = true;
 
 

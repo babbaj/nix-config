@@ -2,7 +2,7 @@
 
 {
   services.prometheus = {
-    enable = true;
+    enable = false;
     listenAddress = "127.0.0.1";
     exporters.node.enable = true;
 
