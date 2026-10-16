@@ -10,10 +10,18 @@
   boot.extraModulePackages = with config.boot.kernelPackages; [
     v4l2loopback
     zenpower
+    bcachefs
   ];
   boot.extraModprobeConfig = ''
     options v4l2loopback exclusive_caps=1 video_nr=9 card_label="OBS Virtual Output"
   '';
+
+  #boot.kernelPatches = [
+  #  {
+  #    name = "fix-vfio-framebuffer-troll";
+  #    patch = ./fix-vfio-troll.patch;
+  #  }
+  #];
 
   # make-linux-fast-again.com
   boot.kernelParams = [

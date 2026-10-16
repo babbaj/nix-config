@@ -52,6 +52,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   patches = [
     #./nanosvg-unvendor.diff
+    #./pause.diff
   ];
 
   nativeBuildInputs = [

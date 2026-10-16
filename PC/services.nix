@@ -49,7 +49,13 @@
     description = "Set the fan speed to 0";
     wantedBy = [ "multi-user.target" ];
     after = [ "display-manager.service" ];
-    serviceConfig.ExecCondition = pkgs.writeShellScript "gpu-idle-vm-condition" ''
+    serviceConfig.User = "babbaj";
+    # vfio pins all guest RAM. Root bypasses this limit via CAP_IPC_LOCK, but the
+    # system manager's default (8 MiB) is far below the VM's 2 GiB.
+    serviceConfig.LimitMEMLOCK = "infinity";
+    # "+" runs the condition as root so the /proc/*/fd scan below can see qemu
+    # processes owned by any user, not just babbaj.
+    serviceConfig.ExecCondition = "+${pkgs.writeShellScript "gpu-idle-vm-condition" ''
       set -u
 
       # All four functions of the 2070 share one iommu group, so checking the
@@ -79,7 +85,7 @@
       done
 
       exit 0
-    '';
+    ''}";
     script = ''
       /run/current-system/sw/bin/run-gpu-idle-vm
     '';
@@ -96,6 +102,7 @@
 
   services.udev.extraRules = ''
     KERNEL=="hidraw*", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="4348", ATTRS{idProduct}=="55e0", MODE="0666"
   '';
 
   hardware.bluetooth.enable = true;

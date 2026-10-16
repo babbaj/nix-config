@@ -1,0 +1,18 @@
+--- a/lsteamclient/unix_steam_utils_manual.cpp	2026-09-14 01:01:15.024153750 -0400
++++ b/lsteamclient/unix_steam_utils_manual.cpp	2026-09-14 01:01:15.035673123 -0400
+@@ -20,6 +20,15 @@
+ 
+     params->_ret = iface->GetAPICallResult( params->hSteamAPICall, u_callback, u_callback_len,
+                                             params->iCallbackExpected, params->pbFailed );
++
++    /* CheckFileSignature_t is k_iSteamUtilsCallbacks (700) + 5 == 705. Its only
++     * field is an int (ECheckFileSignature m_eCheckFileSignature) at offset 0.
++     * Force k_ECheckFileSignatureValidSignature (1) so the Source engine does not
++     * fall back to insecure mode: the native Linux build performs no such check,
++     * and this makes the Windows build under Proton behave the same. Written into
++     * u_callback before conversion so it propagates whether or not a copy is made. */
++    if (params->_ret && params->iCallbackExpected == 705)
++        *(int *)u_callback = 1;
+     if (params->_ret && u_callback != params->pCallback)
+     {
+         convert_callback_utow( params->iCallbackExpected, u_callback, u_callback_len,

@@ -70,6 +70,10 @@ in
       ];
       extraConfig = ''
         export HISTORY_START_WITH_GLOBAL=true
+        # per-directory-history snapshots $HISTFILE when oh-my-zsh loads, which is
+        # before home-manager's history block sets it; without this it falls back
+        # to oh-my-zsh's default of ~/.zsh_history.
+        HISTFILE="${config.programs.zsh.history.path}"
       '';
     };
 

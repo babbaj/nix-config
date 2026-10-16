@@ -67,5 +67,17 @@
     options = [ "nofail" "noatime" "compress-force=zstd:3" ];
   };
 
+  fileSystems."/mnt/sneed" = {
+    device = "/dev/disk/by-id/ata-SAMSUNG_MZ7LH3T8HMLT-00005_S456NY0M300880-part1";
+    fsType = "bcachefs";
+    options = [ "nofail" "noatime" "compression=zstd:3" ];
+  };
+
+  fileSystems."/mnt/feed" = {
+    device = "/dev/disk/by-id/ata-SAMSUNG_MZ7LH3T8HMLT-00005_S456NY0M300883-part1";
+    fsType = "bcachefs";
+    options = [ "nofail" "noatime" "compression=zstd:3" ];
+  };
+
   swapDevices = [{ device = "/dev/disk/by-uuid/69384c4f-67cd-42d7-ba0b-a54b806f1bc8"; }];
 }

@@ -25,6 +25,7 @@
     ./nix.nix
     ./mic
     ./samba.nix
+    ./qbittorrent.nix
   ];
 
   networking.hostName = "nixos";

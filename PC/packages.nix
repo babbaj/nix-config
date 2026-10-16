@@ -124,6 +124,7 @@ let
     gamescope
     wl-clipboard
     television
+    bcachefs-tools
   ];
 
   nix-tools = with pkgs; [
@@ -190,8 +191,9 @@ let
     kdePackages.ffmpegthumbs
     claude-code
     #bottles # see lutris
-    freecad
+    #freecad
     slack
+    openscad
   ];
 in
 {

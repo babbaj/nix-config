@@ -1,0 +1,69 @@
+diff --git a/src/app.c b/src/app.c
+index f79403dc..2c3ab41d 100644
+--- a/src/app.c
++++ b/src/app.c
+@@ -263,6 +263,23 @@ void app_getMouseState(LG_MouseState * state)
+   state->valid = !!(packedState & SHADER_MOUSE_VALID);
+ }
+ 
++/* set while input is disabled by holding the pause key */
++static bool inputPaused = false;
++
++static void setInputPaused(bool paused)
++{
++  inputPaused         = paused;
++  g_state.ignoreInput = paused;
++
++  if (paused)
++    core_setCursorInView(false);
++  else
++    g_state.ds->realignPointer();
++  core_updateKeyboardGrab();
++
++  app_alert(LG_ALERT_INFO, paused ? "Input Disabled" : "Input Enabled");
++}
++
+ void app_handleFocusEvent(bool focused)
+ {
+   MTRACE("focus set=%d old=%d inWin=%d inView=%d grab=%d",
+@@ -290,6 +307,9 @@ void app_handleFocusEvent(bool focused)
+   }
+   else
+   {
++    if (inputPaused)
++      setInputPaused(false);
++
+     if (g_params.captureOnFocus && !g_state.ignoreInput)
+       core_setGrab(true);
+     core_updateKeyboardGrab();
+@@ -518,6 +538,15 @@ void app_handleKeyPressInternal(int sc)
+     return;
+   }
+ 
++  if (sc == KEY_PAUSE)
++  {
++    /* while held, stop forwarding input so host shortcuts such as Alt+Tab
++     * reach the compositor; input resumes on release or when refocused */
++    if (!g_state.ignoreInput)
++      setInputPaused(true);
++    return;
++  }
++
+   if (!core_inputEnabled())
+     return;
+ 
+@@ -564,6 +593,14 @@ void app_handleKeyReleaseInternal(int sc)
+     return;
+   }
+ 
++  if (sc == KEY_PAUSE)
++  {
++    if (inputPaused && g_state.ignoreInput)
++      setInputPaused(false);
++    inputPaused = false;
++    return;
++  }
++
+   if (!core_inputEnabled())
+     return;
+ 

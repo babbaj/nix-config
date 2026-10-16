@@ -36,6 +36,12 @@ with lib;
       }
     ];
 
+    # The nix store and xchg shares are vhost-user-fs (virtiofs) devices, and
+    # vhost-user needs guest RAM in a shareable memfd. Without this the daemons
+    # fail with "vhost_set_vring_kick failed" and the guest boots without
+    # /nix/store, so it never reaches multi-user and nvidia-fan never runs.
+    qemu.enableSharedMemory = true;
+
     qemu.options = [
       "-nographic"
       "-cpu host"

@@ -14,12 +14,6 @@
     options kvmfr static_size_mb=128
   '';
 
-  boot.kernelPatches = [
-    {
-      name = "fix-vfio-framebuffer-troll";
-      patch = ./fix-vfio-troll.patch;
-    }
-  ];
 
   boot.kernelParams =
     let
@@ -66,6 +60,7 @@
         fullScreen = true;
         # not recommended with x11
         #jitRender = true;
+        quickSplash = true;
       };
       # NOTE: keep this section, even empty — the ini generator emits an [egl]
       # header for it, so deleting it changes looking-glass-client.ini.
