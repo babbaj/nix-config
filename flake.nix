@@ -73,6 +73,11 @@
               jdks = [ pkgs.jdk17 pkgs.jdk8 pkgs.zulu8 ];
             };
             steam = prev.steam.override { extraArgs = "-noreactlogin"; };
+            # Chromium/Electron pick kwallet when XDG_CURRENT_DESKTOP=KDE; their encryption
+            # keys live in gnome-keyring (see PC/desktop.nix), so pin that backend.
+            brave = prev.brave.override { commandLineArgs = "--password-store=gnome-libsecret"; };
+            google-chrome = prev.google-chrome.override { commandLineArgs = "--password-store=gnome-libsecret"; };
+            element-desktop = prev.element-desktop.override { commandLineArgs = "--password-store=gnome-libsecret"; };
             helvum = pkgsStable.helvum;
             nix-alien = nix-alien.packages.${system}.default;
             obs-studio-plugins = prev.obs-studio-plugins // {

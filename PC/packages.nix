@@ -121,7 +121,6 @@ let
     libnotify
     exfatprogs
     graphviz
-    gamescope
     wl-clipboard
     television
     bcachefs-tools

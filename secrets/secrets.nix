@@ -4,5 +4,4 @@ in
 {
   "nocom-wireguard-key.age".publicKeys = [ me ];
   "hetzner-wireguard-key.age".publicKeys = [ me ];
-  "mullvad-qbittorrent-key.age".publicKeys = [ me ];
 }

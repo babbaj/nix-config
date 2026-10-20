@@ -20,14 +20,17 @@ in
     ];
     config = {
       osc = "no";
-      gpu-context = "wayland";
+      vo = "gpu-next";
+      gpu-api = "vulkan";
+      gpu-context = "waylandvk";
+      #target-colorspace-hint = "yes";
     };
     profiles.Idle = {
       profile-cond= ''p["idle-active"]'';
       profile-restore = "copy-equal";
       title= "' '";
       keepaspect = "no";
-      background = 1;
+      #background = 1; # i don't remember what this is for
     };
   };
   xdg.configFile."mpv/fonts/material-design-iconic-font.ttf".source = "${pkgs.fetchurl {

@@ -40,6 +40,20 @@
   };
 
   programs.steam.enable = true;
+  # gamescope + its WSI Vulkan layer (64- and 32-bit), needed for HDR passthrough with `gamescope --hdr-enabled`
+  programs.gamescope = {
+    enable = true;
+    enableWsi = true;
+  };
+  # "Steam" session at the GDM login screen: gamescope drives the display directly, so HDR works
+  # (GNOME lacks the color-management features nested gamescope needs for HDR)
+  programs.steam.gamescopeSession = {
+    enable = true;
+    # EDID's preferred mode is 60Hz, so the refresh rate has to be given explicitly
+    args = [ "--hdr-enabled" "-W" "2560" "-H" "1440" "-r" "240" ];
+    # lets DXVK/vkd3d-proton (DX11/DX12 games) expose HDR to the game, as SteamOS does
+    env.DXVK_HDR = "1";
+  };
   programs.java.enable = true;
   programs.gnupg.agent.enable = true;
   programs.nix-ld.enable = true;
